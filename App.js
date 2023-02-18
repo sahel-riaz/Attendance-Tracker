@@ -66,6 +66,12 @@ export default function App() {
 			{/* <Button onPress={test} title='press' /> */}
 			<Button onPress={yes} title='press' />
 			<Button onPress={handlePress} title='press' />
+
+			{[...Array(2)].map((e, i) => (
+				<View style={styles.card}>
+					<Text>Aadhavan Paavai Lenin</Text>
+				</View>
+			))}
 		</View>
 	)
 }
@@ -82,6 +88,15 @@ const styles = StyleSheet.create({
 		margin: 12,
 		borderWidth: 1,
 		padding: 10,
+	},
+	card: {
+		width: 320,
+		borderRadius: 10,
+		borderWidth: 1,
+		borderColor: '#D8D8D8',
+		paddingTop: 12,
+		paddingBottom: 12,
+		paddingLeft: 16,
 	},
 })
 
