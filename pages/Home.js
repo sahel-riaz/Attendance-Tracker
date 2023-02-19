@@ -1,12 +1,4 @@
-import {
-	Image,
-	SafeAreaView,
-	ScrollView,
-	ScrollViewBase,
-	ScrollViewComponent,
-	Text,
-	View,
-} from 'react-native'
+import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native'
 import ClassCard from '../components/home/ClassCard'
 import HomeCard from '../components/home/HomeCard'
 import Navbar from '../components/Navbar'
@@ -66,6 +58,13 @@ export default function Home() {
 					<ClassCard />
 					<ClassCard />
 					<ClassCard />
+					<ClassCard />
+					<ClassCard />
+					<ClassCard />
+					<ClassCard />
+					<ClassCard />
+					<ClassCard />
+					<View style={{ height: 400 }}></View>
 				</ScrollView>
 			</View>
 			<Navbar />

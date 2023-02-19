@@ -9,6 +9,8 @@ export const COLORS = {
 	black: '#000000',
 	borderGrey: '#D8D8D8',
 	iconGrey: '#C8C8C8',
+	subHeading: '#525058',
+	selectGrey: '#838383',
 }
 
 export const FONTS = {

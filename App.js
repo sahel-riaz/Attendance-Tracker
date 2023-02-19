@@ -3,6 +3,7 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 
 import Home from './pages/Home'
+import Mark from './pages/Mark'
 
 const Stack = createNativeStackNavigator()
 
@@ -25,7 +26,8 @@ const App = () => {
 	return (
 		<NavigationContainer theme={theme}>
 			<Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: false }}>
-				<Stack.Screen name='Home' component={Home} />
+				{/* <Stack.Screen name='Home' component={Home} /> */}
+				<Stack.Screen name='Mark' component={Mark} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

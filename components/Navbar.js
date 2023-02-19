@@ -19,7 +19,6 @@ export default function Navbar() {
 				bottom: 0,
 				justifyContent: 'space-between',
 				width: '100%',
-				// display: 'flex',
 			}}
 		>
 			<View style={{ flexDirection: 'row' }}>
@@ -40,6 +39,7 @@ export default function Navbar() {
 					width: 64,
 					justifyContent: 'center',
 					alignItems: 'center',
+					elevation: 3,
 				}}
 			>
 				<Image style={{ height: 30, width: 30 }} source={require('./icons/calendar.png')} />
