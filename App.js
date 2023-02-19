@@ -15,9 +15,9 @@ const theme = {
 
 const App = () => {
 	const [loaded] = useFonts({
-		LatoBold: require('./assets/fonts/Lato-Bold.tff'),
-		LatoLight: require('./assets/fonts/Lato-Light.tff'),
-		LatoRegular: require('./assets/fonts/Lato-Regular.tff'),
+		LatoBold: require('./assets/fonts/Lato-Bold.ttf'),
+		LatoLight: require('./assets/fonts/Lato-Light.ttf'),
+		LatoRegular: require('./assets/fonts/Lato-Regular.ttf'),
 	})
 
 	if (!loaded) return null
