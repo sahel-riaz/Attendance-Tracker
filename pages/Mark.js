@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native'
+import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
 import Navbar from '../components/Navbar'
 import { StyleSheet } from 'react-native'
@@ -16,7 +16,13 @@ export default function Mark() {
 		{ label: 'Item 7', value: '7' },
 		{ label: 'Item 8', value: '8' },
 	]
-	const [value, setValue] = useState(null)
+	const [course, setCourse] = useState(null)
+	const [classs, setClasss] = useState(null)
+
+	var date = new Date().getDate()
+	var month = new Date().getMonth() + 1
+	var year = new Date().getFullYear()
+
 	return (
 		<View style={{ flex: 1 }}>
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
@@ -84,9 +90,9 @@ export default function Mark() {
 						}}
 						labelField='label'
 						valueField='value'
-						value={value}
+						value={course}
 						onChange={(item) => {
-							setValue(item.value)
+							setCourse(item.value)
 						}}
 						renderRightIcon={() => <Image source={require('./icons/arrowDown.png')} />}
 					/>
@@ -119,14 +125,14 @@ export default function Mark() {
 						}}
 						labelField='label'
 						valueField='value'
-						value={value}
+						value={classs}
 						onChange={(item) => {
-							setValue(item.value)
+							setClasss(item.value)
 						}}
 						renderRightIcon={() => <Image source={require('./icons/arrowDown.png')} />}
 					/>
 				</View>
-				<View //apply button -> send date also
+				<TouchableOpacity //apply button -> send date also
 					style={{
 						height: 43,
 						width: 160,
@@ -137,6 +143,10 @@ export default function Mark() {
 						justifyContent: 'center',
 						marginTop: 40,
 					}}
+					onPress={() => {
+						console.log(date + '/' + month + '/' + year)
+					}}
+					activeOpacity={0.7}
 				>
 					<Image style={{ height: 19, width: 19 }} source={require('./icons/penAdd.png')} />
 					<Text
@@ -149,7 +159,7 @@ export default function Mark() {
 					>
 						Apply
 					</Text>
-				</View>
+				</TouchableOpacity>
 			</View>
 			<Navbar />
 		</View>
