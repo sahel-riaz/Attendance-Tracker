@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native'
 
 import { COLORS, FONTS } from '../styles/theme'
 import { useState } from 'react'
+
 export default function Mark() {
 	const data = [
 		{ label: 'Item 1', value: '1' },
