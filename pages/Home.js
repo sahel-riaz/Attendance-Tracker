@@ -1,6 +1,11 @@
-import React from 'react'
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
+
+import COLORS from '../styles/theme'
 
 export default function Home() {
-	return <Text>Hello</Text>
+	return (
+		<View style={{ backgroundColor: COLORS.bg }}>
+			<Text>hello</Text>
+		</View>
+	)
 }
