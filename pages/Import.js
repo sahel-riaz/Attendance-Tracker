@@ -5,6 +5,8 @@ import { StyleSheet } from 'react-native'
 import { COLORS, FONTS } from '../styles/theme'
 import { useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
+import * as FileSystem from 'expo-file-system'
+import { readRemoteFile } from 'react-native-csv'
 
 import * as DocumentPicker from 'expo-document-picker'
 
@@ -16,11 +18,18 @@ export default function Mark() {
 	const [courseID, setCourseID] = useState(null)
 	const [courseName, setCourseName] = useState(null)
 	const [classs, setClasss] = useState(null)
-	const [fileResponse, setFileResponse] = useState([])
+	const [fileResponse, setFileResponse] = useState('')
 
 	const pickDocument = async () => {
-		let result = await DocumentPicker.getDocumentAsync({})
-		console.log(result.uri)
+		const result = await DocumentPicker.getDocumentAsync({
+			copyToCacheDirectory: true,
+		})
+		const path = result.uri
+		const res = readRemoteFile(path, {})
+
+		// setFileResponse(result.uri)
+		// const res = await RNFetchBlob.fs.readFile(result.uri, 'ascii')
+		console.log(res)
 	}
 
 	return (
