@@ -216,6 +216,7 @@ export default function Mark() {
 						marginTop: 40,
 					}}
 					onPress={() => {
+						// console.log(date + '/' + month + '/' + year)
 						navigation.navigate('Students')
 					}}
 					activeOpacity={0.7}
