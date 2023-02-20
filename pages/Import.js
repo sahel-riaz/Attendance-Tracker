@@ -1,4 +1,12 @@
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import {
+	Image,
+	SafeAreaView,
+	ScrollView,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+} from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
 import Navbar from '../components/Navbar'
 import { StyleSheet } from 'react-native'
@@ -12,17 +20,8 @@ import { useNavigation } from '@react-navigation/native'
 export default function Mark() {
 	const navigation = useNavigation()
 
-	const data = [
-		{ label: 'Item 1', value: '1' },
-		{ label: 'Item 2', value: '2' },
-		{ label: 'Item 3', value: '3' },
-		{ label: 'Item 4', value: '4' },
-		{ label: 'Item 5', value: '5' },
-		{ label: 'Item 6', value: '6' },
-		{ label: 'Item 7', value: '7' },
-		{ label: 'Item 8', value: '8' },
-	]
-	const [course, setCourse] = useState(null)
+	const [courseID, setCourseID] = useState(null)
+	const [courseName, setCourseName] = useState(null)
 	const [classs, setClasss] = useState(null)
 
 	return (
@@ -63,7 +62,7 @@ export default function Mark() {
 							lineHeight: 19,
 						}}
 					>
-						Export data
+						Import data
 					</Text>
 				</View>
 			</View>
@@ -106,47 +105,23 @@ export default function Mark() {
 							marginTop: 70,
 						}}
 					>
-						Course:
+						Course ID:
 					</Text>
-					<Dropdown
-						style={styles.dropdown}
-						placeholder='Select course'
-						placeholderStyle={styles.placeholderStyle}
-						selectedTextStyle={styles.selectedTextStyle}
-						data={data}
-						autoScroll={false}
-						maxHeight={300}
-						containerStyle={{ marginTop: -50, borderRadius: 7 }}
-						itemTextStyle={{
-							fontFamily: FONTS?.regular,
-							fontSize: 14,
-							marginLeft: -5,
+					<TextInput style={styles.dropdown} value={courseID} onChangeText={setCourseID} />
+				</View>
+				<View>
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+							marginBottom: 6,
+							marginTop: 15,
 						}}
-						labelField='label'
-						valueField='value'
-						value={course}
-						onChange={(item) => {
-							setCourse(item.value)
-						}}
-						renderRightIcon={() => (
-							<Svg
-								width='16'
-								height='16'
-								viewBox='0 0 16 16'
-								fill='none'
-								xmlns='http://www.w3.org/2000/svg'
-							>
-								<Path
-									d='M13.28 5.96667L8.9333 10.3133C8.41997 10.8267 7.57997 10.8267 7.06664 10.3133L2.71997 5.96667'
-									stroke='#838383'
-									stroke-width='1.5'
-									stroke-miterlimit='10'
-									stroke-linecap='round'
-									stroke-linejoin='round'
-								/>
-							</Svg>
-						)}
-					/>
+					>
+						Course name:
+					</Text>
+					<TextInput style={styles.dropdown} value={courseName} onChangeText={setCourseName} />
 				</View>
 				<View>
 					<Text
@@ -160,45 +135,7 @@ export default function Mark() {
 					>
 						Class:
 					</Text>
-					<Dropdown
-						style={styles.dropdown}
-						placeholder='Select class'
-						placeholderStyle={styles.placeholderStyle}
-						selectedTextStyle={styles.selectedTextStyle}
-						data={data}
-						autoScroll={false}
-						maxHeight={300}
-						containerStyle={{ marginTop: -50, borderRadius: 7 }}
-						itemTextStyle={{
-							fontFamily: FONTS?.regular,
-							fontSize: 14,
-							marginLeft: -5,
-						}}
-						labelField='label'
-						valueField='value'
-						value={classs}
-						onChange={(item) => {
-							setClasss(item.value)
-						}}
-						renderRightIcon={() => (
-							<Svg
-								width='16'
-								height='16'
-								viewBox='0 0 16 16'
-								fill='none'
-								xmlns='http://www.w3.org/2000/svg'
-							>
-								<Path
-									d='M13.28 5.96667L8.9333 10.3133C8.41997 10.8267 7.57997 10.8267 7.06664 10.3133L2.71997 5.96667'
-									stroke='#838383'
-									stroke-width='1.5'
-									stroke-miterlimit='10'
-									stroke-linecap='round'
-									stroke-linejoin='round'
-								/>
-							</Svg>
-						)}
-					/>
+					<TextInput style={styles.dropdown} value={classs} onChangeText={setClasss} />
 				</View>
 				<TouchableOpacity
 					style={{
@@ -215,22 +152,14 @@ export default function Mark() {
 					activeOpacity={0.7}
 				>
 					<Svg
-						width='24'
-						height='24'
-						viewBox='0 0 24 24'
+						width='19'
+						height='19'
+						viewBox='0 0 19 19'
 						fill='none'
 						xmlns='http://www.w3.org/2000/svg'
 					>
 						<Path
-							d='M7.25 7.59998C7.25 8.56647 8.0335 9.34998 9 9.34998H15C15.9665 9.34998 16.75 8.56647 16.75 7.59998V4.27627C16.75 4.12369 16.8737 4 17.0263 4C17.1722 4 17.3108 4.06373 17.4058 4.17448L20.3685 7.62867C20.7791 8.1074 20.9936 8.72364 20.9689 9.35387L20.6273 18.0976C20.5749 19.4393 19.4719 20.5 18.1292 20.5H17.75C17.4739 20.5 17.25 20.2761 17.25 20V15C17.25 14.0335 16.4665 13.25 15.5 13.25H8.5C7.5335 13.25 6.75 14.0335 6.75 15V20C6.75 20.2761 6.52614 20.5 6.25 20.5H6.11291C4.90908 20.5 3.89276 19.6055 3.73989 18.4114C3.24597 14.5534 3.2247 10.6495 3.67653 6.78632L3.73742 6.26575C3.8885 4.97395 4.983 4 6.28361 4H6.75C7.02614 4 7.25 4.22386 7.25 4.5V7.59998Z'
-							fill='white'
-						/>
-						<Path
-							d='M8.25 20C8.25 20.2761 8.47386 20.5 8.75 20.5H15.25C15.5261 20.5 15.75 20.2761 15.75 20V15C15.75 14.8619 15.6381 14.75 15.5 14.75H8.5C8.36193 14.75 8.25 14.8619 8.25 15V20Z'
-							fill='white'
-						/>
-						<Path
-							d='M15.25 4.5C15.25 4.22386 15.0261 4 14.75 4H9.25C8.97386 4 8.75 4.22386 8.75 4.5V7.59998C8.75 7.73805 8.86193 7.84998 9 7.84998H15C15.1381 7.84998 15.25 7.73805 15.25 7.59998V4.5Z'
+							d='M12.8171 1.58331H6.18293C3.30126 1.58331 1.58334 3.30123 1.58334 6.1829V12.8091C1.58334 15.6987 3.30126 17.4166 6.18293 17.4166H12.8092C15.6908 17.4166 17.4088 15.6987 17.4088 12.8171V6.1829C17.4167 3.30123 15.6988 1.58331 12.8171 1.58331ZM12.6667 10.0937H10.0938V12.6666C10.0938 12.9912 9.82459 13.2604 9.50001 13.2604C9.17543 13.2604 8.90626 12.9912 8.90626 12.6666V10.0937H6.33334C6.00876 10.0937 5.73959 9.82456 5.73959 9.49998C5.73959 9.1754 6.00876 8.90623 6.33334 8.90623H8.90626V6.33331C8.90626 6.00873 9.17543 5.73956 9.50001 5.73956C9.82459 5.73956 10.0938 6.00873 10.0938 6.33331V8.90623H12.6667C12.9913 8.90623 13.2604 9.1754 13.2604 9.49998C13.2604 9.82456 12.9913 10.0937 12.6667 10.0937Z'
 							fill='white'
 						/>
 					</Svg>
@@ -242,7 +171,7 @@ export default function Mark() {
 							color: COLORS?.white,
 						}}
 					>
-						Export data
+						Import data
 					</Text>
 				</TouchableOpacity>
 			</View>

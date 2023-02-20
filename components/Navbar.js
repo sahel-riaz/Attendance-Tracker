@@ -183,7 +183,7 @@ export default function Navbar() {
 					}}
 					activeOpacity={0.7}
 				>
-					{route.name == 'DB' ? (
+					{route.name == 'Db' ? (
 						<Svg
 							width='24'
 							height='24'
