@@ -1,19 +1,12 @@
-import {
-	Image,
-	SafeAreaView,
-	ScrollView,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-} from 'react-native'
-import { Dropdown } from 'react-native-element-dropdown'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Navbar from '../components/Navbar'
 import { StyleSheet } from 'react-native'
 
 import { COLORS, FONTS } from '../styles/theme'
 import { useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
+
+import * as DocumentPicker from 'expo-document-picker'
 
 import { useNavigation } from '@react-navigation/native'
 
@@ -23,6 +16,12 @@ export default function Mark() {
 	const [courseID, setCourseID] = useState(null)
 	const [courseName, setCourseName] = useState(null)
 	const [classs, setClasss] = useState(null)
+	const [fileResponse, setFileResponse] = useState([])
+
+	const pickDocument = async () => {
+		let result = await DocumentPicker.getDocumentAsync({})
+		console.log(result.uri)
+	}
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -137,6 +136,46 @@ export default function Mark() {
 					</Text>
 					<TextInput style={styles.dropdown} value={classs} onChangeText={setClasss} />
 				</View>
+				<View>
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+							marginBottom: 6,
+							marginTop: 15,
+						}}
+					>
+						Add file:
+					</Text>
+					<TouchableOpacity style={styles.input} onPress={pickDocument}>
+						<Svg
+							width='17'
+							height='18'
+							viewBox='0 0 17 18'
+							fill='none'
+							xmlns='http://www.w3.org/2000/svg'
+						>
+							<Path
+								d='M4.25 9H12.75M8.5 13.25V4.75'
+								stroke='#838383'
+								stroke-width='1.5'
+								stroke-linecap='round'
+								stroke-linejoin='round'
+							/>
+						</Svg>
+						<Text
+							style={{
+								paddingLeft: 10,
+								fontFamily: FONTS?.regular,
+								fontSize: 16,
+								color: COLORS?.selectGrey,
+							}}
+						>
+							Select file
+						</Text>
+					</TouchableOpacity>
+				</View>
 				<TouchableOpacity
 					style={{
 						height: 43,
@@ -207,5 +246,16 @@ const styles = StyleSheet.create({
 	inputSearchStyle: {
 		height: 40,
 		fontSize: 16,
+	},
+	input: {
+		height: 50,
+		borderColor: COLORS?.borderGrey,
+		borderWidth: 1,
+		width: 270,
+		borderRadius: 7,
+		borderStyle: 'dashed',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center',
 	},
 })
