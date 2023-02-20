@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font'
 
 import Home from './pages/Home'
 import Mark from './pages/Mark'
+import Export from './pages/Export'
 
 const Stack = createNativeStackNavigator()
 
@@ -28,6 +29,7 @@ const App = () => {
 			<Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: false }}>
 				<Stack.Screen name='Home' component={Home} />
 				<Stack.Screen name='Mark' component={Mark} />
+				<Stack.Screen name='Export' component={Export} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

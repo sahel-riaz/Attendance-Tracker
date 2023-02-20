@@ -2,9 +2,11 @@ import { TouchableOpacity, View } from 'react-native'
 import { COLORS } from '../styles/theme'
 import { useRoute } from '@react-navigation/native'
 import { Path, Svg } from 'react-native-svg'
+import { useNavigation } from '@react-navigation/native'
 
 export default function Navbar() {
 	const route = useRoute()
+	const navigation = useNavigation()
 
 	return (
 		<View
@@ -26,7 +28,13 @@ export default function Navbar() {
 			}}
 		>
 			<View style={{ flexDirection: 'row' }}>
-				<TouchableOpacity onPress={() => {}} activeOpacity={0.7} style={{ marginRight: 42 }}>
+				<TouchableOpacity
+					onPress={() => {
+						navigation.navigate('Home')
+					}}
+					activeOpacity={0.7}
+					style={{ marginRight: 42 }}
+				>
 					{route.name == 'Home' ? (
 						<Svg
 							width='24'
@@ -55,7 +63,12 @@ export default function Navbar() {
 						</Svg>
 					)}
 				</TouchableOpacity>
-				<TouchableOpacity onPress={() => {}} activeOpacity={0.7}>
+				<TouchableOpacity
+					onPress={() => {
+						navigation.navigate('Import')
+					}}
+					activeOpacity={0.7}
+				>
 					{route.name == 'Import' ? (
 						<Svg
 							width='24'
@@ -87,7 +100,7 @@ export default function Navbar() {
 			</View>
 			<TouchableOpacity
 				onPress={() => {
-					console.log(route.name)
+					navigation.navigate('Mark')
 				}}
 				activeOpacity={0.7}
 				style={{
@@ -121,7 +134,13 @@ export default function Navbar() {
 				</Svg>
 			</TouchableOpacity>
 			<View style={{ flexDirection: 'row' }}>
-				<TouchableOpacity onPress={() => {}} activeOpacity={0.7} style={{ marginRight: 42 }}>
+				<TouchableOpacity
+					onPress={() => {
+						navigation.navigate('Export')
+					}}
+					activeOpacity={0.7}
+					style={{ marginRight: 42 }}
+				>
 					{route.name == 'Export' ? (
 						<Svg
 							width='24'
@@ -158,7 +177,12 @@ export default function Navbar() {
 						</Svg>
 					)}
 				</TouchableOpacity>
-				<TouchableOpacity onPress={() => {}} activeOpacity={0.7}>
+				<TouchableOpacity
+					onPress={() => {
+						navigation.navigate('Db')
+					}}
+					activeOpacity={0.7}
+				>
 					{route.name == 'DB' ? (
 						<Svg
 							width='24'
