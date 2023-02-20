@@ -68,6 +68,7 @@ export default function Mark() {
 						width: '100%',
 					}}
 					activeOpacity={0.4}
+					onPress={() => navigation.navigate('Student')}
 				>
 					<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>Aadhavan Paavai Lenin</Text>
 				</TouchableOpacity>
@@ -82,6 +83,7 @@ export default function Mark() {
 						width: '100%',
 					}}
 					activeOpacity={0.4}
+					onPress={() => navigation.navigate('Student')}
 				>
 					<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>Aadhavan Paavai Lenin</Text>
 				</TouchableOpacity>
@@ -96,6 +98,7 @@ export default function Mark() {
 						width: '100%',
 					}}
 					activeOpacity={0.4}
+					onPress={() => navigation.navigate('Student')}
 				>
 					<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>Aadhavan Paavai Lenin</Text>
 				</TouchableOpacity>
@@ -110,8 +113,46 @@ export default function Mark() {
 						width: '100%',
 					}}
 					activeOpacity={0.4}
+					onPress={() => navigation.navigate('Student')}
 				>
 					<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>Aadhavan Paavai Lenin</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={{
+						marginTop: 20,
+						paddingBottom: 12,
+						paddingTop: 12,
+						borderColor: COLORS?.black,
+						borderStyle: 'dashed',
+						borderWidth: 1,
+						borderRadius: 10,
+						width: '100%',
+						flexDirection: 'row',
+						alignItems: 'center',
+						justifyContent: 'center',
+					}}
+					activeOpacity={0.4}
+					onPress={() => navigation.navigate('AddStudent')}
+				>
+					<Svg
+						width='25'
+						height='24'
+						viewBox='0 0 25 24'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M6.5 12H18.5M12.5 18V6'
+							stroke='black'
+							stroke-width='1.5'
+							stroke-linecap='round'
+							stroke-linejoin='round'
+						/>
+					</Svg>
+
+					<Text style={{ fontSize: 18, fontFamily: FONTS?.regular, marginLeft: 10 }}>
+						Add student to class
+					</Text>
 				</TouchableOpacity>
 			</View>
 			<Navbar />

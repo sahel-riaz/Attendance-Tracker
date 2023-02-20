@@ -63,7 +63,7 @@ export default function Mark() {
 							lineHeight: 19,
 						}}
 					>
-						Add tudent
+						Add student
 					</Text>
 				</View>
 			</View>

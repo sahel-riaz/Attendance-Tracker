@@ -30,7 +30,7 @@ export default function Navbar() {
 			<View style={{ flexDirection: 'row' }}>
 				<TouchableOpacity
 					onPress={() => {
-						navigation.navigate('Students')
+						navigation.navigate('Home')
 					}}
 					activeOpacity={0.7}
 					style={{ marginRight: 42 }}
@@ -136,7 +136,7 @@ export default function Navbar() {
 			<View style={{ flexDirection: 'row' }}>
 				<TouchableOpacity
 					onPress={() => {
-						navigation.navigate('Student')
+						navigation.navigate('Export')
 					}}
 					activeOpacity={0.7}
 					style={{ marginRight: 42 }}
