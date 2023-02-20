@@ -30,7 +30,7 @@ export default function Navbar() {
 			<View style={{ flexDirection: 'row' }}>
 				<TouchableOpacity
 					onPress={() => {
-						navigation.navigate('Home')
+						navigation.navigate('Students')
 					}}
 					activeOpacity={0.7}
 					style={{ marginRight: 42 }}
