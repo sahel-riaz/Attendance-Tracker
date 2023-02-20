@@ -1,7 +1,5 @@
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import { Dropdown } from 'react-native-element-dropdown'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import Navbar from '../components/Navbar'
-import { StyleSheet } from 'react-native'
 
 import { COLORS, FONTS } from '../styles/theme'
 import { useState } from 'react'
