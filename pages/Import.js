@@ -5,12 +5,13 @@ import { StyleSheet } from 'react-native'
 import { COLORS, FONTS } from '../styles/theme'
 import { useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
-import * as FileSystem from 'expo-file-system'
-import { readRemoteFile } from 'react-native-csv'
+import { useNavigation } from '@react-navigation/native'
 
 import * as DocumentPicker from 'expo-document-picker'
+import PapaParse from 'papaparse'
+import * as FileSystem from 'expo-file-system'
 
-import { useNavigation } from '@react-navigation/native'
+import { EncodingType } from 'expo-file-system'
 
 export default function Mark() {
 	const navigation = useNavigation()
@@ -25,11 +26,35 @@ export default function Mark() {
 			copyToCacheDirectory: true,
 		})
 		const path = result.uri
-		const res = readRemoteFile(path, {})
+		// console.log(path)
 
-		// setFileResponse(result.uri)
-		// const res = await RNFetchBlob.fs.readFile(result.uri, 'ascii')
-		console.log(res)
+		//can parse string
+		// console.log(PapaParse.parse(path))
+
+		//testing
+		// const res = await DocumentPicker.pcik({
+		// 	type: [DocumentPicker.type.allFiles],
+		// })
+		// readFile(res[0].uri, ascii).then((res) => {
+		// 	const wb = XLSX.read(res, { type: 'binary' })
+		// 	const wsname = wb.SheetNames[0]
+		// 	const ws = wb.Sheets[wsname]
+		// 	const data = XLSX.utils.sheet_to_json(ws, { header: 1 })
+		// 	var temp = []
+		// 	console.log(data)
+		// })
+
+		//testing 2
+		const dirInfo = await FileSystem.readAsStringAsync(path, EncodingType)
+		const temp = dirInfo.split('\n')
+		// console.log(temp[0])
+		let data = {}
+		for (let i = 0; i < temp.length; i++) {
+			const temp2 = temp[i].split(',')
+			// data = { ...data, studentName: temp2[0], roll: temp2[1] }
+			console.log(temp2)
+		}
+		// console.log(data)
 	}
 
 	return (
