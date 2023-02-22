@@ -52,13 +52,14 @@ export default function Mark() {
 		]
 		// console.log(yes)
 		const temp_json = JSON.stringify(yes)
-		const cID = JSON.stringify([courseID])
-		await AsyncStorage.setItem(cID, temp_json)
+		await AsyncStorage.setItem(courseID, temp_json)
+		// await AsyncStorage.clear()
 	}
 
 	async function handlePress() {
-		const temp = await AsyncStorage.getItem('data')
-		console.log(temp)
+		const temp = await AsyncStorage.getItem('CS4003D')
+		const temp2 = JSON.parse(temp)
+		console.log(temp2[0]?.classes.CS01[0].students[0].rollNumber)
 	}
 
 	return (
