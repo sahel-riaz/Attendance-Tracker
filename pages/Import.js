@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import { StyleSheet } from 'react-native'
 
 import { COLORS, FONTS } from '../styles/theme'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
 
@@ -12,6 +12,7 @@ import PapaParse from 'papaparse'
 import * as FileSystem from 'expo-file-system'
 
 import { EncodingType } from 'expo-file-system'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Mark() {
 	const navigation = useNavigation()
@@ -19,42 +20,45 @@ export default function Mark() {
 	const [courseID, setCourseID] = useState(null)
 	const [courseName, setCourseName] = useState(null)
 	const [classs, setClasss] = useState(null)
-	const [fileResponse, setFileResponse] = useState('')
 
 	const pickDocument = async () => {
 		const result = await DocumentPicker.getDocumentAsync({
 			copyToCacheDirectory: true,
 		})
 		const path = result.uri
-		// console.log(path)
-
-		//can parse string
-		// console.log(PapaParse.parse(path))
-
-		//testing
-		// const res = await DocumentPicker.pcik({
-		// 	type: [DocumentPicker.type.allFiles],
-		// })
-		// readFile(res[0].uri, ascii).then((res) => {
-		// 	const wb = XLSX.read(res, { type: 'binary' })
-		// 	const wsname = wb.SheetNames[0]
-		// 	const ws = wb.Sheets[wsname]
-		// 	const data = XLSX.utils.sheet_to_json(ws, { header: 1 })
-		// 	var temp = []
-		// 	console.log(data)
-		// })
-
-		//testing 2
 		const dirInfo = await FileSystem.readAsStringAsync(path, EncodingType)
 		const temp = dirInfo.split('\n')
-		// console.log(temp[0])
-		let data = {}
+		let data = []
 		for (let i = 0; i < temp.length; i++) {
 			const temp2 = temp[i].split(',')
-			// data = { ...data, studentName: temp2[0], roll: temp2[1] }
-			console.log(temp2)
+			if (temp2[1] != undefined) {
+				const temp3 = { studentName: temp2[0], rollNumber: temp2[1], attendance: [] }
+				data.push(temp3)
+			}
 		}
 		// console.log(data)
+		const yes = [
+			{
+				courseName: courseName,
+				classes: {
+					[classs]: [
+						{
+							date: [],
+							students: data,
+						},
+					],
+				},
+			},
+		]
+		// console.log(yes)
+		const temp_json = JSON.stringify(yes)
+		const cID = JSON.stringify([courseID])
+		await AsyncStorage.setItem(cID, temp_json)
+	}
+
+	async function handlePress() {
+		const temp = await AsyncStorage.getItem('data')
+		console.log(temp)
 	}
 
 	return (
@@ -221,7 +225,7 @@ export default function Mark() {
 						justifyContent: 'center',
 						marginTop: 40,
 					}}
-					onPress={() => {}}
+					onPress={handlePress}
 					activeOpacity={0.7}
 				>
 					<Svg
