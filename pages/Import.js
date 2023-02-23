@@ -20,12 +20,14 @@ export default function Mark() {
 	const [courseID, setCourseID] = useState(null)
 	const [courseName, setCourseName] = useState(null)
 	const [classs, setClasss] = useState(null)
+	const [path, setPath] = useState('')
 
 	const pickDocument = async () => {
 		const result = await DocumentPicker.getDocumentAsync({
 			copyToCacheDirectory: true,
 		})
 		const path = result.uri
+		setPath(result)
 		const dirInfo = await FileSystem.readAsStringAsync(path, EncodingType)
 		const temp = dirInfo.split('\n')
 		let data = []
@@ -37,29 +39,59 @@ export default function Mark() {
 			}
 		}
 		// console.log(data)
-		const yes = [
-			{
-				courseName: courseName,
-				classes: {
-					[classs]: [
-						{
-							date: [],
-							students: data,
-						},
-					],
-				},
+		const dataToSet = {
+			courseName: courseName,
+			classes: {
+				[classs]: [
+					{
+						date: [],
+						students: data,
+					},
+				],
 			},
-		]
+		}
+
+		//check if courseID already exists using getAllKeys()
+		//if it does, push it
+
+		//if it doesnt, set new
+
+		const allKeys = await AsyncStorage.getAllKeys()
+		if (allKeys.includes(courseID)) {
+			//key already exists
+			let fetchedData = await AsyncStorage.getItem(courseID)
+			fetchedData = JSON.parse(fetchedData)
+			fetchedData.push(dataToSet)
+			fetchedData = JSON.stringify(fetchedData)
+			await AsyncStorage.setItem(courseID, fetchedData)
+		} else {
+			//key does not exist
+			const temp_json = JSON.stringify([dataToSet])
+			await AsyncStorage.setItem(courseID, temp_json)
+		}
+
 		// console.log(yes)
-		const temp_json = JSON.stringify(yes)
-		await AsyncStorage.setItem(courseID, temp_json)
-		// await AsyncStorage.clear()
+		// const temp_json = JSON.stringify(yes)
+		// let fetchedData = await AsyncStorage.getItem(courseID)
+		// console.log(typeof fetchedData)
+		// fetchedData = JSON.parse(fetchedData)
+		// console.log(typeof fetchedData)
+		// console.log(fetchedData)
+		// fetchedData.push(temp_json)
+		// fetchedData = JSON.stringify(fetchedData)
+		// await AsyncStorage.setItem(courseID, fetchedData)
+		// fetchedData.push(temp_json)
 	}
 
 	async function handlePress() {
-		const temp = await AsyncStorage.getItem('CS4003D')
-		const temp2 = JSON.parse(temp)
-		console.log(temp2[0]?.classes.CS01[0].students[0].rollNumber)
+		const temp = await AsyncStorage.getAllKeys()
+		// const temp2 = JSON.parse(temp)
+		console.log(temp)
+		const temp2 = await AsyncStorage.getItem('CS4002D')
+		console.log(JSON.parse(temp2)[1])
+		// await AsyncStorage.clear()
+
+		// console.log(temp2[0]?.classes.CS01[0].students[0].rollNumber)
 	}
 
 	return (
