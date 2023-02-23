@@ -8,7 +8,6 @@ import { Path, Svg } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
 
 import * as DocumentPicker from 'expo-document-picker'
-import PapaParse from 'papaparse'
 import * as FileSystem from 'expo-file-system'
 
 import { EncodingType } from 'expo-file-system'
@@ -21,40 +20,47 @@ export default function Mark() {
 	const [courseName, setCourseName] = useState(null)
 	const [classs, setClasss] = useState(null)
 	const [path, setPath] = useState('')
+	const [error, setError] = useState('')
 
 	const pickDocument = async () => {
-		const result = await DocumentPicker.getDocumentAsync({
-			copyToCacheDirectory: true,
-		})
-		const path = result.uri
-		setPath(result)
+		const result = await DocumentPicker.getDocumentAsync({ type: 'text/*' })
+		setPath(result.uri)
+	}
+
+	async function handlePress() {
+		if (!courseID || !courseName || !classs) {
+			setError('Please enter the details before uploading!')
+			return
+		}
 		const dirInfo = await FileSystem.readAsStringAsync(path, EncodingType)
-		const temp = dirInfo.split('\n')
-		let data = []
-		for (let i = 0; i < temp.length; i++) {
-			const temp2 = temp[i].split(',')
-			if (temp2[1] != undefined) {
-				const temp3 = { studentName: temp2[0], rollNumber: temp2[1], attendance: [] }
-				data.push(temp3)
+		const dirInfoSplit = dirInfo.split('\n')
+		let info = []
+		for (let i = 0; i < dirInfoSplit.length; i++) {
+			const values = dirInfoSplit[i].split(',')
+			if (values[0] != undefined || values[1] != undefined) {
+				info.push({ studentName: values[0], rollNumber: values[1], attendance: [] })
 			}
 		}
-		// console.log(data)
+
 		const dataToSet = {
 			courseName: courseName,
 			classes: {
 				[classs]: [
 					{
 						date: [],
-						students: data,
+						students: info,
 					},
 				],
 			},
 		}
 
-		//check if courseID already exists using getAllKeys()
-		//if it does, push it
-
-		//if it doesnt, set new
+		/*
+		 *
+			check if courseID already exists using getAllKeys()
+			if it does, push it
+			if it doesnt, set new
+		 *
+		 */
 
 		const allKeys = await AsyncStorage.getAllKeys()
 		if (allKeys.includes(courseID)) {
@@ -70,28 +76,8 @@ export default function Mark() {
 			await AsyncStorage.setItem(courseID, temp_json)
 		}
 
-		// console.log(yes)
-		// const temp_json = JSON.stringify(yes)
-		// let fetchedData = await AsyncStorage.getItem(courseID)
-		// console.log(typeof fetchedData)
-		// fetchedData = JSON.parse(fetchedData)
-		// console.log(typeof fetchedData)
-		// console.log(fetchedData)
-		// fetchedData.push(temp_json)
-		// fetchedData = JSON.stringify(fetchedData)
-		// await AsyncStorage.setItem(courseID, fetchedData)
-		// fetchedData.push(temp_json)
-	}
-
-	async function handlePress() {
-		const temp = await AsyncStorage.getAllKeys()
-		// const temp2 = JSON.parse(temp)
-		console.log(temp)
-		const temp2 = await AsyncStorage.getItem('CS4002D')
-		console.log(JSON.parse(temp2)[1])
-		// await AsyncStorage.clear()
-
-		// console.log(temp2[0]?.classes.CS01[0].students[0].rollNumber)
+		const test = await AsyncStorage.getAllKeys()
+		console.log(test)
 	}
 
 	return (
