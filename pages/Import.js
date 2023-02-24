@@ -16,9 +16,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function Mark() {
 	const navigation = useNavigation()
 
-	const [courseID, setCourseID] = useState(null)
-	const [courseName, setCourseName] = useState(null)
-	const [classs, setClasss] = useState(null)
+	const [courseID, setCourseID] = useState('')
+	const [courseName, setCourseName] = useState('')
+	const [classs, setClasss] = useState('')
 	const [path, setPath] = useState('')
 	const [error, setError] = useState('')
 
@@ -80,16 +80,17 @@ export default function Mark() {
 		console.log(test)
 	}
 
-	async function setCourseIDHandle() {
-		console.log(AsyncStorage.getItem(courseID))
-		if (AsyncStorage.getItem(courseID) != null) {
-			let fetchedData = await AsyncStorage.getItem(courseID)
-			fetchedData = JSON.parse(fetchedData)
-			console.log(fetchedData)
-			if (fetchedData != null) {
-				setCourseName(fetchedData[0]?.courseName)
-			}
-		}
+	async function setCourseNameHandle() {
+		await AsyncStorage.getItem(courseID)
+			.then((res) => {
+				res = JSON.parse(res)
+				if (res != null) {
+					setCourseName(res[0]?.courseName)
+				}
+			})
+			.catch((e) => {
+				console.log(e)
+			})
 	}
 
 	return (
@@ -175,14 +176,7 @@ export default function Mark() {
 					>
 						Course ID:
 					</Text>
-					<TextInput
-						style={styles.dropdown}
-						value={courseID}
-						onChangeText={(val) => {
-							setCourseID(val)
-							setCourseIDHandle()
-						}}
-					/>
+					<TextInput style={styles.dropdown} value={courseID} onChangeText={setCourseID} />
 				</View>
 				<View>
 					<Text
@@ -196,7 +190,12 @@ export default function Mark() {
 					>
 						Course name:
 					</Text>
-					<TextInput style={styles.dropdown} value={courseName} onChangeText={setCourseName} />
+					<TextInput
+						style={styles.dropdown}
+						value={courseName}
+						onChangeText={setCourseName}
+						onPressIn={setCourseNameHandle}
+					/>
 				</View>
 				<View>
 					<Text
@@ -210,12 +209,7 @@ export default function Mark() {
 					>
 						Class:
 					</Text>
-					<TextInput
-						style={styles.dropdown}
-						value={classs}
-						onChangeText={setClasss}
-						onPressIn={setCourseIDHandle}
-					/>
+					<TextInput style={styles.dropdown} value={classs} onChangeText={setClasss} />
 				</View>
 				<View>
 					<Text
