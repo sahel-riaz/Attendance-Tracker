@@ -62,21 +62,18 @@ export default function Mark() {
 
 		const allKeys = await AsyncStorage.getAllKeys()
 		if (allKeys.includes(courseID)) {
-			//key already exists
+			/*=====  key already exists  ======*/
 			let fetchedData = await AsyncStorage.getItem(courseID)
 			fetchedData = JSON.parse(fetchedData)
-			fetchedData.push(dataToSet)
+			fetchedData = fetchedData['classes']
+			fetchedData = { ...fetchedData, [classs]: { date: [], students: info } }
 			fetchedData = JSON.stringify(fetchedData)
 			await AsyncStorage.setItem(courseID, fetchedData)
 		} else {
-			//key (courseID) does not exist
+			/*=====  key (courseID) does not exist  ======*/
 			const temp_json = JSON.stringify(dataToSet)
 			await AsyncStorage.setItem(courseID, temp_json)
-			// console.log(temp_json)
 		}
-
-		const test = await AsyncStorage.getAllKeys()
-		console.log(test)
 	}
 
 	async function setCourseNameHandle() {
@@ -93,13 +90,14 @@ export default function Mark() {
 	}
 
 	async function handleDelete() {
-		// await AsyncStorage.getAllKeys().then((res) => {
-		// 	console.log(res)
-		// })
+		await AsyncStorage.getAllKeys().then((res) => {
+			console.log(res)
+		})
 		// await AsyncStorage.clear()
 		await AsyncStorage.getItem(courseID).then((res) => {
 			res = JSON.parse(res)
-			console.log(res['classes']['CS01']['students'][0]['attendance'])
+			// console.log(res['classes']['CS01']['students'][0]['attendance'])
+			console.log(res['CS02'])
 		})
 	}
 
