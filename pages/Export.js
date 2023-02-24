@@ -9,8 +9,16 @@ import { Path, Svg } from 'react-native-svg'
 
 import { useNavigation } from '@react-navigation/native'
 
+import { jsonToCSV } from 'react-native-csv'
+
+import * as FileSystem from 'expo-file-system'
+import * as MediaLibrary from 'expo-media-library'
+import { StorageAccessFramework } from 'expo-file-system'
+
 export default function Mark() {
 	const navigation = useNavigation()
+
+	const date = new Date()
 
 	const data = [
 		{ label: 'Item 1', value: '1' },
@@ -24,6 +32,67 @@ export default function Mark() {
 	]
 	const [course, setCourse] = useState(null)
 	const [classs, setClasss] = useState(null)
+
+	async function handlePress() {
+		const results = jsonToCSV([
+			{
+				hello: [
+					{
+						col: 'hello',
+						col2: 'slkjs',
+					},
+					{
+						sdf: 'sdknf',
+						sdlknf: 'sdlfklkn',
+					},
+					{
+						doiofhs: 'salkkf;s',
+					},
+					{
+						lsdjfs: 'dlfk',
+					},
+				],
+			},
+		])
+		// console.log(results)
+
+		StorageAccessFramework.requestDirectoryPermissionsAsync()
+			.then((res) => {
+				console.log(res)
+				const folderLocation = res['directoryUri']
+				StorageAccessFramework.createFileAsync(folderLocation, date.toString(), 'text/csv')
+					.then((res) => {
+						console.log(res)
+						StorageAccessFramework.writeAsStringAsync(res, results)
+							.then((res) => {
+								console.log(res)
+							})
+							.catch((e) => {
+								console.log(e)
+							})
+					})
+					.catch((e) => {
+						console.log(e)
+					})
+			})
+			.catch((e) => {
+				console.log(e)
+			})
+
+		// StorageAccessFramework.createFileAsync()
+
+		// let fileUri = FileSystem.documentDirectory + 'savedFile.txt'
+		// console.log(fileUri)
+		// await FileSystem.writeAsStringAsync(fileUri, results, {
+		// 	encoding: FileSystem.EncodingType.UTF8,
+		// })
+
+		// const preRes = MediaLibrary.requestPermissionsAsync()
+		// console.log(preRes)
+
+		// const albumRes = MediaLibrary.createAlbumAsync('download', fileUri)
+		// console.log(albumRes)
+	}
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -211,7 +280,7 @@ export default function Mark() {
 						justifyContent: 'center',
 						marginTop: 40,
 					}}
-					onPress={() => {}}
+					onPress={handlePress}
 					activeOpacity={0.7}
 				>
 					<Svg

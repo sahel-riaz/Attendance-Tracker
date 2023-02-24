@@ -80,6 +80,18 @@ export default function Mark() {
 		console.log(test)
 	}
 
+	async function setCourseIDHandle() {
+		console.log(AsyncStorage.getItem(courseID))
+		if (AsyncStorage.getItem(courseID) != null) {
+			let fetchedData = await AsyncStorage.getItem(courseID)
+			fetchedData = JSON.parse(fetchedData)
+			console.log(fetchedData)
+			if (fetchedData != null) {
+				setCourseName(fetchedData[0]?.courseName)
+			}
+		}
+	}
+
 	return (
 		<View style={{ flex: 1 }}>
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
@@ -163,7 +175,14 @@ export default function Mark() {
 					>
 						Course ID:
 					</Text>
-					<TextInput style={styles.dropdown} value={courseID} onChangeText={setCourseID} />
+					<TextInput
+						style={styles.dropdown}
+						value={courseID}
+						onChangeText={(val) => {
+							setCourseID(val)
+							setCourseIDHandle()
+						}}
+					/>
 				</View>
 				<View>
 					<Text
@@ -191,7 +210,12 @@ export default function Mark() {
 					>
 						Class:
 					</Text>
-					<TextInput style={styles.dropdown} value={classs} onChangeText={setClasss} />
+					<TextInput
+						style={styles.dropdown}
+						value={classs}
+						onChangeText={setClasss}
+						onPressIn={setCourseIDHandle}
+					/>
 				</View>
 				<View>
 					<Text
