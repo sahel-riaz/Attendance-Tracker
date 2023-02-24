@@ -63,14 +63,17 @@ export default function Mark() {
 		const allKeys = await AsyncStorage.getAllKeys()
 		if (allKeys.includes(courseID)) {
 			/*=====  key already exists  ======*/
+			console.log('COURSE ALREADY EXISTS')
 			let fetchedData = await AsyncStorage.getItem(courseID)
 			fetchedData = JSON.parse(fetchedData)
-			fetchedData = fetchedData['classes']
-			fetchedData = { ...fetchedData, [classs]: { date: [], students: info } }
+			fetchedData['classes'][classs] = { date: [], students: info }
+			// fetchedData = fetchedData['classes']
+			// fetchedData = { ...fetchedData, [classs]: { date: [], students: info } }
 			fetchedData = JSON.stringify(fetchedData)
 			await AsyncStorage.setItem(courseID, fetchedData)
 		} else {
 			/*=====  key (courseID) does not exist  ======*/
+			console.log('COURSE DOES NOT EXIST')
 			const temp_json = JSON.stringify(dataToSet)
 			await AsyncStorage.setItem(courseID, temp_json)
 		}
@@ -89,17 +92,26 @@ export default function Mark() {
 			})
 	}
 
-	async function handleDelete() {
-		await AsyncStorage.getAllKeys().then((res) => {
-			console.log(res)
-		})
-		// await AsyncStorage.clear()
-		await AsyncStorage.getItem(courseID).then((res) => {
-			res = JSON.parse(res)
-			// console.log(res['classes']['CS01']['students'][0]['attendance'])
-			console.log(res['CS02'])
-		})
-	}
+	useEffect(() => {
+		async function handleDelete() {
+			await AsyncStorage.getAllKeys().then((res) => {
+				console.log(res)
+				AsyncStorage.getItem(res[0]).then((res) => {
+					res = JSON.parse(res)
+					console.log(res['classes']['CS02'])
+				})
+			})
+
+			// await AsyncStorage.clear()
+			// await AsyncStorage.getItem(courseID).then((res) => {
+			// 	res = JSON.parse(res)
+			// 	console.log(res)
+			// 	// console.log(res['classes']['CS01']['students'][0]['attendance'])
+			// 	// console.log(res['CS02'])
+			// })
+		}
+		handleDelete()
+	}, [])
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -296,44 +308,8 @@ export default function Mark() {
 						Import data
 					</Text>
 				</TouchableOpacity>
-				<TouchableOpacity
-					style={{
-						height: 43,
-						width: 160,
-						backgroundColor: COLORS?.blue,
-						alignItems: 'center',
-						borderRadius: 10,
-						flexDirection: 'row',
-						justifyContent: 'center',
-					}}
-					onPress={handleDelete}
-					activeOpacity={0.7}
-				>
-					<Svg
-						width='19'
-						height='19'
-						viewBox='0 0 19 19'
-						fill='none'
-						xmlns='http://www.w3.org/2000/svg'
-					>
-						<Path
-							d='M12.8171 1.58331H6.18293C3.30126 1.58331 1.58334 3.30123 1.58334 6.1829V12.8091C1.58334 15.6987 3.30126 17.4166 6.18293 17.4166H12.8092C15.6908 17.4166 17.4088 15.6987 17.4088 12.8171V6.1829C17.4167 3.30123 15.6988 1.58331 12.8171 1.58331ZM12.6667 10.0937H10.0938V12.6666C10.0938 12.9912 9.82459 13.2604 9.50001 13.2604C9.17543 13.2604 8.90626 12.9912 8.90626 12.6666V10.0937H6.33334C6.00876 10.0937 5.73959 9.82456 5.73959 9.49998C5.73959 9.1754 6.00876 8.90623 6.33334 8.90623H8.90626V6.33331C8.90626 6.00873 9.17543 5.73956 9.50001 5.73956C9.82459 5.73956 10.0938 6.00873 10.0938 6.33331V8.90623H12.6667C12.9913 8.90623 13.2604 9.1754 13.2604 9.49998C13.2604 9.82456 12.9913 10.0937 12.6667 10.0937Z'
-							fill='white'
-						/>
-					</Svg>
-					<Text
-						style={{
-							paddingLeft: 10,
-							fontFamily: FONTS?.regular,
-							fontSize: 16,
-							color: COLORS?.white,
-						}}
-					>
-						DELETE
-					</Text>
-				</TouchableOpacity>
 			</View>
-			{/* <Navbar /> */}
+			<Navbar />
 		</View>
 	)
 }

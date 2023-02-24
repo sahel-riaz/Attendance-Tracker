@@ -4,26 +4,49 @@ import Navbar from '../components/Navbar'
 import { StyleSheet } from 'react-native'
 
 import { COLORS, FONTS } from '../styles/theme'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Mark() {
 	const navigation = useNavigation()
 
-	const data = [
-		{ label: 'Item 1', value: '1' },
-		{ label: 'Item 2', value: '2' },
-		{ label: 'Item 3', value: '3' },
-		{ label: 'Item 4', value: '4' },
-		{ label: 'Item 5', value: '5' },
-		{ label: 'Item 6', value: '6' },
-		{ label: 'Item 7', value: '7' },
-		{ label: 'Item 8', value: '8' },
-	]
+	const [courses, setCourses] = useState([])
+	const [classes, setClasses] = useState([])
+
 	const [course, setCourse] = useState(null)
 	const [classs, setClasss] = useState(null)
+
+	useEffect(() => {
+		async function fetch() {
+			AsyncStorage.getAllKeys()
+				.then((res) => {
+					setCourses(res.map((item, index) => ({ label: item, value: item })))
+					console.log(res)
+				})
+				.catch((e) => {
+					console.log(e)
+				})
+		}
+		fetch()
+	}, [])
+
+	useEffect(() => {
+		async function fetch() {
+			AsyncStorage.getItem(course)
+				.then((res) => {
+					res = JSON.parse(res)
+					res = Object.keys(res)
+					setClasses(res.map((item, index) => ({ label: item, value: item })))
+				})
+				.catch((e) => {
+					console.log(e)
+				})
+		}
+		fetch()
+	}, [course])
 
 	var date = new Date().getDate()
 	var month = new Date().getMonth() + 1
@@ -117,7 +140,7 @@ export default function Mark() {
 						placeholder='Select course'
 						placeholderStyle={styles.placeholderStyle}
 						selectedTextStyle={styles.selectedTextStyle}
-						data={data}
+						data={courses}
 						autoScroll={false}
 						maxHeight={300}
 						containerStyle={{ marginTop: -50, borderRadius: 7 }}
@@ -169,7 +192,7 @@ export default function Mark() {
 						placeholder='Select class'
 						placeholderStyle={styles.placeholderStyle}
 						selectedTextStyle={styles.selectedTextStyle}
-						data={data}
+						data={classes}
 						autoScroll={false}
 						maxHeight={300}
 						containerStyle={{ marginTop: -50, borderRadius: 7 }}
