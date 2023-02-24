@@ -24,7 +24,6 @@ export default function Mark() {
 			AsyncStorage.getAllKeys()
 				.then((res) => {
 					setCourses(res.map((item, index) => ({ label: item, value: item })))
-					console.log(res)
 				})
 				.catch((e) => {
 					console.log(e)
@@ -34,11 +33,12 @@ export default function Mark() {
 	}, [])
 
 	useEffect(() => {
+		if (course == null) return
 		async function fetch() {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					res = Object.keys(res)
+					res = Object.keys(res['classes'])
 					setClasses(res.map((item, index) => ({ label: item, value: item })))
 				})
 				.catch((e) => {
