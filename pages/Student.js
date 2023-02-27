@@ -4,26 +4,50 @@ import Navbar from '../components/Navbar'
 import { COLORS, FONTS } from '../styles/theme'
 import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Mark({ route, navigation }) {
-	const { student } = route.params
+	const { course, classs, id } = route.params
 
+	const [student, setStudent] = useState()
+	const [status, setStatus] = useState()
 	const [stats, setStats] = useState([])
 	const [warning, setWarning] = useState(0)
 
-	function handleAbsent() {
-		student['attendance'] = [...student['attendance'], 0]
-	}
-
-	function handlePresent() {
-		student['attendance'] = [...student['attendance'], 1]
-	}
-
-	function handleLate() {
-		student['attendance'] = [...student['attendance'], 2]
-	}
+	const [res, setRes] = useState({})
 
 	useEffect(() => {
+		if (course == null) return
+		async function fetch() {
+			AsyncStorage.getItem(course)
+				.then((res) => {
+					res = JSON.parse(res)
+					setRes(res)
+					setStudent(res.classes[classs].students[id])
+				})
+				.catch((e) => {
+					console.log(e)
+				})
+		}
+		fetch()
+	}, [])
+
+	useEffect(() => {
+		if (!student) return
+		async function handleStatus() {
+			var tempJson = res
+			tempJson.classes[classs].students[id].attendance = [
+				...tempJson.classes[classs].students[id].attendance,
+				status,
+			]
+			tempJson = JSON.stringify(tempJson)
+			AsyncStorage.setItem(course, tempJson)
+		}
+		handleStatus()
+	}, [status])
+
+	useEffect(() => {
+		if (!student) return
 		var tempStats = [0, 0, 0]
 		for (let i = 0; i < student.attendance.length; i++) {
 			if (student.attendance[i] == 0) {
@@ -47,7 +71,7 @@ export default function Mark({ route, navigation }) {
 			}
 		}
 		setWarning(absentCount)
-	}, [])
+	}, [student])
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -111,7 +135,7 @@ export default function Mark({ route, navigation }) {
 						Student name:
 					</Text>
 					<Text style={{ marginTop: 5, fontFamily: FONTS?.bold, fontSize: 16 }}>
-						{student.studentName}
+						{student && student.studentName}
 					</Text>
 				</View>
 				<View style={{ marginTop: 20 }}>
@@ -119,7 +143,7 @@ export default function Mark({ route, navigation }) {
 						Roll no:
 					</Text>
 					<Text style={{ marginTop: 5, fontFamily: FONTS?.bold, fontSize: 16 }}>
-						{student.rollNumber}
+						{student && student.rollNumber}
 					</Text>
 				</View>
 				<View style={{ marginTop: 20 }}>
@@ -177,7 +201,7 @@ export default function Mark({ route, navigation }) {
 						}}
 					>
 						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>
-							Out of {student.attendance.length} classes
+							Out of {student && student.attendance.length} classes
 						</Text>
 					</View>
 				</View>
@@ -227,7 +251,7 @@ export default function Mark({ route, navigation }) {
 					flexDirection: 'row',
 				}}
 				activeOpacity={0.4}
-				onPress={handlePresent}
+				onPress={() => setStatus(1)}
 			>
 				<Svg
 					width='19'
@@ -256,7 +280,7 @@ export default function Mark({ route, navigation }) {
 						flexGrow: 1,
 					}}
 					activeOpacity={0.4}
-					onPress={handleLate}
+					onPress={() => setStatus(2)}
 				>
 					<Svg
 						width='19'
@@ -286,7 +310,7 @@ export default function Mark({ route, navigation }) {
 						flexGrow: 1,
 					}}
 					activeOpacity={0.4}
-					onPress={handleAbsent}
+					onPress={() => setStatus(0)}
 				>
 					<Svg
 						width='19'

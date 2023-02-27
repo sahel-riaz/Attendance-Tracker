@@ -88,7 +88,7 @@ export default function Mark({ route, navigation }) {
 								width: '100%',
 							}}
 							activeOpacity={0.4}
-							onPress={() => navigation.navigate('Student', { student })}
+							onPress={() => navigation.navigate('Student', { course, classs, id })}
 						>
 							<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>
 								{student.studentName}
