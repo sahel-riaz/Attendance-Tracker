@@ -11,6 +11,18 @@ export default function Mark({ route, navigation }) {
 	const [stats, setStats] = useState([])
 	const [warning, setWarning] = useState(0)
 
+	function handleAbsent() {
+		student['attendance'] = [...student['attendance'], 0]
+	}
+
+	function handlePresent() {
+		student['attendance'] = [...student['attendance'], 1]
+	}
+
+	function handleLate() {
+		student['attendance'] = [...student['attendance'], 2]
+	}
+
 	useEffect(() => {
 		var tempStats = [0, 0, 0]
 		for (let i = 0; i < student.attendance.length; i++) {
@@ -25,17 +37,13 @@ export default function Mark({ route, navigation }) {
 		setStats(tempStats)
 
 		var absentCount = 0
+		var tempAbsentCount = 0
 		for (let i = 0; i < student.attendance.length; i++) {
 			if (student.attendance[i] == 0) {
-				var tempAbsentCount = 0
-				for (let j = i; j < student.attendance.length; j++) {
-					if (student.attendance[j] == 0) {
-						tempAbsentCount++
-					} else {
-						absentCount = Math.max(absentCount, tempAbsentCount)
-						tempAbsentCount = 0
-					}
-				}
+				tempAbsentCount++
+				absentCount = Math.max(absentCount, tempAbsentCount)
+			} else {
+				tempAbsentCount = 0
 			}
 		}
 		setWarning(absentCount)
@@ -219,6 +227,7 @@ export default function Mark({ route, navigation }) {
 					flexDirection: 'row',
 				}}
 				activeOpacity={0.4}
+				onPress={handlePresent}
 			>
 				<Svg
 					width='19'
@@ -247,6 +256,7 @@ export default function Mark({ route, navigation }) {
 						flexGrow: 1,
 					}}
 					activeOpacity={0.4}
+					onPress={handleLate}
 				>
 					<Svg
 						width='19'
@@ -276,6 +286,7 @@ export default function Mark({ route, navigation }) {
 						flexGrow: 1,
 					}}
 					activeOpacity={0.4}
+					onPress={handleAbsent}
 				>
 					<Svg
 						width='19'

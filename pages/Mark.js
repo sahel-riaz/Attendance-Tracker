@@ -55,10 +55,20 @@ export default function Mark() {
 	var minutes = new Date().getMinutes()
 	var seconds = new Date().getSeconds()
 
-	var date = String(day + '/' + month + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds)
+	var date = String(day + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ':' + seconds)
 
-	function handleNavigate() {
+	async function handleNavigate() {
 		if (course && classs) {
+			AsyncStorage.getItem(course)
+				.then((res) => {
+					res = JSON.parse(res)
+					res.classes[classs]['date'] = [...res.classes[classs]['date'], date]
+					res = JSON.stringify(res)
+					AsyncStorage.setItem(course, res)
+				})
+				.catch((e) => {
+					console.log(e)
+				})
 			navigation.navigate('Students', {
 				course: course,
 				classs: classs,

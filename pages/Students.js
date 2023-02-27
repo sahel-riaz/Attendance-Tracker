@@ -10,10 +10,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function Mark({ route, navigation }) {
 	const { course, classs, date } = route.params
 
-	// useEffect(() => {
-	// 	console.log(course, classs, date)
-	// }, [])
-
 	const [students, setStudents] = useState([])
 
 	useEffect(() => {
@@ -23,7 +19,6 @@ export default function Mark({ route, navigation }) {
 				.then((res) => {
 					res = JSON.parse(res)
 					setStudents(res.classes[classs].students)
-					console.log(res.classes[classs].students)
 				})
 				.catch((e) => {
 					console.log(e)
@@ -99,52 +94,6 @@ export default function Mark({ route, navigation }) {
 							</Text>
 						</TouchableOpacity>
 					))}
-
-				{/* <TouchableOpacity
-					style={{
-						marginTop: 8,
-						paddingLeft: 16,
-						paddingBottom: 12,
-						paddingTop: 12,
-						borderRadius: 10,
-						backgroundColor: COLORS?.yellow,
-						width: '100%',
-					}}
-					activeOpacity={0.4}
-					onPress={() => navigation.navigate('Student')}
-				>
-					<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>Aadhavan Paavai Lenin</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={{
-						marginTop: 8,
-						paddingLeft: 16,
-						paddingBottom: 12,
-						paddingTop: 12,
-						borderRadius: 10,
-						backgroundColor: COLORS?.lightRed,
-						width: '100%',
-					}}
-					activeOpacity={0.4}
-					onPress={() => navigation.navigate('Student')}
-				>
-					<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>Aadhavan Paavai Lenin</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={{
-						marginTop: 8,
-						paddingLeft: 16,
-						paddingBottom: 12,
-						paddingTop: 12,
-						borderRadius: 10,
-						backgroundColor: COLORS?.green,
-						width: '100%',
-					}}
-					activeOpacity={0.4}
-					onPress={() => navigation.navigate('Student')}
-				>
-					<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>Aadhavan Paavai Lenin</Text>
-				</TouchableOpacity> */}
 				<TouchableOpacity
 					style={{
 						marginTop: 20,
