@@ -76,6 +76,7 @@ export default function Mark({ route, navigation }) {
 				{!students.length < 1 &&
 					students.map((student, id) => (
 						<TouchableOpacity
+							key={id}
 							style={{
 								marginTop: 8,
 								paddingLeft: 16,
