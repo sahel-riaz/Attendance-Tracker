@@ -2,13 +2,44 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import Navbar from '../components/Navbar'
 
 import { COLORS, FONTS } from '../styles/theme'
-import { useState } from 'react'
-import { Path, Svg, Defs, G, Rect, ClipPath } from 'react-native-svg'
+import { useEffect, useState } from 'react'
+import { Path, Svg } from 'react-native-svg'
 
-import { useNavigation } from '@react-navigation/native'
+export default function Mark({ route, navigation }) {
+	const { student } = route.params
 
-export default function Mark() {
-	const navigation = useNavigation()
+	const [stats, setStats] = useState([])
+	const [warning, setWarning] = useState(0)
+
+	useEffect(() => {
+		var tempStats = [0, 0, 0]
+		for (let i = 0; i < student.attendance.length; i++) {
+			if (student.attendance[i] == 0) {
+				tempStats[0]++
+			} else if (student.attendance[i] == 1) {
+				tempStats[1]++
+			} else if (student.attendance[i] == 2) {
+				tempStats[2]++
+			}
+		}
+		setStats(tempStats)
+
+		var absentCount = 0
+		for (let i = 0; i < student.attendance.length; i++) {
+			if (student.attendance[i] == 0) {
+				var tempAbsentCount = 0
+				for (let j = i; j < student.attendance.length; j++) {
+					if (student.attendance[j] == 0) {
+						tempAbsentCount++
+					} else {
+						absentCount = Math.max(absentCount, tempAbsentCount)
+						tempAbsentCount = 0
+					}
+				}
+			}
+		}
+		setWarning(absentCount)
+	}, [])
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -72,14 +103,16 @@ export default function Mark() {
 						Student name:
 					</Text>
 					<Text style={{ marginTop: 5, fontFamily: FONTS?.bold, fontSize: 16 }}>
-						Aadhavan Paavai Lenin
+						{student.studentName}
 					</Text>
 				</View>
 				<View style={{ marginTop: 20 }}>
 					<Text style={{ fontFamily: FONTS?.bold, color: COLORS?.selectGrey, fontSize: 16 }}>
 						Roll no:
 					</Text>
-					<Text style={{ marginTop: 5, fontFamily: FONTS?.bold, fontSize: 16 }}>B200046CS</Text>
+					<Text style={{ marginTop: 5, fontFamily: FONTS?.bold, fontSize: 16 }}>
+						{student.rollNumber}
+					</Text>
 				</View>
 				<View style={{ marginTop: 20 }}>
 					<View style={{ marginTop: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -93,7 +126,7 @@ export default function Mark() {
 								flex: 1,
 							}}
 						>
-							<Text style={{ fontFamily: FONTS?.bold, fontSize: 22 }}>7</Text>
+							<Text style={{ fontFamily: FONTS?.bold, fontSize: 22 }}>{stats[1]}</Text>
 							<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>Present</Text>
 						</View>
 						<View
@@ -107,7 +140,7 @@ export default function Mark() {
 								marginLeft: 10,
 							}}
 						>
-							<Text style={{ fontFamily: FONTS?.bold, fontSize: 22 }}>3</Text>
+							<Text style={{ fontFamily: FONTS?.bold, fontSize: 22 }}>{stats[0]}</Text>
 							<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>Absent</Text>
 						</View>
 						<View
@@ -121,7 +154,7 @@ export default function Mark() {
 								marginLeft: 10,
 							}}
 						>
-							<Text style={{ fontFamily: FONTS?.bold, fontSize: 22 }}>2</Text>
+							<Text style={{ fontFamily: FONTS?.bold, fontSize: 22 }}>{stats[2]}</Text>
 							<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>Late</Text>
 						</View>
 					</View>
@@ -135,37 +168,43 @@ export default function Mark() {
 							height: 40,
 						}}
 					>
-						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>Out of 10 classes</Text>
+						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>
+							Out of {student.attendance.length} classes
+						</Text>
 					</View>
 				</View>
-				<View style={{ flexDirection: 'row', marginTop: 25 }}>
-					<Svg
-						width='17'
-						height='17'
-						viewBox='0 0 17 17'
-						fill='none'
-						xmlns='http://www.w3.org/2000/svg'
-					>
-						<Path
-							d='M8.50005 6.37495V9.91662M8.50005 15.1654H4.20755C1.74964 15.1654 0.722554 13.4087 1.91255 11.2624L4.12255 7.28162L6.20505 3.54162C7.46589 1.26787 9.53422 1.26787 10.7951 3.54162L12.8776 7.2887L15.0876 11.2695C16.2776 13.4158 15.2434 15.1724 12.7926 15.1724H8.50005V15.1654Z'
-							stroke='#FF0000'
-							stroke-width='1.5'
-							stroke-linecap='round'
-							stroke-linejoin='round'
-						/>
-						<Path
-							d='M8.49646 12.0416H8.50283'
-							stroke='#FF0000'
-							stroke-width='2'
-							stroke-linecap='round'
-							stroke-linejoin='round'
-						/>
-					</Svg>
+				{warning > 2 ? (
+					<View style={{ flexDirection: 'row', marginTop: 25 }}>
+						<Svg
+							width='17'
+							height='17'
+							viewBox='0 0 17 17'
+							fill='none'
+							xmlns='http://www.w3.org/2000/svg'
+						>
+							<Path
+								d='M8.50005 6.37495V9.91662M8.50005 15.1654H4.20755C1.74964 15.1654 0.722554 13.4087 1.91255 11.2624L4.12255 7.28162L6.20505 3.54162C7.46589 1.26787 9.53422 1.26787 10.7951 3.54162L12.8776 7.2887L15.0876 11.2695C16.2776 13.4158 15.2434 15.1724 12.7926 15.1724H8.50005V15.1654Z'
+								stroke='#FF0000'
+								stroke-width='1.5'
+								stroke-linecap='round'
+								stroke-linejoin='round'
+							/>
+							<Path
+								d='M8.49646 12.0416H8.50283'
+								stroke='#FF0000'
+								stroke-width='2'
+								stroke-linecap='round'
+								stroke-linejoin='round'
+							/>
+						</Svg>
 
-					<Text style={{ paddingLeft: 7, fontFamily: FONTS?.bold, color: COLORS?.red }}>
-						Absent for 3 consecutive days
-					</Text>
-				</View>
+						<Text style={{ paddingLeft: 7, fontFamily: FONTS?.bold, color: COLORS?.red }}>
+							Absent for {warning} consecutive days
+						</Text>
+					</View>
+				) : (
+					<></>
+				)}
 			</View>
 			<TouchableOpacity
 				style={{

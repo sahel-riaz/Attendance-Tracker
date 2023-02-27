@@ -1,13 +1,13 @@
 import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
-import Navbar from '../components/Navbar'
 import { StyleSheet } from 'react-native'
-
-import { COLORS, FONTS } from '../styles/theme'
 import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
-
 import { useNavigation } from '@react-navigation/native'
+
+import Navbar from '../components/Navbar'
+import { COLORS, FONTS } from '../styles/theme'
+
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Mark() {
@@ -48,9 +48,26 @@ export default function Mark() {
 		fetch()
 	}, [course])
 
-	var date = new Date().getDate()
+	var day = new Date().getDate()
 	var month = new Date().getMonth() + 1
 	var year = new Date().getFullYear()
+	var hours = new Date().getHours()
+	var minutes = new Date().getMinutes()
+	var seconds = new Date().getSeconds()
+
+	var date = String(day + '/' + month + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds)
+
+	function handleNavigate() {
+		if (course && classs) {
+			navigation.navigate('Students', {
+				course: course,
+				classs: classs,
+				date: date,
+			})
+		} else {
+			//error
+		}
+	}
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -239,8 +256,12 @@ export default function Mark() {
 						marginTop: 40,
 					}}
 					onPress={() => {
-						// console.log(date + '/' + month + '/' + year)
-						navigation.navigate('Students')
+						handleNavigate()
+						// navigation.navigate('Students', {
+						// 	course: course,
+						// 	classs: classs,
+						// 	date:date
+						// })
 					}}
 					activeOpacity={0.7}
 				>

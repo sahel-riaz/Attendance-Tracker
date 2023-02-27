@@ -2,13 +2,35 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import Navbar from '../components/Navbar'
 
 import { COLORS, FONTS } from '../styles/theme'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 
-import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export default function Mark() {
-	const navigation = useNavigation()
+export default function Mark({ route, navigation }) {
+	const { course, classs, date } = route.params
+
+	// useEffect(() => {
+	// 	console.log(course, classs, date)
+	// }, [])
+
+	const [students, setStudents] = useState([])
+
+	useEffect(() => {
+		if (course == null) return
+		async function fetch() {
+			AsyncStorage.getItem(course)
+				.then((res) => {
+					res = JSON.parse(res)
+					setStudents(res.classes[classs].students)
+					console.log(res.classes[classs].students)
+				})
+				.catch((e) => {
+					console.log(e)
+				})
+		}
+		fetch()
+	}, [])
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -56,23 +78,29 @@ export default function Mark() {
 				Students:
 			</Text>
 			<View style={{ alignItems: 'center', paddingLeft: 24, paddingRight: 24, marginTop: 10 }}>
-				<TouchableOpacity
-					style={{
-						marginTop: 8,
-						paddingLeft: 16,
-						paddingBottom: 12,
-						paddingTop: 12,
-						borderColor: COLORS?.borderGrey,
-						borderWidth: 1,
-						borderRadius: 10,
-						width: '100%',
-					}}
-					activeOpacity={0.4}
-					onPress={() => navigation.navigate('Student')}
-				>
-					<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>Aadhavan Paavai Lenin</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
+				{!students.length < 1 &&
+					students.map((student, id) => (
+						<TouchableOpacity
+							style={{
+								marginTop: 8,
+								paddingLeft: 16,
+								paddingBottom: 12,
+								paddingTop: 12,
+								borderColor: COLORS?.borderGrey,
+								borderWidth: 1,
+								borderRadius: 10,
+								width: '100%',
+							}}
+							activeOpacity={0.4}
+							onPress={() => navigation.navigate('Student', { student })}
+						>
+							<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>
+								{student.studentName}
+							</Text>
+						</TouchableOpacity>
+					))}
+
+				{/* <TouchableOpacity
 					style={{
 						marginTop: 8,
 						paddingLeft: 16,
@@ -116,7 +144,7 @@ export default function Mark() {
 					onPress={() => navigation.navigate('Student')}
 				>
 					<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>Aadhavan Paavai Lenin</Text>
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 				<TouchableOpacity
 					style={{
 						marginTop: 20,
