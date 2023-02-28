@@ -26,7 +26,6 @@ export default function Mark({ route, navigation }) {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					console.log(date)
 					console.log(res.classes[classs]['date'].indexOf(date))
 					setDateIndex(res.classes[classs]['date'].indexOf(date))
 					setStudents(res.classes[classs].students)
@@ -47,7 +46,7 @@ export default function Mark({ route, navigation }) {
 					viewBox='0 0 16 17'
 					fill='none'
 					xmlns='http://www.w3.org/2000/svg'
-					onPress={() => navigation.goBack()}
+					onPress={() => navigation.navigate('Home')}
 				>
 					<Path
 						d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
@@ -105,13 +104,13 @@ export default function Mark({ route, navigation }) {
 									course: course,
 									classs: classs,
 									id: id,
-									date: dateIndex,
+									date: date,
+									dateIndex: dateIndex,
 								})
 							}
 						>
 							<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>
 								{student.studentName}
-								{console.log(student.attendance)}
 							</Text>
 						</TouchableOpacity>
 					))}

@@ -73,14 +73,16 @@ export default function Mark() {
 					res = JSON.stringify(res)
 					AsyncStorage.setItem(course, res)
 				})
+				.then(() => {
+					navigation.navigate('Students', {
+						course: course,
+						classs: classs,
+						date: date,
+					})
+				})
 				.catch((e) => {
 					console.log(e)
 				})
-			navigation.navigate('Students', {
-				course: course,
-				classs: classs,
-				date: date,
-			})
 		} else {
 			//error
 		}

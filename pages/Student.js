@@ -7,7 +7,7 @@ import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Mark({ route, navigation }) {
-	const { course, classs, id, dateIndex } = route.params
+	const { course, classs, id, date, dateIndex } = route.params
 
 	const [studentsCount, setStudentsCount] = useState(0)
 	const [student, setStudent] = useState()
@@ -38,20 +38,21 @@ export default function Mark({ route, navigation }) {
 		if (!student) return
 		async function handleStatus() {
 			var tempJson = res
-			// tempJson.classes[classs].students[id].attendance = [
-			// 	...tempJson.classes[classs].students[id].attendance,
-			// 	status,
-			// ]
-			console.log(status)
-			console.log(dateIndex)
-			console.log(tempJson.classes[classs].students[id].attendance)
-			// tempJson = JSON.stringify(tempJson)
-			// AsyncStorage.setItem(course, tempJson)
-			// if (id < studentsCount - 1) {
-			// 	navigation.push('Student', { course: course, classs: classs, id: id + 1 })
-			// } else {
-			// 	navigation.navigate('Students', { course: course, classs: classs })
-			// }
+			tempJson.classes[classs].students[id].attendance[dateIndex] = status
+			tempJson = JSON.stringify(tempJson)
+			AsyncStorage.setItem(course, tempJson).then(() => {
+				if (id < studentsCount - 1) {
+					navigation.push('Student', {
+						course: course,
+						classs: classs,
+						id: id + 1,
+						date: date,
+						dateIndex: dateIndex,
+					})
+				} else {
+					navigation.push('Students', { course: course, classs: classs, date: date })
+				}
+			})
 		}
 		handleStatus()
 	}, [status])
@@ -92,7 +93,14 @@ export default function Mark({ route, navigation }) {
 					viewBox='0 0 16 17'
 					fill='none'
 					xmlns='http://www.w3.org/2000/svg'
-					onPress={() => navigation.goBack()}
+					onPress={() =>
+						navigation.reset({
+							index: 0,
+							routes: [
+								{ name: 'Students', params: { course: course, classs: classs, date: date } },
+							],
+						})
+					}
 				>
 					<Path
 						d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
