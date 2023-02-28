@@ -26,7 +26,6 @@ export default function Mark({ route, navigation }) {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					console.log(res.classes[classs]['date'].indexOf(date))
 					setDateIndex(res.classes[classs]['date'].indexOf(date))
 					setStudents(res.classes[classs].students)
 				})
@@ -92,8 +91,8 @@ export default function Mark({ route, navigation }) {
 								paddingLeft: 16,
 								paddingBottom: 12,
 								paddingTop: 12,
-								borderColor: `${status[student.attendance]}`,
-								backgroundColor: `${status[student.attendance]}`,
+								borderColor: `${status[student.attendance[dateIndex]]}`,
+								backgroundColor: `${status[student.attendance[dateIndex]]}`,
 								borderWidth: 1,
 								borderRadius: 10,
 								width: '100%',

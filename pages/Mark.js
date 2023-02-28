@@ -48,17 +48,19 @@ export default function Mark() {
 		fetch()
 	}, [course])
 
-	var day = new Date().getDate()
-	var month = new Date().getMonth() + 1
-	var year = new Date().getFullYear()
-	var hours = new Date().getHours()
-	var minutes = new Date().getMinutes()
-	var seconds = new Date().getSeconds()
-
-	var date = String(day + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ':' + seconds)
-
 	async function handleNavigate() {
 		if (course && classs) {
+			var day = new Date().getDate()
+			var month = new Date().getMonth() + 1
+			var year = new Date().getFullYear()
+			var hours = new Date().getHours()
+			var minutes = new Date().getMinutes()
+			var seconds = new Date().getSeconds()
+
+			var date = String(
+				day + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ':' + seconds
+			)
+
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)

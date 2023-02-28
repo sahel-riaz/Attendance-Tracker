@@ -14,7 +14,6 @@ export default function Mark({ route, navigation }) {
 	const [status, setStatus] = useState()
 	const [stats, setStats] = useState([])
 	const [warning, setWarning] = useState(0)
-
 	const [res, setRes] = useState({})
 
 	useEffect(() => {
@@ -219,7 +218,7 @@ export default function Mark({ route, navigation }) {
 						}}
 					>
 						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>
-							Out of {student && student.attendance.length} classes
+							Out of {student && student.attendance.length - 1} classes
 						</Text>
 					</View>
 				</View>
