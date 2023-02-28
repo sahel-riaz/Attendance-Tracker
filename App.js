@@ -10,6 +10,8 @@ import Import from './pages/Import'
 import Db from './pages/Db'
 import Students from './pages/Students'
 import Student from './pages/Student'
+import DbStudents from './pages/DbStudents'
+import DbStudent from './pages/DbStudent'
 
 const Stack = createNativeStackNavigator()
 
@@ -40,6 +42,8 @@ const App = () => {
 				<Stack.Screen name='AddStudent' component={AddStudent} />
 				<Stack.Screen name='Students' component={Students} />
 				<Stack.Screen name='Student' component={Student} />
+				<Stack.Screen name='DbStudents' component={DbStudents} />
+				<Stack.Screen name='DbStudent' component={DbStudent} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

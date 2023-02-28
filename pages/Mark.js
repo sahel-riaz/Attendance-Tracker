@@ -265,7 +265,7 @@ export default function Mark() {
 						)}
 					/>
 				</View>
-				<TouchableOpacity //apply button -> send date also
+				<TouchableOpacity
 					style={{
 						height: 43,
 						width: 160,
@@ -278,11 +278,6 @@ export default function Mark() {
 					}}
 					onPress={() => {
 						handleNavigate()
-						// navigation.navigate('Students', {
-						// 	course: course,
-						// 	classs: classs,
-						// 	date:date
-						// })
 					}}
 					activeOpacity={0.7}
 				>

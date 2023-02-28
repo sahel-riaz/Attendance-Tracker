@@ -7,18 +7,10 @@ import { Path, Svg } from 'react-native-svg'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export default function Students({ route, navigation }) {
-	const { course, classs, date } = route.params
+export default function DbStudents({ route, navigation }) {
+	const { course, classs } = route.params
 
 	const [students, setStudents] = useState([])
-	const [dateIndex, setDateIndex] = useState()
-
-	const [status, setStatus] = useState([
-		COLORS?.lightRed,
-		COLORS?.green,
-		COLORS?.yellow,
-		COLORS?.borderGrey,
-	])
 
 	useEffect(() => {
 		if (course == null) return
@@ -26,7 +18,6 @@ export default function Students({ route, navigation }) {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					setDateIndex(res.classes[classs]['date'].indexOf(date))
 					setStudents(res.classes[classs].students)
 				})
 				.catch((e) => {
@@ -74,7 +65,7 @@ export default function Students({ route, navigation }) {
 							lineHeight: 19,
 						}}
 					>
-						Mark attendance
+						View details
 					</Text>
 				</View>
 			</View>
@@ -89,28 +80,45 @@ export default function Students({ route, navigation }) {
 							style={{
 								marginTop: 8,
 								paddingLeft: 16,
+								paddingRight: 10,
 								paddingBottom: 12,
 								paddingTop: 12,
-								borderColor: `${status[student.attendance[dateIndex]]}`,
-								backgroundColor: `${status[student.attendance[dateIndex]]}`,
+								borderColor: COLORS?.borderGrey,
 								borderWidth: 1,
 								borderRadius: 10,
 								width: '100%',
+								flexDirection: 'row',
+								justifyContent: 'space-between',
+								alignItems: 'center',
 							}}
 							activeOpacity={0.4}
 							onPress={() =>
-								navigation.navigate('Student', {
+								navigation.navigate('DbStudent', {
 									course: course,
 									classs: classs,
 									id: id,
-									date: date,
-									dateIndex: dateIndex,
 								})
 							}
 						>
 							<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>
 								{student.studentName}
 							</Text>
+							<Svg
+								width='24'
+								height='26'
+								viewBox='0 0 24 26'
+								fill='none'
+								xmlns='http://www.w3.org/2000/svg'
+							>
+								<Path
+									d='M6.00751 13.1777V10.5077C6.00751 7.19766 8.35751 5.83766 11.2275 7.49766L13.5375 8.83766L15.8475 10.1777C18.7175 11.8377 18.7175 14.5477 15.8475 16.2077L13.5375 17.5477L11.2275 18.8877C8.35751 20.5177 6.00751 19.1677 6.00751 15.8477V13.1777Z'
+									stroke='black'
+									stroke-width='1.5'
+									stroke-miterlimit='10'
+									stroke-linecap='round'
+									stroke-linejoin='round'
+								/>
+							</Svg>
 						</TouchableOpacity>
 					))}
 				<TouchableOpacity
