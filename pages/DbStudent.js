@@ -243,9 +243,9 @@ export default function DbStudent({ route, navigation }) {
 						marginTop: 40,
 						alignSelf: 'center',
 					}}
-					onPress={() => {
-						handleNavigate()
-					}}
+					// onPress={() => {
+					// 	handleNavigate()
+					// }}
 					activeOpacity={0.7}
 				>
 					<Svg
