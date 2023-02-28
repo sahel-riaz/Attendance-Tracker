@@ -21,10 +21,15 @@ export default function Mark() {
 	const [classs, setClasss] = useState('')
 	const [path, setPath] = useState('')
 	const [error, setError] = useState('')
+	const [docPicker, setDocPicker] = useState([true, ''])
 
 	const pickDocument = async () => {
-		const result = await DocumentPicker.getDocumentAsync({ type: 'text/*' })
-		setPath(result.uri)
+		await DocumentPicker.getDocumentAsync({ type: 'text/*' }).then((res) => {
+			if (res.type == 'success') {
+				setPath(res.uri)
+				setDocPicker([false, res.name])
+			}
+		})
 	}
 
 	async function handlePress() {
@@ -250,31 +255,48 @@ export default function Mark() {
 						Add file:
 					</Text>
 					<TouchableOpacity style={styles.input} onPress={pickDocument}>
-						<Svg
-							width='17'
-							height='18'
-							viewBox='0 0 17 18'
-							fill='none'
-							xmlns='http://www.w3.org/2000/svg'
-						>
-							<Path
-								d='M4.25 9H12.75M8.5 13.25V4.75'
-								stroke='#838383'
-								stroke-width='1.5'
-								stroke-linecap='round'
-								stroke-linejoin='round'
-							/>
-						</Svg>
-						<Text
-							style={{
-								paddingLeft: 10,
-								fontFamily: FONTS?.regular,
-								fontSize: 16,
-								color: COLORS?.selectGrey,
-							}}
-						>
-							Select file
-						</Text>
+						{docPicker[0] ? (
+							<>
+								<Svg
+									width='17'
+									height='18'
+									viewBox='0 0 17 18'
+									fill='none'
+									xmlns='http://www.w3.org/2000/svg'
+								>
+									<Path
+										d='M4.25 9H12.75M8.5 13.25V4.75'
+										stroke='#838383'
+										stroke-width='1.5'
+										stroke-linecap='round'
+										stroke-linejoin='round'
+									/>
+								</Svg>
+								<Text
+									style={{
+										paddingLeft: 10,
+										fontFamily: FONTS?.regular,
+										fontSize: 16,
+										color: COLORS?.selectGrey,
+									}}
+								>
+									Select file
+								</Text>
+							</>
+						) : (
+							<>
+								<Text
+									style={{
+										paddingLeft: 10,
+										fontFamily: FONTS?.regular,
+										fontSize: 16,
+										color: COLORS?.selectGrey,
+									}}
+								>
+									File selected: {docPicker[1]}
+								</Text>
+							</>
+						)}
 					</TouchableOpacity>
 				</View>
 				<TouchableOpacity
