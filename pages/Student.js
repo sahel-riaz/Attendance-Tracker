@@ -49,7 +49,10 @@ export default function Student({ route, navigation }) {
 						dateIndex: dateIndex,
 					})
 				} else {
-					navigation.push('Students', { course: course, classs: classs, date: date })
+					navigation.reset({
+						index: 0,
+						routes: [{ name: 'Students', params: { course: course, classs: classs, date: date } }],
+					})
 				}
 			})
 		}

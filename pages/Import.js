@@ -60,23 +60,29 @@ export default function Mark() {
 		 *
 		 */
 
-		const allKeys = await AsyncStorage.getAllKeys()
-		if (allKeys.includes(courseID)) {
-			/*=====  key already exists  ======*/
-			console.log('COURSE ALREADY EXISTS')
-			let fetchedData = await AsyncStorage.getItem(courseID)
-			fetchedData = JSON.parse(fetchedData)
-			fetchedData['classes'][classs] = { date: [], students: info }
-			// fetchedData = fetchedData['classes']
-			// fetchedData = { ...fetchedData, [classs]: { date: [], students: info } }
-			fetchedData = JSON.stringify(fetchedData)
-			await AsyncStorage.setItem(courseID, fetchedData)
-		} else {
-			/*=====  key (courseID) does not exist  ======*/
-			console.log('COURSE DOES NOT EXIST')
-			const temp_json = JSON.stringify(dataToSet)
-			await AsyncStorage.setItem(courseID, temp_json)
-		}
+		await AsyncStorage.getAllKeys()
+			.then((allKeys) => {
+				if (allKeys.includes(courseID)) {
+					/*=====  key (courseID) already exists  ======*/
+					AsyncStorage.getItem(courseID).then((fetchedData) => {
+						fetchedData = JSON.parse(fetchedData)
+						fetchedData['classes'][classs] = { date: [], students: info }
+						fetchedData = JSON.stringify(fetchedData)
+						AsyncStorage.setItem(courseID, fetchedData).then(() => {
+							navigation.push('Home')
+						})
+					})
+				} else {
+					/*=====  key (courseID) does not exist  ======*/
+					const temp_json = JSON.stringify(dataToSet)
+					AsyncStorage.setItem(courseID, temp_json).then(() => {
+						navigation.push('Home')
+					})
+				}
+			})
+			.catch((e) => {
+				console.log(e)
+			})
 	}
 
 	async function setCourseNameHandle() {

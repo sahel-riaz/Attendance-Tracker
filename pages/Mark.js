@@ -76,7 +76,7 @@ export default function Mark() {
 					AsyncStorage.setItem(course, res)
 				})
 				.then(() => {
-					navigation.navigate('Students', {
+					navigation.push('Students', {
 						course: course,
 						classs: classs,
 						date: date,
