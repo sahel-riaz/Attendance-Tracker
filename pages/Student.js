@@ -315,7 +315,7 @@ export default function Student({ route, navigation }) {
 						/>
 					</Svg>
 
-					<Text style={{ marginLeft: 10, fontFamily: FONTS?.bold, fontSize: 16 }}>Present</Text>
+					<Text style={{ marginLeft: 10, fontFamily: FONTS?.bold, fontSize: 16 }}>Late</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={{

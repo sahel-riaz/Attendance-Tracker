@@ -15,9 +15,13 @@ export default function Mark() {
 
 	const [courses, setCourses] = useState([])
 	const [classes, setClasses] = useState([])
+	const [dates, setDates] = useState([])
+
+	const [res, setRes] = useState({})
 
 	const [course, setCourse] = useState(null)
 	const [classs, setClasss] = useState(null)
+	const [date, setDate] = useState(null)
 
 	useEffect(() => {
 		async function fetch() {
@@ -38,6 +42,7 @@ export default function Mark() {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
+					setRes(res)
 					res = Object.keys(res['classes'])
 					setClasses(res.map((item, index) => ({ label: item, value: item })))
 				})
@@ -48,29 +53,46 @@ export default function Mark() {
 		fetch()
 	}, [course])
 
+	useEffect(() => {
+		if (classs == null) return
+
+		const jsDate = new Date()
+		const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+		const [dotw, day, month, year, hours, minutes, seconds] = [
+			weekday[jsDate.getDay()],
+			jsDate.getDate(),
+			jsDate.getMonth() + 1,
+			jsDate.getFullYear(),
+			jsDate.getHours(),
+			jsDate.getMinutes(),
+			jsDate.getSeconds(),
+		]
+
+		var date = String(
+			dotw + ', ' + day + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ':' + seconds
+		)
+
+		let tempDates = Object.values(res.classes[classs].date)
+		tempDates.push(date)
+		setDate(date)
+		setDates(tempDates.map((item, index) => ({ label: item, value: item })))
+	}, [classs])
+
 	async function handleNavigate() {
 		if (course && classs) {
-			var day = new Date().getDate()
-			var month = new Date().getMonth() + 1
-			var year = new Date().getFullYear()
-			var hours = new Date().getHours()
-			var minutes = new Date().getMinutes()
-			var seconds = new Date().getSeconds()
-
-			var date = String(
-				day + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ':' + seconds
-			)
-
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					/*=====  insert todays date and time; push 3 into every students attendance  ======*/
-					res.classes[classs]['date'] = [...res.classes[classs]['date'], date]
-					for (let i = 0; i < res.classes[classs].students.length; i++) {
-						res.classes[classs].students[i].attendance = [
-							...res.classes[classs].students[i].attendance,
-							3,
-						]
+					/*=====  check if the selected date already exists  ======*/
+					if (!Object.values(res.classes[classs].date).includes(date)) {
+						/*=====  insert selected date and time; push 3 into every students attendance  ======*/
+						res.classes[classs]['date'] = [...res.classes[classs]['date'], date]
+						for (let i = 0; i < res.classes[classs].students.length; i++) {
+							res.classes[classs].students[i].attendance = [
+								...res.classes[classs].students[i].attendance,
+								3,
+							]
+						}
 					}
 					res = JSON.stringify(res)
 					AsyncStorage.setItem(course, res)
@@ -244,6 +266,58 @@ export default function Mark() {
 						value={classs}
 						onChange={(item) => {
 							setClasss(item.value)
+						}}
+						renderRightIcon={() => (
+							<Svg
+								width='16'
+								height='16'
+								viewBox='0 0 16 16'
+								fill='none'
+								xmlns='http://www.w3.org/2000/svg'
+							>
+								<Path
+									d='M13.28 5.96667L8.9333 10.3133C8.41997 10.8267 7.57997 10.8267 7.06664 10.3133L2.71997 5.96667'
+									stroke='#838383'
+									stroke-width='1.5'
+									stroke-miterlimit='10'
+									stroke-linecap='round'
+									stroke-linejoin='round'
+								/>
+							</Svg>
+						)}
+					/>
+				</View>
+				<View>
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+							marginBottom: 6,
+							marginTop: 15,
+						}}
+					>
+						Date / Time:
+					</Text>
+					<Dropdown
+						style={styles.dropdown}
+						placeholder='Select date/time'
+						placeholderStyle={styles.placeholderStyle}
+						selectedTextStyle={styles.selectedTextStyle}
+						data={dates}
+						autoScroll={false}
+						maxHeight={300}
+						containerStyle={{ marginTop: -50, borderRadius: 7 }}
+						itemTextStyle={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							marginLeft: -5,
+						}}
+						labelField='label'
+						valueField='value'
+						value={date}
+						onChange={(item) => {
+							setDate(item.value)
 						}}
 						renderRightIcon={() => (
 							<Svg

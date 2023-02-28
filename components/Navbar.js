@@ -30,7 +30,7 @@ export default function Navbar() {
 			<View style={{ flexDirection: 'row' }}>
 				<TouchableOpacity
 					onPress={() => {
-						navigation.navigate('Home')
+						navigation.push('Home')
 					}}
 					activeOpacity={0.7}
 					style={{ marginRight: 42 }}
@@ -65,7 +65,7 @@ export default function Navbar() {
 				</TouchableOpacity>
 				<TouchableOpacity
 					onPress={() => {
-						navigation.navigate('Import')
+						navigation.push('Import')
 					}}
 					activeOpacity={0.7}
 				>
@@ -100,7 +100,7 @@ export default function Navbar() {
 			</View>
 			<TouchableOpacity
 				onPress={() => {
-					navigation.navigate('Mark')
+					navigation.push('Mark')
 				}}
 				activeOpacity={0.7}
 				style={{
@@ -136,7 +136,7 @@ export default function Navbar() {
 			<View style={{ flexDirection: 'row' }}>
 				<TouchableOpacity
 					onPress={() => {
-						navigation.navigate('Export')
+						navigation.push('Export')
 					}}
 					activeOpacity={0.7}
 					style={{ marginRight: 42 }}
@@ -179,7 +179,7 @@ export default function Navbar() {
 				</TouchableOpacity>
 				<TouchableOpacity
 					onPress={() => {
-						navigation.navigate('Db')
+						navigation.push('Db')
 					}}
 					activeOpacity={0.7}
 				>
