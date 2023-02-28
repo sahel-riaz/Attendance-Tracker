@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function Mark({ route, navigation }) {
 	const { course, classs, id } = route.params
 
+	const [studentsCount, setStudentsCount] = useState(0)
 	const [student, setStudent] = useState()
 	const [status, setStatus] = useState()
 	const [stats, setStats] = useState([])
@@ -23,6 +24,7 @@ export default function Mark({ route, navigation }) {
 				.then((res) => {
 					res = JSON.parse(res)
 					setRes(res)
+					setStudentsCount(res.classes[classs].students.length)
 					setStudent(res.classes[classs].students[id])
 				})
 				.catch((e) => {
@@ -42,6 +44,11 @@ export default function Mark({ route, navigation }) {
 			]
 			tempJson = JSON.stringify(tempJson)
 			AsyncStorage.setItem(course, tempJson)
+			if (id < studentsCount - 1) {
+				navigation.push('Student', { course: course, classs: classs, id: id + 1 })
+			} else {
+				navigation.navigate('Students', { course: course, classs: classs })
+			}
 		}
 		handleStatus()
 	}, [status])
