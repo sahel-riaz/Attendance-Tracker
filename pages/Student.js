@@ -7,7 +7,7 @@ import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Mark({ route, navigation }) {
-	const { course, classs, id } = route.params
+	const { course, classs, id, dateIndex } = route.params
 
 	const [studentsCount, setStudentsCount] = useState(0)
 	const [student, setStudent] = useState()
@@ -38,17 +38,20 @@ export default function Mark({ route, navigation }) {
 		if (!student) return
 		async function handleStatus() {
 			var tempJson = res
-			tempJson.classes[classs].students[id].attendance = [
-				...tempJson.classes[classs].students[id].attendance,
-				status,
-			]
-			tempJson = JSON.stringify(tempJson)
-			AsyncStorage.setItem(course, tempJson)
-			if (id < studentsCount - 1) {
-				navigation.push('Student', { course: course, classs: classs, id: id + 1 })
-			} else {
-				navigation.navigate('Students', { course: course, classs: classs })
-			}
+			// tempJson.classes[classs].students[id].attendance = [
+			// 	...tempJson.classes[classs].students[id].attendance,
+			// 	status,
+			// ]
+			console.log(status)
+			console.log(dateIndex)
+			console.log(tempJson.classes[classs].students[id].attendance)
+			// tempJson = JSON.stringify(tempJson)
+			// AsyncStorage.setItem(course, tempJson)
+			// if (id < studentsCount - 1) {
+			// 	navigation.push('Student', { course: course, classs: classs, id: id + 1 })
+			// } else {
+			// 	navigation.navigate('Students', { course: course, classs: classs })
+			// }
 		}
 		handleStatus()
 	}, [status])

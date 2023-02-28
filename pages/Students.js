@@ -11,6 +11,14 @@ export default function Mark({ route, navigation }) {
 	const { course, classs, date } = route.params
 
 	const [students, setStudents] = useState([])
+	const [dateIndex, setDateIndex] = useState()
+
+	const [status, setStatus] = useState([
+		COLORS?.lightRed,
+		COLORS?.green,
+		COLORS?.yellow,
+		COLORS?.borderGrey,
+	])
 
 	useEffect(() => {
 		if (course == null) return
@@ -18,6 +26,9 @@ export default function Mark({ route, navigation }) {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
+					console.log(date)
+					console.log(res.classes[classs]['date'].indexOf(date))
+					setDateIndex(res.classes[classs]['date'].indexOf(date))
 					setStudents(res.classes[classs].students)
 				})
 				.catch((e) => {
@@ -82,16 +93,25 @@ export default function Mark({ route, navigation }) {
 								paddingLeft: 16,
 								paddingBottom: 12,
 								paddingTop: 12,
-								borderColor: COLORS?.borderGrey,
+								borderColor: `${status[student.attendance]}`,
+								backgroundColor: `${status[student.attendance]}`,
 								borderWidth: 1,
 								borderRadius: 10,
 								width: '100%',
 							}}
 							activeOpacity={0.4}
-							onPress={() => navigation.navigate('Student', { course, classs, id })}
+							onPress={() =>
+								navigation.navigate('Student', {
+									course: course,
+									classs: classs,
+									id: id,
+									date: dateIndex,
+								})
+							}
 						>
 							<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>
 								{student.studentName}
+								{console.log(student.attendance)}
 							</Text>
 						</TouchableOpacity>
 					))}

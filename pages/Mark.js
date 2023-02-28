@@ -62,7 +62,14 @@ export default function Mark() {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
+					/*=====  insert todays date and time; push 3 into every students attendance  ======*/
 					res.classes[classs]['date'] = [...res.classes[classs]['date'], date]
+					for (let i = 0; i < res.classes[classs].students.length; i++) {
+						res.classes[classs].students[i].attendance = [
+							...res.classes[classs].students[i].attendance,
+							3,
+						]
+					}
 					res = JSON.stringify(res)
 					AsyncStorage.setItem(course, res)
 				})
