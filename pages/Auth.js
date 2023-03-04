@@ -10,24 +10,21 @@ import { Path, Svg } from 'react-native-svg'
 export default function Auth() {
 	const navigation = useNavigation()
 
-	const [isBiometricSupported, setIsBiometricSupported] = useState(false)
-	const [isAuthenticated, setAuthenticated] = useState(false)
-
 	async function localAuth() {
 		LocalAuthentication.hasHardwareAsync()
 			.then((res) => {
-				setIsBiometricSupported(res)
 				if (res) {
 					LocalAuthentication.isEnrolledAsync().then((res) => {
 						if (res) {
 							LocalAuthentication.authenticateAsync().then((res) => {
-								setAuthenticated(res.success)
 								if (res.success) {
 									navigation.navigate('Home')
 								}
 							})
 						}
 					})
+				} else {
+					navigation.navigate('Home')
 				}
 			})
 			.catch((e) => {
