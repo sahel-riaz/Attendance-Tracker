@@ -3,6 +3,8 @@ import ClassCard from '../components/home/ClassCard'
 import HomeCard from '../components/home/HomeCard'
 import Navbar from '../components/Navbar'
 
+import * as LocalAuthentication from 'expo-local-authentication'
+
 import { COLORS, FONTS } from '../styles/theme'
 
 export default function Home() {

@@ -16,13 +16,23 @@
 		},
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"infoPlist": {
+				"NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos",
+				"NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos"
+			}
 		},
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/expo/adaptive-icon.png",
 				"backgroundColor": "#FFFFFF"
-			}
+			},
+			"permissions": [
+				"android.permission.READ_EXTERNAL_STORAGE",
+				"android.permission.WRITE_EXTERNAL_STORAGE",
+				"android.permission.ACCESS_MEDIA_LOCATION"
+			],
+			"package": "com.aadhavan.attendance"
 		},
 		"web": {
 			"favicon": "./assets/expo/favicon.png"
@@ -33,7 +43,18 @@
 				{
 					"isAccessMediaLocationEnabled": true
 				}
+			],
+			[
+				"expo-local-authentication",
+				{
+					"faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID."
+				}
 			]
-		]
+		],
+		"extra": {
+			"eas": {
+				"projectId": "fdb9c8d7-c371-44a2-80e6-359a6a86ee6e"
+			}
+		}
 	}
 }

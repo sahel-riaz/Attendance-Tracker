@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 
+import Auth from './pages/Auth'
 import Home from './pages/Home'
 import Mark from './pages/Mark'
 import Export from './pages/Export'
@@ -33,7 +34,8 @@ const App = () => {
 
 	return (
 		<NavigationContainer theme={theme}>
-			<Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: false }}>
+			<Stack.Navigator initialRouteName='Auth' screenOptions={{ headerShown: false }}>
+				<Stack.Screen name='Auth' component={Auth} />
 				<Stack.Screen name='Home' component={Home} />
 				<Stack.Screen name='Import' component={Import} />
 				<Stack.Screen name='Mark' component={Mark} />
