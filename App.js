@@ -8,6 +8,7 @@ import Mark from './pages/Mark'
 import Export from './pages/Export'
 import AddStudent from './pages/AddStudent'
 import Import from './pages/Import'
+import newImport from './pages/newImport'
 import Db from './pages/Db'
 import Students from './pages/Students'
 import Student from './pages/Student'
@@ -38,6 +39,7 @@ const App = () => {
 				<Stack.Screen name='Auth' component={Auth} />
 				<Stack.Screen name='Home' component={Home} />
 				<Stack.Screen name='Import' component={Import} />
+				<Stack.Screen name='newImport' component={newImport} />
 				<Stack.Screen name='Mark' component={Mark} />
 				<Stack.Screen name='Export' component={Export} />
 				<Stack.Screen name='Db' component={Db} />
