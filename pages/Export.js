@@ -4,10 +4,11 @@ import Navbar from '../components/Navbar'
 import { StyleSheet } from 'react-native'
 
 import { COLORS, FONTS } from '../styles/theme'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { jsonToCSV } from 'react-native-csv'
 
@@ -18,81 +19,154 @@ import { StorageAccessFramework } from 'expo-file-system'
 export default function Mark() {
 	const navigation = useNavigation()
 
-	const date = new Date()
+	const [courses, setCourses] = useState([])
+	const [classes, setClasses] = useState([])
 
-	const data = [
-		{ label: 'Item 1', value: '1' },
-		{ label: 'Item 2', value: '2' },
-		{ label: 'Item 3', value: '3' },
-		{ label: 'Item 4', value: '4' },
-		{ label: 'Item 5', value: '5' },
-		{ label: 'Item 6', value: '6' },
-		{ label: 'Item 7', value: '7' },
-		{ label: 'Item 8', value: '8' },
-	]
 	const [course, setCourse] = useState(null)
 	const [classs, setClasss] = useState(null)
 
+	/*=============================================
+	=                fetchCourses                 =
+	=============================================*/
+	useEffect(() => {
+		async function fetch() {
+			AsyncStorage.getAllKeys()
+				.then((res) => {
+					setCourses(res.map((item, index) => ({ label: item, value: item })))
+				})
+				.catch((e) => {
+					console.log(e)
+				})
+		}
+		fetch()
+	}, [])
+
+	/*=============================================
+	=                fetchClasses                 =
+	=============================================*/
+	useEffect(() => {
+		if (course == null) return
+		async function fetch() {
+			AsyncStorage.getItem(course)
+				.then((res) => {
+					res = JSON.parse(res)
+					res = Object.keys(res['classes'])
+					setClasses(res.map((item, index) => ({ label: item, value: item })))
+				})
+				.catch((e) => {
+					console.log(e)
+				})
+		}
+		fetch()
+	}, [course])
+
 	async function handlePress() {
-		const results = jsonToCSV([
-			{
-				hello: [
-					{
-						col: 'hello',
-						col2: 'slkjs',
-					},
-					{
-						sdf: 'sdknf',
-						sdlknf: 'sdlfklkn',
-					},
-					{
-						doiofhs: 'salkkf;s',
-					},
-					{
-						lsdjfs: 'dlfk',
-					},
-				],
-			},
-		])
-		// console.log(results)
+		if (course && classs) {
+			AsyncStorage.getItem(course).then((res) => {
+				results = JSON.parse(res)
+				// console.log(results)
 
-		StorageAccessFramework.requestDirectoryPermissionsAsync()
-			.then((res) => {
-				console.log(res)
-				const folderLocation = res['directoryUri']
-				StorageAccessFramework.createFileAsync(folderLocation, date.toString(), 'text/csv')
-					.then((res) => {
-						console.log(res)
-						StorageAccessFramework.writeAsStringAsync(res, results)
-							.then((res) => {
-								console.log(res)
-							})
-							.catch((e) => {
-								console.log(e)
-							})
-					})
-					.catch((e) => {
-						console.log(e)
-					})
+				const jsDate = new Date()
+				const weekday = [
+					'Sunday',
+					'Monday',
+					'Tuesday',
+					'Wednesday',
+					'Thursday',
+					'Friday',
+					'Saturday',
+				]
+				const [dotw, day, month, year, hours, minutes, seconds] = [
+					weekday[jsDate.getDay()],
+					jsDate.getDate(),
+					jsDate.getMonth() + 1,
+					jsDate.getFullYear(),
+					jsDate.getHours(),
+					jsDate.getMinutes(),
+					jsDate.getSeconds(),
+				]
+
+				const date = String(
+					dotw + ', ' + day + '/' + month + '/' + year + '-' + hours + ':' + minutes + ':' + seconds
+				)
+				const fileName = course + '|' + classs + ' || ' + date
+
+				var dates = ['Student Name', 'Student Roll Number']
+
+				for (let i = 0; i < results['classes'][classs].date.length; i++) {
+					dates.push(results['classes'][classs].date[i])
+				}
+
+				var student = []
+
+				for (let i = 0; i < results['classes'][classs].students.length; i++) {
+					if (results['classes'][classs].students[i].studentName != '') {
+						student.push(results['classes'][classs].students[i].studentName)
+						student.push(results['classes'][classs].students[i].rollNumber)
+						student.concat(results['classes'][classs].students[i].attendance)
+					}
+				}
+
+				console.log(student)
+
+				// for (let i = 0; i < results['classes'][classs].students.length; i++) {
+				// 	var tempStudentAttendance = results['classes'][classs].students[i].attendance
+				// 	studentAttendance.push(tempStudentAttendance)
+				// }
+
+				// console.log(studentNames)
+				// console.log(studentRolls)
+				// console.log(studentAttendance)
+
+				// console.log(results['classes'][classs].students)
+
+				// StorageAccessFramework.requestDirectoryPermissionsAsync()
+				// 	.then((res) => {
+				// 		console.log(res)
+				// 		const folderLocation = res['directoryUri']
+				// 		const results = jsonToCSV({
+				// 			fields: ['Name', '07-02-2023', '20-05-2023', '15-06-2013', '04-01-2023'],
+				// 			data: [
+				// 				['foo', '1', '2', '3', '4'],
+				// 				['abc', '1', '2', '3', '4'],
+				// 			],
+				// 		})
+				// 		StorageAccessFramework.createFileAsync(folderLocation, fileName, 'text/csv').then(
+				// 			(res) => {
+				// 				console.log(res)
+				// 				StorageAccessFramework.writeAsStringAsync(res, results).then((res) => {
+				// 					console.log(res)
+				// 				})
+				// 			}
+				// 		)
+				// 	})
+				// 	.catch((e) => {
+				// 		console.log(e)
+				// 	})
 			})
-			.catch((e) => {
-				console.log(e)
-			})
-
-		// StorageAccessFramework.createFileAsync()
-
-		// let fileUri = FileSystem.documentDirectory + 'savedFile.txt'
-		// console.log(fileUri)
-		// await FileSystem.writeAsStringAsync(fileUri, results, {
-		// 	encoding: FileSystem.EncodingType.UTF8,
-		// })
-
-		// const preRes = MediaLibrary.requestPermissionsAsync()
-		// console.log(preRes)
-
-		// const albumRes = MediaLibrary.createAlbumAsync('download', fileUri)
-		// console.log(albumRes)
+		}
 	}
+
+	/**
+	 *
+	 * archive code
+	 *
+	 */
+
+	// StorageAccessFramework.createFileAsync()
+
+	// let fileUri = FileSystem.documentDirectory + 'savedFile.txt'
+	// console.log(fileUri)
+	// await FileSystem.writeAsStringAsync(fileUri, results, {
+	// 	encoding: FileSystem.EncodingType.UTF8,
+	// })
+
+	// const preRes = MediaLibrary.requestPermissionsAsync()
+	// console.log(preRes)
+
+	// const albumRes = MediaLibrary.createAlbumAsync('download', fileUri)
+	// console.log(albumRes)
+	// }
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -182,7 +256,7 @@ export default function Mark() {
 						placeholder='Select course'
 						placeholderStyle={styles.placeholderStyle}
 						selectedTextStyle={styles.selectedTextStyle}
-						data={data}
+						data={courses}
 						autoScroll={false}
 						maxHeight={300}
 						containerStyle={{ marginTop: -50, borderRadius: 7 }}
@@ -234,7 +308,7 @@ export default function Mark() {
 						placeholder='Select class'
 						placeholderStyle={styles.placeholderStyle}
 						selectedTextStyle={styles.selectedTextStyle}
-						data={data}
+						data={classes}
 						autoScroll={false}
 						maxHeight={300}
 						containerStyle={{ marginTop: -50, borderRadius: 7 }}
