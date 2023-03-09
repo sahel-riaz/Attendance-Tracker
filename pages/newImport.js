@@ -13,6 +13,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function newImport() {
     const navigation = useNavigation()
+	const [courseID, setCourseID] = useState ('')
+
+	
     return (
 		<View style={{ flex:1 }}>
 			{/* Back Arrow */}
@@ -80,8 +83,62 @@ export default function newImport() {
 						/>
 					</Svg>
 				</View>
+				{/* Course ID */}
+				<View>
+					<Text style={
+						{
+							fontFamily:FONTS?.bold,
+							fontSize:16,
+							lineHeight:19,
+							marginTop:70,
+							marginBottom:6
+						}
+					}>
+						Course ID:
+					</Text>
+					<TextInput style={styles.dropdown} value={courseID} onChangeText={setCourseID}/>
+				</View>
+				<View>
+					<Text style={
+						{
+							fontFamily:FONTS?.bold,
+							fontSize:16,
+							lineHeight:19,
+							marginTop:15,
+							marginBottom:6
+						}
+					}>
+						Course Name:
+					</Text>
+					<TextInput style={styles.dropdown} value={courseID} onChangeText={setCourseID}/>
+				</View>
+				<View>
+					<Text style={
+						{
+							fontFamily:FONTS?.bold,
+							fontSize:16,
+							lineHeight:19,
+							marginTop:15,
+							marginBottom:6
+						}
+					}>
+						Class:
+					</Text>
+					<TextInput style={styles.dropdown} value={courseID} onChangeText={setCourseID}/>
+				</View>
 			</View>
 		</View>
 	)
 }
 
+const styles=StyleSheet.create({
+	dropdown: {
+		height:50,
+		width:270,
+		paddingLeft:10,
+		paddingRight:10,
+		borderColor:COLORS?.borderGrey,
+		borderWidth:1,
+		borderRadius:7,
+	}
+})
