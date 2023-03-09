@@ -16,7 +16,7 @@ export default function Home() {
 					<Text style={{ paddingTop: 6 }}>
 						Good morning,
 						<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, lineHeight: 19 }}>
-							&nbsp;Aadhavan&nbsp;
+							&nbsp;Sahel&nbsp;
 						</Text>
 						👋
 					</Text>
