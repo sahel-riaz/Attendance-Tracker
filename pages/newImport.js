@@ -14,7 +14,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function newImport() {
     const navigation = useNavigation()
 	const [courseID, setCourseID] = useState ('')
-
+	const [courseName, setCourseName] = useState ('')
+	const [classs, setClasss] = useState ('')
 	
     return (
 		<View style={{ flex:1 }}>
@@ -48,7 +49,7 @@ export default function newImport() {
 						lineHeight: 19
 					}
 				}>
-					Import Data
+					New Import Data
 					</Text>
 			</View>
 			{/* Full body */}
@@ -110,7 +111,7 @@ export default function newImport() {
 					}>
 						Course Name:
 					</Text>
-					<TextInput style={styles.dropdown} value={courseID} onChangeText={setCourseID}/>
+					<TextInput style={styles.dropdown} value={courseName} onChangeText={setCourseName}/>
 				</View>
 				<View>
 					<Text style={
@@ -124,7 +125,48 @@ export default function newImport() {
 					}>
 						Class:
 					</Text>
-					<TextInput style={styles.dropdown} value={courseID} onChangeText={setCourseID}/>
+					<TextInput style={styles.dropdown} value={classs} onChangeText={setClasss}/>
+				</View>
+				{/* Import Button */}
+				<View>
+					<View style={
+						{
+							marginTop:40,
+							flexDirection:'row',
+							backgroundColor:'#294F82',
+							borderRadius:10,
+							padding:45,
+							paddingTop:12,
+							paddingBottom:12,
+							
+						}
+					}>
+						<Svg
+							width='19'
+							height='19'
+							viewBox='0 0 19 19'
+							fill='none'
+							xmlns='http://www.w3.org/2000/svg'
+						>
+							<Path
+								d='M12.8171 1.58331H6.18293C3.30126 1.58331 1.58334 3.30123 1.58334 6.1829V12.8091C1.58334 15.6987 3.30126 17.4166 6.18293 17.4166H12.8092C15.6908 17.4166 17.4088 15.6987 17.4088 12.8171V6.1829C17.4167 3.30123 15.6988 1.58331 12.8171 1.58331ZM12.6667 10.0937H10.0938V12.6666C10.0938 12.9912 9.82459 13.2604 9.50001 13.2604C9.17543 13.2604 8.90626 12.9912 8.90626 12.6666V10.0937H6.33334C6.00876 10.0937 5.73959 9.82456 5.73959 9.49998C5.73959 9.1754 6.00876 8.90623 6.33334 8.90623H8.90626V6.33331C8.90626 6.00873 9.17543 5.73956 9.50001 5.73956C9.82459 5.73956 10.0938 6.00873 10.0938 6.33331V8.90623H12.6667C12.9913 8.90623 13.2604 9.1754 13.2604 9.49998C13.2604 9.82456 12.9913 10.0937 12.6667 10.0937Z'
+								fill='white'
+							/>
+						</Svg>
+						<Text style={
+							{
+								fontFamily:FONTS?.bold,
+								fontSize:16,
+								fontWeight:500,
+								lineHeight:19,
+								color:'white',
+								marginLeft:10,
+
+							}
+						}>
+							Import Data
+						</Text>
+					</View>
 				</View>
 			</View>
 		</View>
