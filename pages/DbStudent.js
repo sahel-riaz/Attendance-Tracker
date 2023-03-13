@@ -5,6 +5,7 @@ import { COLORS, FONTS } from '../styles/theme'
 import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import email from 'react-native-email'
 
 export default function DbStudent({ route, navigation }) {
 	const { course, classs, id } = route.params
@@ -59,6 +60,43 @@ export default function DbStudent({ route, navigation }) {
 		}
 		setWarning(absentCount)
 	}, [student])
+
+	function handleEmail() {
+		/**
+		 *
+		 * 3 different cases:
+		 *
+		 *   -> {FName} .. {LName} = {FName}_Rollno@nitc.ac.in
+		 *   -> {I} {FName} .. {LName} = {FName}_Rollno@nitc.ac.in
+		 *   -> {I} {I} {FName} .. {LName} = {I}{I}{FName}_Rollno@nitc.ac.in
+		 *
+		 */
+
+		let to = ''
+
+		const names = student.studentName.split(' ')
+
+		if (names[0].length == 1) {
+			if (names[1].length == 1) {
+				to =
+					names[0].toLowerCase() +
+					names[1].toLowerCase() +
+					names[2].toLowerCase() +
+					'_' +
+					student.rollNumber.toLowerCase() +
+					'@nitc.ac.in'
+			} else {
+				to = names[1].toLowerCase() + '_' + student.rollNumber.toLowerCase() + '@nitc.ac.in'
+			}
+		} else {
+			to = names[0].toLowerCase() + '_' + student.rollNumber.toLowerCase() + '@nitc.ac.in'
+		}
+
+		email([to], {
+			subject: 'Test 3 subject',
+			body: 'Test 3 body',
+		}).catch(console.error)
+	}
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -243,9 +281,9 @@ export default function DbStudent({ route, navigation }) {
 						marginTop: 40,
 						alignSelf: 'center',
 					}}
-					// onPress={() => {
-					// 	handleNavigate()
-					// }}
+					onPress={() => {
+						handleEmail()
+					}}
 					activeOpacity={0.7}
 				>
 					<Svg
