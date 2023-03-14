@@ -64,7 +64,6 @@ export default function Mark() {
 		if (course && classs) {
 			AsyncStorage.getItem(course).then((res) => {
 				results = JSON.parse(res)
-				// console.log(results)
 
 				const jsDate = new Date()
 				const weekday = [
@@ -94,55 +93,44 @@ export default function Mark() {
 				var dates = ['Student Name', 'Student Roll Number']
 
 				for (let i = 0; i < results['classes'][classs].date.length; i++) {
-					dates.push(results['classes'][classs].date[i])
+					dates = [...dates, results['classes'][classs].date[i]]
 				}
 
 				var student = []
 
 				for (let i = 0; i < results['classes'][classs].students.length; i++) {
+					let temp = []
 					if (results['classes'][classs].students[i].studentName != '') {
-						student.push(results['classes'][classs].students[i].studentName)
-						student.push(results['classes'][classs].students[i].rollNumber)
-						student.concat(results['classes'][classs].students[i].attendance)
+						temp = [
+							...temp,
+							results['classes'][classs].students[i].studentName,
+							results['classes'][classs].students[i].rollNumber,
+							...results['classes'][classs].students[i].attendance,
+						]
 					}
+					student = [...student, temp]
 				}
 
-				console.log(student)
-
-				// for (let i = 0; i < results['classes'][classs].students.length; i++) {
-				// 	var tempStudentAttendance = results['classes'][classs].students[i].attendance
-				// 	studentAttendance.push(tempStudentAttendance)
-				// }
-
-				// console.log(studentNames)
-				// console.log(studentRolls)
-				// console.log(studentAttendance)
-
-				// console.log(results['classes'][classs].students)
-
-				// StorageAccessFramework.requestDirectoryPermissionsAsync()
-				// 	.then((res) => {
-				// 		console.log(res)
-				// 		const folderLocation = res['directoryUri']
-				// 		const results = jsonToCSV({
-				// 			fields: ['Name', '07-02-2023', '20-05-2023', '15-06-2013', '04-01-2023'],
-				// 			data: [
-				// 				['foo', '1', '2', '3', '4'],
-				// 				['abc', '1', '2', '3', '4'],
-				// 			],
-				// 		})
-				// 		StorageAccessFramework.createFileAsync(folderLocation, fileName, 'text/csv').then(
-				// 			(res) => {
-				// 				console.log(res)
-				// 				StorageAccessFramework.writeAsStringAsync(res, results).then((res) => {
-				// 					console.log(res)
-				// 				})
-				// 			}
-				// 		)
-				// 	})
-				// 	.catch((e) => {
-				// 		console.log(e)
-				// 	})
+				StorageAccessFramework.requestDirectoryPermissionsAsync()
+					.then((res) => {
+						console.log(res)
+						const folderLocation = res['directoryUri']
+						const results = jsonToCSV({
+							fields: dates,
+							data: student,
+						})
+						StorageAccessFramework.createFileAsync(folderLocation, fileName, 'text/csv').then(
+							(res) => {
+								console.log(res)
+								StorageAccessFramework.writeAsStringAsync(res, results).then((res) => {
+									console.log(res)
+								})
+							}
+						)
+					})
+					.catch((e) => {
+						console.log(e)
+					})
 			})
 		}
 	}
