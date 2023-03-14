@@ -1,4 +1,12 @@
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import {
+	Image,
+	SafeAreaView,
+	ScrollView,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+} from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
 import Navbar from '../components/Navbar'
 import { StyleSheet } from 'react-native'
@@ -7,23 +15,11 @@ import { COLORS, FONTS } from '../styles/theme'
 import { useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 
-import { useNavigation } from '@react-navigation/native'
+export default function Mark({ route, navigation }) {
+	const { course, classs } = route.params
 
-export default function Mark() {
-	const navigation = useNavigation()
-
-	const data = [
-		{ label: 'Item 1', value: '1' },
-		{ label: 'Item 2', value: '2' },
-		{ label: 'Item 3', value: '3' },
-		{ label: 'Item 4', value: '4' },
-		{ label: 'Item 5', value: '5' },
-		{ label: 'Item 6', value: '6' },
-		{ label: 'Item 7', value: '7' },
-		{ label: 'Item 8', value: '8' },
-	]
-	const [course, setCourse] = useState(null)
-	const [classs, setClasss] = useState(null)
+	const [studentName, setStudentName] = useState()
+	const [studentID, setStudentID] = useState()
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -100,6 +96,7 @@ export default function Mark() {
 						/>
 					</Svg>
 				</View>
+
 				<View>
 					<Text
 						style={{
@@ -110,49 +107,33 @@ export default function Mark() {
 							marginTop: 70,
 						}}
 					>
+						Student Name:
+					</Text>
+					<TextInput style={styles.dropdown} value={studentName} onChangeText={setStudentName} />
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+							marginBottom: 6,
+							marginTop: 15,
+						}}
+					>
+						Student Roll no:
+					</Text>
+					<TextInput style={styles.dropdown} value={studentID} onChangeText={setStudentID} />
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+							marginBottom: 6,
+							marginTop: 15,
+						}}
+					>
 						Course:
 					</Text>
-					<Dropdown
-						style={styles.dropdown}
-						placeholder='Select course'
-						placeholderStyle={styles.placeholderStyle}
-						selectedTextStyle={styles.selectedTextStyle}
-						data={data}
-						autoScroll={false}
-						maxHeight={300}
-						containerStyle={{ marginTop: -50, borderRadius: 7 }}
-						itemTextStyle={{
-							fontFamily: FONTS?.regular,
-							fontSize: 14,
-							marginLeft: -5,
-						}}
-						labelField='label'
-						valueField='value'
-						value={course}
-						onChange={(item) => {
-							setCourse(item.value)
-						}}
-						renderRightIcon={() => (
-							<Svg
-								width='16'
-								height='16'
-								viewBox='0 0 16 16'
-								fill='none'
-								xmlns='http://www.w3.org/2000/svg'
-							>
-								<Path
-									d='M13.28 5.96667L8.9333 10.3133C8.41997 10.8267 7.57997 10.8267 7.06664 10.3133L2.71997 5.96667'
-									stroke='#838383'
-									stroke-width='1.5'
-									stroke-miterlimit='10'
-									stroke-linecap='round'
-									stroke-linejoin='round'
-								/>
-							</Svg>
-						)}
-					/>
-				</View>
-				<View>
+					<TextInput style={styles.dropdown} value={course} editable={false} />
 					<Text
 						style={{
 							fontFamily: FONTS?.bold,
@@ -164,46 +145,9 @@ export default function Mark() {
 					>
 						Class:
 					</Text>
-					<Dropdown
-						style={styles.dropdown}
-						placeholder='Select class'
-						placeholderStyle={styles.placeholderStyle}
-						selectedTextStyle={styles.selectedTextStyle}
-						data={data}
-						autoScroll={false}
-						maxHeight={300}
-						containerStyle={{ marginTop: -50, borderRadius: 7 }}
-						itemTextStyle={{
-							fontFamily: FONTS?.regular,
-							fontSize: 14,
-							marginLeft: -5,
-						}}
-						labelField='label'
-						valueField='value'
-						value={classs}
-						onChange={(item) => {
-							setClasss(item.value)
-						}}
-						renderRightIcon={() => (
-							<Svg
-								width='16'
-								height='16'
-								viewBox='0 0 16 16'
-								fill='none'
-								xmlns='http://www.w3.org/2000/svg'
-							>
-								<Path
-									d='M13.28 5.96667L8.9333 10.3133C8.41997 10.8267 7.57997 10.8267 7.06664 10.3133L2.71997 5.96667'
-									stroke='#838383'
-									stroke-width='1.5'
-									stroke-miterlimit='10'
-									stroke-linecap='round'
-									stroke-linejoin='round'
-								/>
-							</Svg>
-						)}
-					/>
+					<TextInput style={styles.dropdown} value={classs} editable={false} />
 				</View>
+
 				<TouchableOpacity
 					style={{
 						height: 43,
