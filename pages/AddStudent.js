@@ -14,12 +14,43 @@ import { StyleSheet } from 'react-native'
 import { COLORS, FONTS } from '../styles/theme'
 import { useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Mark({ route, navigation }) {
-	const { course, classs } = route.params
+	const { course, classs, date } = route.params
 
 	const [studentName, setStudentName] = useState()
 	const [studentID, setStudentID] = useState()
+
+	async function handlePress() {
+		if (studentName && studentID) {
+			AsyncStorage.getItem(course)
+				.then((res) => {
+					res = JSON.parse(res)
+					const numberOfDays = res.classes[classs].date.length
+					const fillAttendance = []
+					for (let i = 0; i < numberOfDays; i++) {
+						fillAttendance.push(3)
+					}
+					const student = {
+						attendance: fillAttendance,
+						rollNumber: studentID,
+						studentName: studentName,
+					}
+					res.classes[classs].students = [...res.classes[classs].students, student]
+					console.log(res.classes[classs].students)
+					res = JSON.stringify(res)
+					AsyncStorage.setItem(course, res)
+				})
+				.then(() => {
+					navigation.push('Students', {
+						course: course,
+						classs: classs,
+						date: date,
+					})
+				})
+		}
+	}
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -159,7 +190,9 @@ export default function Mark({ route, navigation }) {
 						justifyContent: 'center',
 						marginTop: 40,
 					}}
-					onPress={() => {}}
+					onPress={() => {
+						handlePress()
+					}}
 					activeOpacity={0.7}
 				>
 					<Svg

@@ -128,7 +128,9 @@ export default function Students({ route, navigation }) {
 						justifyContent: 'center',
 					}}
 					activeOpacity={0.4}
-					onPress={() => navigation.push('AddStudent', { course: course, classs: classs })}
+					onPress={() =>
+						navigation.push('AddStudent', { course: course, classs: classs, date: date })
+					}
 				>
 					<Svg
 						width='25'
