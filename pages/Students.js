@@ -1,4 +1,4 @@
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import Navbar from '../components/Navbar'
 
 import { COLORS, FONTS } from '../styles/theme'
@@ -81,18 +81,26 @@ export default function Students({ route, navigation }) {
 			<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 24, marginTop: 25 }}>
 				Students:
 			</Text>
-			<View style={{ alignItems: 'center', paddingLeft: 24, paddingRight: 24, marginTop: 10 }}>
-				{!students.length < 1 &&
-					students.map((student, id) => (
+
+			{students.length > 1 && (
+				<FlatList
+					keyExtractor={(student) => student.rollNumber}
+					data={students}
+					style={{
+						width: '100%',
+						paddingLeft: 24,
+						paddingRight: 24,
+						marginTop: 10,
+					}}
+					renderItem={({ item, index }) => (
 						<TouchableOpacity
-							key={id}
 							style={{
 								marginTop: 8,
 								paddingLeft: 16,
 								paddingBottom: 12,
 								paddingTop: 12,
-								borderColor: `${status[student.attendance[dateIndex]]}`,
-								backgroundColor: `${status[student.attendance[dateIndex]]}`,
+								borderColor: `${status[item.attendance[dateIndex]]}`,
+								backgroundColor: `${status[item.attendance[dateIndex]]}`,
 								borderWidth: 1,
 								borderRadius: 10,
 								width: '100%',
@@ -102,57 +110,56 @@ export default function Students({ route, navigation }) {
 								navigation.navigate('Student', {
 									course: course,
 									classs: classs,
-									id: id,
+									id: index,
 									date: date,
 									dateIndex: dateIndex,
 								})
 							}
 						>
-							<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>
-								{student.studentName}
-							</Text>
+							<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>{item.studentName}</Text>
 						</TouchableOpacity>
-					))}
-				<TouchableOpacity
-					style={{
-						marginTop: 20,
-						paddingBottom: 12,
-						paddingTop: 12,
-						borderColor: COLORS?.black,
-						borderStyle: 'dashed',
-						borderWidth: 1,
-						borderRadius: 10,
-						width: '100%',
-						flexDirection: 'row',
-						alignItems: 'center',
-						justifyContent: 'center',
-					}}
-					activeOpacity={0.4}
-					onPress={() =>
-						navigation.push('AddStudent', { course: course, classs: classs, date: date })
-					}
+					)}
+				/>
+			)}
+			<TouchableOpacity
+				style={{
+					marginTop: 20,
+					paddingBottom: 12,
+					paddingTop: 12,
+					borderColor: COLORS?.black,
+					borderStyle: 'dashed',
+					borderWidth: 1,
+					borderRadius: 10,
+					width: '100%',
+					flexDirection: 'row',
+					alignItems: 'center',
+					justifyContent: 'center',
+				}}
+				activeOpacity={0.4}
+				onPress={() =>
+					navigation.push('AddStudent', { course: course, classs: classs, date: date })
+				}
+			>
+				<Svg
+					width='25'
+					height='24'
+					viewBox='0 0 25 24'
+					fill='none'
+					xmlns='http://www.w3.org/2000/svg'
 				>
-					<Svg
-						width='25'
-						height='24'
-						viewBox='0 0 25 24'
-						fill='none'
-						xmlns='http://www.w3.org/2000/svg'
-					>
-						<Path
-							d='M6.5 12H18.5M12.5 18V6'
-							stroke='black'
-							stroke-width='1.5'
-							stroke-linecap='round'
-							stroke-linejoin='round'
-						/>
-					</Svg>
+					<Path
+						d='M6.5 12H18.5M12.5 18V6'
+						stroke='black'
+						stroke-width='1.5'
+						stroke-linecap='round'
+						stroke-linejoin='round'
+					/>
+				</Svg>
 
-					<Text style={{ fontSize: 18, fontFamily: FONTS?.regular, marginLeft: 10 }}>
-						Add student to class
-					</Text>
-				</TouchableOpacity>
-			</View>
+				<Text style={{ fontSize: 18, fontFamily: FONTS?.regular, marginLeft: 10 }}>
+					Add student to class
+				</Text>
+			</TouchableOpacity>
 			<Navbar />
 		</View>
 	)
