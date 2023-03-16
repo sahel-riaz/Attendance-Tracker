@@ -1,14 +1,12 @@
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, ScrollView, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
-import { StyleSheet } from 'react-native'
 import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Navbar from '../components/Navbar'
 import { COLORS, FONTS } from '../styles/theme'
-
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Mark() {
 	const navigation = useNavigation()
@@ -23,6 +21,9 @@ export default function Mark() {
 	const [classs, setClasss] = useState(null)
 	const [date, setDate] = useState(null)
 
+	/*=============================================
+	=                fetchCourses                 =
+	=============================================*/
 	useEffect(() => {
 		async function fetch() {
 			AsyncStorage.getAllKeys()
@@ -36,6 +37,9 @@ export default function Mark() {
 		fetch()
 	}, [])
 
+	/*=============================================
+	=                fetchClasses                 =
+	=============================================*/
 	useEffect(() => {
 		if (course == null) return
 		async function fetch() {
@@ -53,6 +57,9 @@ export default function Mark() {
 		fetch()
 	}, [course])
 
+	/*=============================================
+	=                 fetchDates                  =
+	=============================================*/
 	useEffect(() => {
 		if (classs == null) return
 
@@ -78,6 +85,9 @@ export default function Mark() {
 		setDates(tempDates.map((item, index) => ({ label: item, value: item })))
 	}, [classs])
 
+	/*=============================================
+	=         Apply button functionality          =
+	=============================================*/
 	async function handleNavigate() {
 		if (course && classs) {
 			AsyncStorage.getItem(course)

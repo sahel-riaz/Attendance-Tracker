@@ -1,9 +1,9 @@
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
 import * as LocalAuthentication from 'expo-local-authentication'
 
 import { COLORS, FONTS } from '../styles/theme'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Path, Svg } from 'react-native-svg'
 

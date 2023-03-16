@@ -72,7 +72,10 @@ export default function DbStudents({ route, navigation }) {
 			<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 24, marginTop: 25 }}>
 				Students:
 			</Text>
-			<View style={{ alignItems: 'center', paddingLeft: 24, paddingRight: 24, marginTop: 10 }}>
+			<ScrollView
+				style={{ paddingLeft: 24, paddingRight: 24, marginTop: 10, marginBottom: 120 }}
+				contentContainerStyle={{ alignItems: 'center' }}
+			>
 				{!students.length < 1 &&
 					students.map((student, id) => (
 						<TouchableOpacity
@@ -93,7 +96,7 @@ export default function DbStudents({ route, navigation }) {
 							}}
 							activeOpacity={0.4}
 							onPress={() =>
-								navigation.navigate('DbStudent', {
+								navigation.push('DbStudent', {
 									course: course,
 									classs: classs,
 									id: id,
@@ -158,7 +161,7 @@ export default function DbStudents({ route, navigation }) {
 						Add student to class
 					</Text>
 				</TouchableOpacity>
-			</View>
+			</ScrollView>
 			<Navbar />
 		</View>
 	)
