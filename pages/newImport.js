@@ -17,6 +17,63 @@ export default function newImport() {
 	const [courseName, setCourseName] = useState ('')
 	const [classs, setClasss] = useState ('')
 	
+	async function handlePress() {
+		if (!courseID || !courseName || !classs) {
+			setError('Please enter the details before uploading!')
+			return
+		}
+		const dirInfo = await FileSystem.readAsStringAsync(path, EncodingType)
+		const dirInfoSplit = dirInfo.split('\n')
+		let info = []
+		for (let i = 0; i < dirInfoSplit.length; i++) {
+			const values = dirInfoSplit[i].split(',')
+			if (values[0] != undefined || values[1] != undefined) {
+				info.push({ studentName: values[0], rollNumber: values[1], attendance: [] })
+			}
+		}
+
+		const dataToSet = {
+			courseName: courseName,
+			classes: {
+				[classs]: {
+					date: [],
+					students: info,
+				},
+			},
+		}
+
+		/*
+		 *
+			check if courseID already exists using getAllKeys()
+			if it does, push it
+			if it doesnt, set new
+		 *
+		 */
+
+		await AsyncStorage.getAllKeys()
+			.then((allKeys) => {
+				if (allKeys.includes(courseID)) {
+					/*=====  key (courseID) already exists  ======*/
+					AsyncStorage.getItem(courseID).then((fetchedData) => {
+						fetchedData = JSON.parse(fetchedData)
+						fetchedData['classes'][classs] = { date: [], students: info }
+						fetchedData = JSON.stringify(fetchedData)
+						AsyncStorage.setItem(courseID, fetchedData).then(() => {
+							navigation.push('Home')
+						})
+					})
+				} else {
+					/*=====  key (courseID) does not exist  ======*/
+					const temp_json = JSON.stringify(dataToSet)
+					AsyncStorage.setItem(courseID, temp_json).then(() => {
+						navigation.push('Home')
+					})
+				}
+			})
+			.catch((e) => {
+				console.log(e)
+			})
+	}
     return (
 		<View style={{ flex:1 }}>
 			{/* Back Arrow */}
@@ -128,8 +185,7 @@ export default function newImport() {
 					<TextInput style={styles.dropdown} value={classs} onChangeText={setClasss}/>
 				</View>
 				{/* Import Button */}
-				<View>
-					<View style={
+					<TouchableOpacity style={
 						{
 							marginTop:40,
 							flexDirection:'row',
@@ -138,9 +194,10 @@ export default function newImport() {
 							padding:45,
 							paddingTop:12,
 							paddingBottom:12,
-							
-						}
-					}>
+						}}
+						onPress={handlePress}
+						activeOpacity={0.7}
+					>
 						<Svg
 							width='19'
 							height='19'
@@ -166,8 +223,7 @@ export default function newImport() {
 						}>
 							Import Data
 						</Text>
-					</View>
-				</View>
+					</TouchableOpacity>
 			</View>
 		</View>
 	)
