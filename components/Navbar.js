@@ -63,7 +63,7 @@ export default function Navbar() {
 						</Svg>
 					)}
 				</TouchableOpacity>
-				<TouchableOpacity //mine
+				{/* <TouchableOpacity //mine
 					onPress={() => {
 						navigation.push('newImport')
 					}}
@@ -97,7 +97,7 @@ export default function Navbar() {
 							/>
 						</Svg>
 					)}
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 				
 				<TouchableOpacity
 					onPress={() => {
