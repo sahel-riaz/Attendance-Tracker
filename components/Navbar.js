@@ -63,9 +63,9 @@ export default function Navbar() {
 						</Svg>
 					)}
 				</TouchableOpacity>
-				{/* <TouchableOpacity //mine
+				<TouchableOpacity //mine
 					onPress={() => {
-						navigation.push('newImport')
+						navigation.push('Info')
 					}}
 					activeOpacity={0.7}
 					style={{ marginRight: 42 }}
@@ -97,7 +97,7 @@ export default function Navbar() {
 							/>
 						</Svg>
 					)}
-				</TouchableOpacity> */}
+				</TouchableOpacity>
 				
 				<TouchableOpacity
 					onPress={() => {

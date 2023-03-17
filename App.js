@@ -14,6 +14,7 @@ import Students from './pages/Students'
 import Student from './pages/Student'
 import DbStudents from './pages/DbStudents'
 import DbStudent from './pages/DbStudent'
+import Info from './pages/Info'
 
 const Stack = createNativeStackNavigator()
 
@@ -39,7 +40,7 @@ const App = () => {
 				<Stack.Screen name='Auth' component={Auth} />
 				<Stack.Screen name='Home' component={Home} />
 				<Stack.Screen name='Import' component={Import} />
-				<Stack.Screen name='newImport' component={newImport} />
+				<Stack.Screen name='Info' component={Info} />
 				<Stack.Screen name='Mark' component={Mark} />
 				<Stack.Screen name='Export' component={Export} />
 				<Stack.Screen name='Db' component={Db} />
