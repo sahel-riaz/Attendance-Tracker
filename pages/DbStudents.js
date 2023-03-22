@@ -27,7 +27,18 @@ export default function DbStudents({ route, navigation }) {
 		fetch()
 	}, [])
 
-	function handleDeleteClass() {}
+	function handleDeleteClass() {
+		AsyncStorage.getItem(course)
+			.then((res) => {
+				res = JSON.parse(res)
+				delete res['classes'][classs]
+				res = JSON.stringify(res)
+				AsyncStorage.setItem(course, res)
+			})
+			.then(() => {
+				navigation.push('Db')
+			})
+	}
 
 	return (
 		<View style={{ flex: 1 }}>
