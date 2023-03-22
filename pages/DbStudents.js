@@ -71,6 +71,23 @@ export default function DbStudents({ route, navigation }) {
 					</Text>
 				</View>
 			</View>
+			<View
+				style={{
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					height: 43,
+					backgroundColor: COLORS?.borderGrey,
+					borderRadius: 10,
+					marginTop: 25,
+					marginLeft: 24,
+					marginRight: 24,
+				}}
+			>
+				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>
+					Total students: {students?.length}
+				</Text>
+			</View>
 			<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 24, marginTop: 25 }}>
 				Students:
 			</Text>
