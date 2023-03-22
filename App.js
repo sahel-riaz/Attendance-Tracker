@@ -15,6 +15,7 @@ import Student from './pages/Student'
 import DbStudents from './pages/DbStudents'
 import DbStudent from './pages/DbStudent'
 import Info from './pages/Info'
+import PopUp from './pages/PopUp'
 
 const Stack = createNativeStackNavigator()
 
@@ -41,6 +42,7 @@ const App = () => {
 				<Stack.Screen name='Home' component={Home} />
 				<Stack.Screen name='Import' component={Import} />
 				<Stack.Screen name='Info' component={Info} />
+				<Stack.Screen name='PopUp' component={PopUp} />
 				<Stack.Screen name='Mark' component={Mark} />
 				<Stack.Screen name='Export' component={Export} />
 				<Stack.Screen name='Db' component={Db} />
