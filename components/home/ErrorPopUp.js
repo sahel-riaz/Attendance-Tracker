@@ -4,14 +4,16 @@ import { COLORS, FONTS } from '../../styles/theme'
 
 export default function ErrorPopUp() {
   return (
+
     <View style ={{
         width : 320,
         height : 184,
-        backgroundColor : '#FA8072',
+        backgroundColor : 'white',
         marginTop : 150,
         marginLeft : 30,
         borderRadius : 20,
     }}>
+
         {/* Confirm */}
         <View style = {{
             marginTop : 47,
@@ -40,6 +42,6 @@ export default function ErrorPopUp() {
                 </Text>
             </View>
         </View>
-    </View>
+    </View> 
   )
 }
