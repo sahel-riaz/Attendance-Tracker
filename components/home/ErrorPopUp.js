@@ -3,7 +3,7 @@ import { Path, Svg } from 'react-native-svg'
 import { COLORS, FONTS } from '../../styles/theme'
 import { TouchableOpacity } from 'react-native'
 
-export default function ErrorPopUp() {
+export default function ErrorPopUp({ textt }) {
   return (
 
     <View style ={{
@@ -74,7 +74,7 @@ export default function ErrorPopUp() {
                         fontSize : 14,
                         lineHeight : 18
                     }}>
-                        Are you sure you want to delete this session?
+                        {textt}
                     </Text>
                 </View>
             </View>

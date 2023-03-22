@@ -7,6 +7,6 @@ import { useNavigation } from '@react-navigation/native'
 export default function PopUp() {
     const navigation = useNavigation()
   return (
-    <ErrorPopUp />
+    <ErrorPopUp textt="Are you sure you want to delete this class?"/>
   )
 }
