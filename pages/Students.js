@@ -329,7 +329,7 @@ export default function Students({ route, navigation }) {
 							color: COLORS?.white,
 						}}
 					>
-						Delete Session
+						Delete session
 					</Text>
 				</TouchableOpacity>
 			</View>
