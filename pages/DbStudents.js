@@ -31,9 +31,13 @@ export default function DbStudents({ route, navigation }) {
 		AsyncStorage.getItem(course)
 			.then((res) => {
 				res = JSON.parse(res)
-				delete res['classes'][classs]
-				res = JSON.stringify(res)
-				AsyncStorage.setItem(course, res)
+				if (Object.keys(res['classes']).length == 1) {
+					AsyncStorage.removeItem(course)
+				} else {
+					delete res['classes'][classs]
+					res = JSON.stringify(res)
+					AsyncStorage.setItem(course, res)
+				}
 			})
 			.then(() => {
 				navigation.push('Db')
