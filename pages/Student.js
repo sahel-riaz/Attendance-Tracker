@@ -63,13 +63,9 @@ export default function Student({ route, navigation }) {
 		if (!student) return
 		var tempStats = [0, 0, 0]
 		for (let i = 0; i < student.attendance.length; i++) {
-			if (student.attendance[i] == 0) {
-				tempStats[0]++
-			} else if (student.attendance[i] == 1) {
-				tempStats[1]++
-			} else if (student.attendance[i] == 2) {
-				tempStats[2]++
-			}
+			if (student.attendance[i] == 0) tempStats[0]++
+			else if (student.attendance[i] == 1) tempStats[1]++
+			else if (student.attendance[i] == 2) tempStats[2]++
 		}
 		setStats(tempStats)
 
@@ -85,6 +81,18 @@ export default function Student({ route, navigation }) {
 		}
 		setWarning(absentCount)
 	}, [student])
+
+	function handlePreviousStudent() {
+		if (id > 0) {
+			navigation.push('Student', {
+				course: course,
+				classs: classs,
+				id: id - 1,
+				date: date,
+				dateIndex: dateIndex,
+			})
+		}
+	}
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -348,6 +356,40 @@ export default function Student({ route, navigation }) {
 					<Text style={{ marginLeft: 10, fontFamily: FONTS?.bold, fontSize: 16 }}>Absent</Text>
 				</TouchableOpacity>
 			</View>
+			<TouchableOpacity
+				style={{
+					display: 'flex',
+					flexDirection: 'row',
+					alignItems: 'center',
+					justifyContent: 'center',
+					height: 43,
+					borderWidth: 1,
+					borderStyle: 'solid',
+					borderColor: COLORS?.borderGrey,
+					borderRadius: 10,
+					marginTop: 15,
+					marginLeft: 24,
+					marginRight: 24,
+				}}
+				onPress={() => handlePreviousStudent()}
+			>
+				<Svg
+					width='19'
+					height='19'
+					viewBox='0 0 19 19'
+					fill='none'
+					xmlns='http://www.w3.org/2000/svg'
+				>
+					<Path
+						d='M12.817 1.58331H6.18284C3.30117 1.58331 1.58325 3.30123 1.58325 6.1829V12.8091C1.58325 15.6987 3.30117 17.4166 6.18284 17.4166H12.8091C15.6908 17.4166 17.4087 15.6987 17.4087 12.8171V6.1829C17.4166 3.30123 15.6987 1.58331 12.817 1.58331ZM11.0199 12.7696H7.12492C6.80033 12.7696 6.53117 12.5004 6.53117 12.1758C6.53117 11.8512 6.80033 11.5821 7.12492 11.5821H11.0199C12.0333 11.5821 12.8645 10.7587 12.8645 9.73748C12.8645 8.71623 12.0412 7.8929 11.0199 7.8929H7.00617L7.212 8.09873C7.44158 8.33623 7.44159 8.70831 7.20409 8.94581C7.08534 9.06456 6.93492 9.11998 6.7845 9.11998C6.63408 9.11998 6.48367 9.06456 6.36492 8.94581L5.122 7.69498C5.01158 7.58325 4.94965 7.43249 4.94965 7.2754C4.94965 7.11831 5.01158 6.96755 5.122 6.85581L6.36492 5.6129C6.5945 5.38331 6.9745 5.38331 7.20409 5.6129C7.43367 5.84248 7.43367 6.22248 7.20409 6.45206L6.94284 6.71331H11.0199C12.6903 6.71331 14.052 8.07498 14.052 9.7454C14.052 11.4158 12.6903 12.7696 11.0199 12.7696Z'
+						fill='black'
+					/>
+				</Svg>
+
+				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 10 }}>
+					Previous student
+				</Text>
+			</TouchableOpacity>
 			<Navbar />
 		</View>
 	)
