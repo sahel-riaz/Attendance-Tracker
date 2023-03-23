@@ -35,7 +35,7 @@ const App = () => {
 	return (
 		<NavigationContainer theme={theme}>
 			<Stack.Navigator
-				initialRouteName='Mark'
+				initialRouteName='Auth'
 				screenOptions={{
 					headerShown: false,
 					gestureEnabled: false,
