@@ -103,23 +103,13 @@ export default function Mark() {
 			})
 	}
 
+	/*=============================================
+	=         Clear storage - for testing         =
+	=============================================*/
+
 	// useEffect(() => {
 	// 	async function handleDelete() {
-	// 		// await AsyncStorage.getAllKeys().then((res) => {
-	// 		// 	console.log(res)
-	// 		// 	AsyncStorage.getItem(res[0]).then((res) => {
-	// 		// 		res = JSON.parse(res)
-	// 		// 		console.log(res)
-	// 		// 	})
-	// 		// })
-
 	// 		await AsyncStorage.clear()
-	// 		// await AsyncStorage.getItem(courseID).then((res) => {
-	// 		// 	res = JSON.parse(res)
-	// 		// 	console.log(res)
-	// 		// 	// console.log(res['classes']['CS01']['students'][0]['attendance'])
-	// 		// 	// console.log(res['CS02'])
-	// 		// })
 	// 	}
 	// 	handleDelete()
 	// }, [])

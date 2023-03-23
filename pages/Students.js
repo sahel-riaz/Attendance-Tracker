@@ -51,7 +51,23 @@ export default function Students({ route, navigation }) {
 		setStats(tempStats)
 	}, [students])
 
-	function handleDeleteSession() {}
+	function handleDeleteSession() {
+		AsyncStorage.getItem(course)
+			.then((res) => {
+				res = JSON.parse(res)
+				res['classes'][classs]['date'].pop()
+
+				for (let i = 0; i < res['classes'][classs]['students'].length; i++) {
+					res['classes'][classs]['students'][i]['attendance'].pop()
+				}
+
+				res = JSON.stringify(res)
+				AsyncStorage.setItem(course, res)
+			})
+			.then(() => {
+				navigation.push('Mark')
+			})
+	}
 
 	return (
 		<View style={{ flex: 1 }}>

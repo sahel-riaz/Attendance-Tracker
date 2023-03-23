@@ -34,7 +34,10 @@ const App = () => {
 
 	return (
 		<NavigationContainer theme={theme}>
-			<Stack.Navigator initialRouteName='Mark' screenOptions={{ headerShown: false }}>
+			<Stack.Navigator
+				initialRouteName='Mark'
+				screenOptions={{ headerShown: false, gestureEnabled: false }}
+			>
 				<Stack.Screen name='Auth' component={Auth} />
 				<Stack.Screen name='Home' component={Home} />
 				<Stack.Screen name='Import' component={Import} />
