@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 
@@ -14,7 +14,7 @@ import Student from './pages/Student'
 import DbStudents from './pages/DbStudents'
 import DbStudent from './pages/DbStudent'
 
-const Stack = createNativeStackNavigator()
+const Stack = createStackNavigator()
 
 const theme = {
 	...DefaultTheme,
@@ -36,7 +36,12 @@ const App = () => {
 		<NavigationContainer theme={theme}>
 			<Stack.Navigator
 				initialRouteName='Mark'
-				screenOptions={{ headerShown: false, gestureEnabled: false }}
+				// screenOptions={{ headerShown: false, gestureEnabled: false }}
+				screenOptions={({ route, navigation }) => ({
+					headerShown: false,
+					gestureEnabled: false,
+					...TransitionPresets.SlideFromRightIOS,
+				})}
 			>
 				<Stack.Screen name='Auth' component={Auth} />
 				<Stack.Screen name='Home' component={Home} />
