@@ -11,6 +11,7 @@ export const COLORS = {
 	iconGrey: '#C8C8C8',
 	subHeading: '#525058',
 	selectGrey: '#838383',
+	placeholder: '#AEAEAE',
 }
 
 export const FONTS = {

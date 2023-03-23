@@ -414,7 +414,7 @@ const styles = StyleSheet.create({
 	placeholderStyle: {
 		fontFamily: FONTS?.regular,
 		fontSize: 14,
-		color: COLORS?.selectGrey,
+		color: COLORS?.placeholder,
 	},
 	selectedTextStyle: {
 		fontFamily: FONTS?.regular,

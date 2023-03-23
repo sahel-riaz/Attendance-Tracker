@@ -141,7 +141,13 @@ export default function Mark({ route, navigation }) {
 					>
 						Student Name:
 					</Text>
-					<TextInput style={styles.dropdown} value={studentName} onChangeText={setStudentName} />
+					<TextInput
+						style={styles.dropdown}
+						value={studentName}
+						onChangeText={setStudentName}
+						placeholder='Enter student name'
+						placeholderTextColor={COLORS?.placeholder}
+					/>
 					<Text
 						style={{
 							fontFamily: FONTS?.bold,
@@ -153,7 +159,13 @@ export default function Mark({ route, navigation }) {
 					>
 						Student Roll no:
 					</Text>
-					<TextInput style={styles.dropdown} value={studentID} onChangeText={setStudentID} />
+					<TextInput
+						style={styles.dropdown}
+						value={studentID}
+						onChangeText={setStudentID}
+						placeholder='Enter student roll number'
+						placeholderTextColor={COLORS?.placeholder}
+					/>
 					<Text
 						style={{
 							fontFamily: FONTS?.bold,
@@ -235,6 +247,7 @@ const styles = StyleSheet.create({
 		paddingLeft: 10,
 		paddingRight: 10,
 		borderRadius: 7,
+		fontFamily: FONTS?.regular,
 	},
 	placeholderStyle: {
 		fontFamily: FONTS?.regular,
