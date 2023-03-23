@@ -64,7 +64,7 @@ export default function Mark() {
 	async function handlePress() {
 		if (course && classs) {
 			AsyncStorage.getItem(course).then((res) => {
-				results = JSON.parse(res)
+				const results = JSON.parse(res)
 
 				const jsDate = new Date()
 				const weekday = [
@@ -114,7 +114,6 @@ export default function Mark() {
 
 				StorageAccessFramework.requestDirectoryPermissionsAsync()
 					.then((res) => {
-						console.log(res)
 						const folderLocation = res['directoryUri']
 						const results = jsonToCSV({
 							fields: dates,
@@ -122,10 +121,7 @@ export default function Mark() {
 						})
 						StorageAccessFramework.createFileAsync(folderLocation, fileName, 'text/csv').then(
 							(res) => {
-								console.log(res)
-								StorageAccessFramework.writeAsStringAsync(res, results).then((res) => {
-									console.log(res)
-								})
+								StorageAccessFramework.writeAsStringAsync(res, results)
 							}
 						)
 					})
