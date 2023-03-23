@@ -7,6 +7,7 @@ import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import email from 'react-native-email'
 import { StatusBar } from 'expo-status-bar'
+import ErrorPopUp from '../components/home/ErrorPopUp'
 
 export default function DbStudent({ route, navigation }) {
 	const { course, classs, id } = route.params
@@ -17,6 +18,7 @@ export default function DbStudent({ route, navigation }) {
 	const [stats, setStats] = useState([])
 	const [warning, setWarning] = useState(0)
 	const [res, setRes] = useState({})
+	const [trigger, setTrigger] = useState(false)
 
 	useEffect(() => {
 		if (course == null) return
@@ -126,9 +128,24 @@ export default function DbStudent({ route, navigation }) {
 			})
 	}
 
+	function onCancel() {
+		setTrigger(false)
+	}
+
+	function onDelete() {
+		handleDeleteStudent()
+		setTrigger(false)
+	}
+
 	return (
 		<View style={{ flex: 1 }}>
 			<StatusBar />
+			<ErrorPopUp
+				data='Are you sure you want to delete this student?'
+				trigger={trigger}
+				onCancel={onCancel}
+				onDelete={onDelete}
+			/>
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'
@@ -353,7 +370,7 @@ export default function DbStudent({ route, navigation }) {
 							alignSelf: 'center',
 						}}
 						onPress={() => {
-							handleDeleteStudent()
+							setTrigger(true)
 						}}
 						activeOpacity={0.7}
 					>

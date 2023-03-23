@@ -60,7 +60,7 @@ export default function DbStudents({ route, navigation }) {
 		<View style={{ flex: 1 }}>
 			<StatusBar />
 			<ErrorPopUp
-				data='Are you sure you want to delete this session?'
+				data='Are you sure you want to delete this class?'
 				trigger={trigger}
 				onCancel={onCancel}
 				onDelete={onDelete}
