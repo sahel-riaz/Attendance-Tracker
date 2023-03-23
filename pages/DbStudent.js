@@ -485,7 +485,7 @@ export default function DbStudent({ route, navigation }) {
 						/>
 					</Svg>
 
-					<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 10 }}>Skip</Text>
+					<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 10 }}>Next</Text>
 				</TouchableOpacity>
 			</View>
 			<Navbar />

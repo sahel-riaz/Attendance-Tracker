@@ -192,7 +192,7 @@ export default function DbStudents({ route, navigation }) {
 						justifyContent: 'center',
 					}}
 					activeOpacity={0.4}
-					onPress={() => navigation.navigate('AddStudent', { course: course, classs: classs })}
+					onPress={() => navigation.push('AddStudent', { course: course, classs: classs })}
 				>
 					<Svg
 						width='25'
