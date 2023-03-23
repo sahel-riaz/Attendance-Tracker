@@ -57,12 +57,10 @@ export default function Students({ route, navigation }) {
 		AsyncStorage.getItem(course)
 			.then((res) => {
 				res = JSON.parse(res)
-				res['classes'][classs]['date'].pop()
-
+				res['classes'][classs]['date'].splice(dateIndex, 1)
 				for (let i = 0; i < res['classes'][classs]['students'].length; i++) {
-					res['classes'][classs]['students'][i]['attendance'].pop()
+					res['classes'][classs]['students'][i]['attendance'].splice(dateIndex, 1)
 				}
-
 				res = JSON.stringify(res)
 				AsyncStorage.setItem(course, res)
 			})
