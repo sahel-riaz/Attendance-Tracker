@@ -17,7 +17,7 @@ import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Mark({ route, navigation }) {
-	const { course, classs, date } = route.params
+	const { course, classs } = route.params
 
 	const [studentName, setStudentName] = useState()
 	const [studentID, setStudentID] = useState()
@@ -43,10 +43,9 @@ export default function Mark({ route, navigation }) {
 					AsyncStorage.setItem(course, res)
 				})
 				.then(() => {
-					navigation.push('Students', {
+					navigation.push('DbStudents', {
 						course: course,
 						classs: classs,
-						date: date,
 					})
 				})
 		}
