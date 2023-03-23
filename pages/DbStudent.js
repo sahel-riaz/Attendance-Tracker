@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import email from 'react-native-email'
+import { StatusBar } from 'expo-status-bar'
 
 export default function DbStudent({ route, navigation }) {
 	const { course, classs, id } = route.params
@@ -127,6 +128,7 @@ export default function DbStudent({ route, navigation }) {
 
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'

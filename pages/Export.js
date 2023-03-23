@@ -15,6 +15,7 @@ import { jsonToCSV } from 'react-native-csv'
 import * as FileSystem from 'expo-file-system'
 import * as MediaLibrary from 'expo-media-library'
 import { StorageAccessFramework } from 'expo-file-system'
+import { StatusBar } from 'expo-status-bar'
 
 export default function Mark() {
 	const navigation = useNavigation()
@@ -158,6 +159,7 @@ export default function Mark() {
 
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'

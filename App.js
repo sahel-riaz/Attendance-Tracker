@@ -36,12 +36,11 @@ const App = () => {
 		<NavigationContainer theme={theme}>
 			<Stack.Navigator
 				initialRouteName='Mark'
-				// screenOptions={{ headerShown: false, gestureEnabled: false }}
-				screenOptions={({ route, navigation }) => ({
+				screenOptions={{
 					headerShown: false,
-					gestureEnabled: true,
+					gestureEnabled: false,
 					...TransitionPresets.SlideFromRightIOS,
-				})}
+				}}
 			>
 				<Stack.Screen name='Auth' component={Auth} />
 				<Stack.Screen name='Home' component={Home} />

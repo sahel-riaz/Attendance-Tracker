@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StatusBar } from 'expo-status-bar'
 
 export default function Students({ route, navigation }) {
 	const { course, classs, date } = route.params
@@ -71,6 +72,7 @@ export default function Students({ route, navigation }) {
 
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'
@@ -280,7 +282,7 @@ export default function Students({ route, navigation }) {
 						data={students}
 						renderItem={({ item, index }) => (
 							<TouchableOpacity
-								key={item.rollNumber}
+								rollNumber={item.rollNumber}
 								style={{
 									marginTop: 8,
 									paddingLeft: 16,

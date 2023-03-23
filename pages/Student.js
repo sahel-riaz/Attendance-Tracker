@@ -5,6 +5,7 @@ import { COLORS, FONTS } from '../styles/theme'
 import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StatusBar } from 'expo-status-bar'
 
 export default function Student({ route, navigation }) {
 	const { course, classs, id, date, dateIndex } = route.params
@@ -96,6 +97,7 @@ export default function Student({ route, navigation }) {
 
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'

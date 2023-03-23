@@ -6,10 +6,12 @@ import Navbar from '../components/Navbar'
 import * as LocalAuthentication from 'expo-local-authentication'
 
 import { COLORS, FONTS } from '../styles/theme'
+import { StatusBar } from 'expo-status-bar'
 
 export default function Home() {
 	return (
 		<SafeAreaView style={{ backgroundColor: COLORS?.bg, flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80 }}>
 				<View style={{ paddingLeft: 30, paddingRight: 30 }}>
 					<Text style={{ fontSize: 32, lineHeight: 32, fontFamily: FONTS?.bold }}>09:12 am</Text>

@@ -9,6 +9,7 @@ import { Path, Svg } from 'react-native-svg'
 
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StatusBar } from 'expo-status-bar'
 
 export default function Mark() {
 	const navigation = useNavigation()
@@ -61,6 +62,7 @@ export default function Mark() {
 
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'

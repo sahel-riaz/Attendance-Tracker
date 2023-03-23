@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import { StyleSheet } from 'react-native'
 
 import { COLORS, FONTS } from '../styles/theme'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
 
@@ -12,6 +12,8 @@ import * as FileSystem from 'expo-file-system'
 
 import { EncodingType } from 'expo-file-system'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { StatusBar } from 'expo-status-bar'
 
 export default function Mark() {
 	const navigation = useNavigation()
@@ -22,6 +24,9 @@ export default function Mark() {
 	const [path, setPath] = useState('')
 	const [error, setError] = useState('')
 	const [docPicker, setDocPicker] = useState([true, ''])
+
+	const courseNameRef = useRef()
+	const classRef = useRef()
 
 	const pickDocument = async () => {
 		await DocumentPicker.getDocumentAsync({ type: 'text/*' }).then((res) => {
@@ -42,7 +47,12 @@ export default function Mark() {
 		let info = []
 		for (let i = 0; i < dirInfoSplit.length; i++) {
 			const values = dirInfoSplit[i].split(',')
-			if (values[0] != undefined || values[1] != undefined) {
+			if (
+				values[0] != undefined ||
+				values[1] != undefined ||
+				values[0] != ' ' ||
+				values[1] != ' '
+			) {
 				info.push({ studentName: values[0], rollNumber: values[1], attendance: [] })
 			}
 		}
@@ -116,6 +126,7 @@ export default function Mark() {
 
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'
@@ -185,110 +196,128 @@ export default function Mark() {
 						/>
 					</Svg>
 				</View>
-				<View>
-					<Text
-						style={{
-							fontFamily: FONTS?.bold,
-							fontSize: 16,
-							lineHeight: 19,
-							marginBottom: 6,
-							marginTop: 70,
-						}}
-					>
-						Course ID:
-					</Text>
-					<TextInput style={styles.dropdown} value={courseID} onChangeText={setCourseID} />
-				</View>
-				<View>
-					<Text
-						style={{
-							fontFamily: FONTS?.bold,
-							fontSize: 16,
-							lineHeight: 19,
-							marginBottom: 6,
-							marginTop: 15,
-						}}
-					>
-						Course name:
-					</Text>
-					<TextInput
-						style={styles.dropdown}
-						value={courseName}
-						onChangeText={setCourseName}
-						onPressIn={setCourseNameHandle}
-					/>
-				</View>
-				<View>
-					<Text
-						style={{
-							fontFamily: FONTS?.bold,
-							fontSize: 16,
-							lineHeight: 19,
-							marginBottom: 6,
-							marginTop: 15,
-						}}
-					>
-						Class:
-					</Text>
-					<TextInput style={styles.dropdown} value={classs} onChangeText={setClasss} />
-				</View>
-				<View>
-					<Text
-						style={{
-							fontFamily: FONTS?.bold,
-							fontSize: 16,
-							lineHeight: 19,
-							marginBottom: 6,
-							marginTop: 15,
-						}}
-					>
-						Add file:
-					</Text>
-					<TouchableOpacity style={styles.input} onPress={pickDocument}>
-						{docPicker[0] ? (
-							<>
-								<Svg
-									width='17'
-									height='18'
-									viewBox='0 0 17 18'
-									fill='none'
-									xmlns='http://www.w3.org/2000/svg'
-								>
-									<Path
-										d='M4.25 9H12.75M8.5 13.25V4.75'
-										stroke='#838383'
-										stroke-width='1.5'
-										stroke-linecap='round'
-										stroke-linejoin='round'
-									/>
-								</Svg>
-								<Text
-									style={{
-										paddingLeft: 10,
-										fontFamily: FONTS?.regular,
-										fontSize: 16,
-										color: COLORS?.selectGrey,
-									}}
-								>
-									Select file
-								</Text>
-							</>
-						) : (
-							<>
-								<Text
-									style={{
-										paddingLeft: 10,
-										fontFamily: FONTS?.regular,
-										fontSize: 16,
-										color: COLORS?.selectGrey,
-									}}
-								>
-									File selected: {docPicker[1]}
-								</Text>
-							</>
-						)}
-					</TouchableOpacity>
-				</View>
+				<KeyboardAwareScrollView>
+					<View>
+						<Text
+							style={{
+								fontFamily: FONTS?.bold,
+								fontSize: 16,
+								lineHeight: 19,
+								marginBottom: 6,
+								marginTop: 70,
+							}}
+						>
+							Course ID:
+						</Text>
+						<TextInput
+							style={styles.dropdown}
+							value={courseID}
+							onChangeText={setCourseID}
+							onSubmitEditing={() => {
+								courseNameRef.current.focus()
+							}}
+						/>
+					</View>
+					<View>
+						<Text
+							style={{
+								fontFamily: FONTS?.bold,
+								fontSize: 16,
+								lineHeight: 19,
+								marginBottom: 6,
+								marginTop: 15,
+							}}
+						>
+							Course name:
+						</Text>
+						<TextInput
+							style={styles.dropdown}
+							value={courseName}
+							onChangeText={setCourseName}
+							onPressIn={setCourseNameHandle}
+							onSubmitEditing={() => {
+								classRef.current.focus()
+							}}
+							ref={courseNameRef}
+						/>
+					</View>
+					<View>
+						<Text
+							style={{
+								fontFamily: FONTS?.bold,
+								fontSize: 16,
+								lineHeight: 19,
+								marginBottom: 6,
+								marginTop: 15,
+							}}
+						>
+							Class:
+						</Text>
+						<TextInput
+							style={styles.dropdown}
+							value={classs}
+							onChangeText={setClasss}
+							ref={classRef}
+						/>
+					</View>
+					<View>
+						<Text
+							style={{
+								fontFamily: FONTS?.bold,
+								fontSize: 16,
+								lineHeight: 19,
+								marginBottom: 6,
+								marginTop: 15,
+							}}
+						>
+							Add file:
+						</Text>
+						<TouchableOpacity style={styles.input} onPress={pickDocument}>
+							{docPicker[0] ? (
+								<>
+									<Svg
+										width='17'
+										height='18'
+										viewBox='0 0 17 18'
+										fill='none'
+										xmlns='http://www.w3.org/2000/svg'
+									>
+										<Path
+											d='M4.25 9H12.75M8.5 13.25V4.75'
+											stroke='#838383'
+											stroke-width='1.5'
+											stroke-linecap='round'
+											stroke-linejoin='round'
+										/>
+									</Svg>
+									<Text
+										style={{
+											paddingLeft: 10,
+											fontFamily: FONTS?.regular,
+											fontSize: 16,
+											color: COLORS?.selectGrey,
+										}}
+									>
+										Select file
+									</Text>
+								</>
+							) : (
+								<>
+									<Text
+										style={{
+											paddingLeft: 10,
+											fontFamily: FONTS?.regular,
+											fontSize: 16,
+											color: COLORS?.selectGrey,
+										}}
+									>
+										File selected: {docPicker[1]}
+									</Text>
+								</>
+							)}
+						</TouchableOpacity>
+					</View>
+				</KeyboardAwareScrollView>
 				<TouchableOpacity
 					style={{
 						height: 43,
