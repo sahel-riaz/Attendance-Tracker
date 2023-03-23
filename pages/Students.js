@@ -280,7 +280,7 @@ export default function Students({ route, navigation }) {
 						data={students}
 						renderItem={({ item, index }) => (
 							<TouchableOpacity
-								key={index}
+								key={item.rollNumber}
 								style={{
 									marginTop: 8,
 									paddingLeft: 16,

@@ -39,7 +39,7 @@ const App = () => {
 				// screenOptions={{ headerShown: false, gestureEnabled: false }}
 				screenOptions={({ route, navigation }) => ({
 					headerShown: false,
-					gestureEnabled: false,
+					gestureEnabled: true,
 					...TransitionPresets.SlideFromRightIOS,
 				})}
 			>
