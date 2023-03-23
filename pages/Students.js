@@ -7,21 +7,22 @@ import { Path, Svg } from 'react-native-svg'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StatusBar } from 'expo-status-bar'
+import ErrorPopUp from '../components/home/ErrorPopUp'
 
 export default function Students({ route, navigation }) {
 	const { course, classs, date } = route.params
 
 	const [students, setStudents] = useState([])
 	const [dateIndex, setDateIndex] = useState()
-
 	const [stats, setStats] = useState([])
-
 	const [status, setStatus] = useState([
 		COLORS?.lightRed,
 		COLORS?.green,
 		COLORS?.yellow,
 		COLORS?.borderGrey,
 	])
+
+	const [trigger, setTrigger] = useState(false)
 
 	useEffect(() => {
 		if (course == null) return
@@ -70,9 +71,24 @@ export default function Students({ route, navigation }) {
 			})
 	}
 
+	function onCancel() {
+		setTrigger(false)
+	}
+
+	function onDelete() {
+		handleDeleteSession()
+		setTrigger(false)
+	}
+
 	return (
 		<View style={{ flex: 1 }}>
 			<StatusBar />
+			<ErrorPopUp
+				data='Are you sure you want to delete this session?'
+				trigger={trigger}
+				onCancel={onCancel}
+				onDelete={onDelete}
+			/>
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'
@@ -322,7 +338,7 @@ export default function Students({ route, navigation }) {
 						marginTop: 30,
 					}}
 					onPress={() => {
-						handleDeleteSession()
+						setTrigger(true)
 					}}
 					activeOpacity={0.7}
 				>
@@ -352,29 +368,6 @@ export default function Students({ route, navigation }) {
 				</TouchableOpacity>
 			</View>
 			<Navbar />
-		</View>
-	)
-}
-
-function ClassStats({ bgColor, borderColor, icon, stat }) {
-	return (
-		<View
-			style={{
-				fontFamily: FONTS?.regular,
-				fontSize: 16,
-				paddingTop: 13,
-				paddingBottom: 13,
-				paddingLeft: 11,
-				paddingRight: 11,
-				backgroundColor: bgColor,
-				borderRadius: 10,
-				borderWidth: 3,
-				borderStyle: 'solid',
-				borderColor: borderColor,
-			}}
-		>
-			{icon}
-			<Text>{stat}</Text>
 		</View>
 	)
 }
