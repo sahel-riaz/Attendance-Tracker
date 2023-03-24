@@ -86,6 +86,27 @@ export default function Test() {
 					>
 						Stats:
 					</Text>
+					<View
+						style={{
+							width: 82,
+							height: 70,
+							padding: 12,
+							marginTop: 5,
+							borderwidth: 1,
+							borderRadius: 7,
+							borderColor: '#66DDAA',
+							backgroundColor: '#66DDAA',
+						}}
+					>
+						<View style={{ height: 46, width: 58, alignItems: 'center' }}>
+							<View>
+								<Text>7</Text>
+							</View>
+							<View style={{ marginTop: 3 }}>
+								<Text>Present</Text>
+							</View>
+						</View>
+					</View>
 				</View>
 			</View>
 		</View>
