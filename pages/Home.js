@@ -25,7 +25,7 @@ export default function Home() {
 		async function fetch() {
 			AsyncStorage.getAllKeys()
 				.then((res) => {
-					setCourses(res.map((item, index) => ({ label: item, value: item })))
+					setCourses(res)
 				})
 				.catch((e) => {
 					console.log(e)
@@ -38,14 +38,12 @@ export default function Home() {
 	=                fetchClasses                 =
 	=============================================*/
 	useEffect(() => {
-		if (course == null) return
+		if (courses.length == 0) return
 		async function fetch() {
-			AsyncStorage.getItem('CS4002D')
+			AsyncStorage.getItem(courses[0])
 				.then((res) => {
-					res = JSON.parse(res)
-					setRes(res)
-					res = Object.keys(res['classes'])
-					setClasses(res.map((item, index) => ({ label: item, value: item })))
+					setClasses(res[0])
+					// res = JSON.parse(res)
 				})
 				.catch((e) => {
 					console.log(e)
@@ -57,6 +55,7 @@ export default function Home() {
 
 	console.log(courses)
 	console.log(classes)
+
 
 	return (
 		<SafeAreaView style={{ backgroundColor: COLORS?.bg, flex: 1 }}>
