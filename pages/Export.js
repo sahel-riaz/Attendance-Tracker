@@ -15,6 +15,7 @@ import { jsonToCSV } from 'react-native-csv'
 import * as FileSystem from 'expo-file-system'
 import * as MediaLibrary from 'expo-media-library'
 import { StorageAccessFramework } from 'expo-file-system'
+import { StatusBar } from 'expo-status-bar'
 
 export default function Mark() {
 	const navigation = useNavigation()
@@ -63,7 +64,7 @@ export default function Mark() {
 	async function handlePress() {
 		if (course && classs) {
 			AsyncStorage.getItem(course).then((res) => {
-				results = JSON.parse(res)
+				const results = JSON.parse(res)
 
 				const jsDate = new Date()
 				const weekday = [
@@ -113,7 +114,6 @@ export default function Mark() {
 
 				StorageAccessFramework.requestDirectoryPermissionsAsync()
 					.then((res) => {
-						console.log(res)
 						const folderLocation = res['directoryUri']
 						const results = jsonToCSV({
 							fields: dates,
@@ -121,10 +121,7 @@ export default function Mark() {
 						})
 						StorageAccessFramework.createFileAsync(folderLocation, fileName, 'text/csv').then(
 							(res) => {
-								console.log(res)
-								StorageAccessFramework.writeAsStringAsync(res, results).then((res) => {
-									console.log(res)
-								})
+								StorageAccessFramework.writeAsStringAsync(res, results)
 							}
 						)
 					})
@@ -158,6 +155,7 @@ export default function Mark() {
 
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'
@@ -395,7 +393,7 @@ const styles = StyleSheet.create({
 	placeholderStyle: {
 		fontFamily: FONTS?.regular,
 		fontSize: 14,
-		color: COLORS?.selectGrey,
+		color: COLORS?.placeholder,
 	},
 	selectedTextStyle: {
 		fontFamily: FONTS?.regular,

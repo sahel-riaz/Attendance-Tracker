@@ -6,11 +6,14 @@ import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StatusBar } from 'expo-status-bar'
+import ErrorPopUp from '../components/home/ErrorPopUp'
 
 export default function DbStudents({ route, navigation }) {
 	const { course, classs } = route.params
 
 	const [students, setStudents] = useState([])
+	const [trigger, setTrigger] = useState(false)
 
 	useEffect(() => {
 		if (course == null) return
@@ -27,8 +30,41 @@ export default function DbStudents({ route, navigation }) {
 		fetch()
 	}, [])
 
+	function handleDeleteClass() {
+		AsyncStorage.getItem(course)
+			.then((res) => {
+				res = JSON.parse(res)
+				if (Object.keys(res['classes']).length == 1) {
+					AsyncStorage.removeItem(course)
+				} else {
+					delete res['classes'][classs]
+					res = JSON.stringify(res)
+					AsyncStorage.setItem(course, res)
+				}
+			})
+			.then(() => {
+				navigation.push('Db')
+			})
+	}
+
+	function onCancel() {
+		setTrigger(false)
+	}
+
+	function onDelete() {
+		handleDeleteClass()
+		setTrigger(false)
+	}
+
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
+			<ErrorPopUp
+				data='Are you sure you want to delete this class?'
+				trigger={trigger}
+				onCancel={onCancel}
+				onDelete={onDelete}
+			/>
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'
@@ -68,6 +104,23 @@ export default function DbStudents({ route, navigation }) {
 						View details
 					</Text>
 				</View>
+			</View>
+			<View
+				style={{
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					height: 43,
+					backgroundColor: COLORS?.borderGrey,
+					borderRadius: 10,
+					marginTop: 25,
+					marginLeft: 24,
+					marginRight: 24,
+				}}
+			>
+				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>
+					Total students: {students?.length}
+				</Text>
 			</View>
 			<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 24, marginTop: 25 }}>
 				Students:
@@ -139,7 +192,7 @@ export default function DbStudents({ route, navigation }) {
 						justifyContent: 'center',
 					}}
 					activeOpacity={0.4}
-					onPress={() => navigation.navigate('AddStudent')}
+					onPress={() => navigation.push('AddStudent', { course: course, classs: classs })}
 				>
 					<Svg
 						width='25'
@@ -159,6 +212,46 @@ export default function DbStudents({ route, navigation }) {
 
 					<Text style={{ fontSize: 18, fontFamily: FONTS?.regular, marginLeft: 10 }}>
 						Add student to class
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={{
+						height: 43,
+						width: '100%',
+						backgroundColor: COLORS?.red,
+						alignItems: 'center',
+						borderRadius: 10,
+						flexDirection: 'row',
+						justifyContent: 'center',
+						marginTop: 30,
+					}}
+					onPress={() => {
+						setTrigger(true)
+					}}
+					activeOpacity={0.7}
+				>
+					<Svg
+						width='19'
+						height='19'
+						viewBox='0 0 19 19'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M16.6803 4.1404C15.4057 4.01373 14.1312 3.91873 12.8487 3.84748V3.83956L12.6745 2.8104C12.5557 2.08206 12.3816 0.989563 10.5291 0.989563H8.4549C6.61032 0.989563 6.43615 2.03456 6.30948 2.80248L6.14323 3.81581C5.40698 3.86331 4.67073 3.91081 3.93448 3.98206L2.31948 4.1404C1.98698 4.17206 1.74948 4.46498 1.78115 4.78956C1.81282 5.11415 2.09782 5.35165 2.43032 5.31998L4.04532 5.16165C8.19365 4.74998 12.3737 4.90831 16.5695 5.3279H16.6328C16.9337 5.3279 17.1949 5.09831 17.2266 4.78956C17.2385 4.63142 17.188 4.4749 17.0859 4.35355C16.9838 4.2322 16.8382 4.15568 16.6803 4.1404ZM15.2237 6.44415C15.0337 6.24623 14.7724 6.1354 14.5032 6.1354H4.49657C4.2274 6.1354 3.95823 6.24623 3.77615 6.44415C3.59407 6.64206 3.49115 6.91123 3.50698 7.18831L3.99782 15.3108C4.0849 16.5141 4.19573 18.0183 6.95865 18.0183H12.0412C14.8041 18.0183 14.9149 16.5221 15.002 15.3108L15.4928 7.19623C15.5087 6.91123 15.4057 6.64206 15.2237 6.44415ZM10.8141 14.0521H8.17782C7.85323 14.0521 7.58407 13.7829 7.58407 13.4583C7.58407 13.1337 7.85323 12.8646 8.17782 12.8646H10.8141C11.1387 12.8646 11.4078 13.1337 11.4078 13.4583C11.4078 13.7829 11.1387 14.0521 10.8141 14.0521ZM11.4791 10.8854H7.52073C7.19615 10.8854 6.92698 10.6162 6.92698 10.2916C6.92698 9.96706 7.19615 9.6979 7.52073 9.6979H11.4791C11.8037 9.6979 12.0728 9.96706 12.0728 10.2916C12.0728 10.6162 11.8037 10.8854 11.4791 10.8854Z'
+							fill='white'
+						/>
+					</Svg>
+
+					<Text
+						style={{
+							paddingLeft: 10,
+							fontFamily: FONTS?.regular,
+							fontSize: 16,
+							color: COLORS?.white,
+						}}
+					>
+						Delete class
 					</Text>
 				</TouchableOpacity>
 			</ScrollView>
