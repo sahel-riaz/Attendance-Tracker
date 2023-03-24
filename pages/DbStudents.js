@@ -217,7 +217,7 @@ export default function DbStudents({ route, navigation }) {
 				{/* Delete button */}
 				<View
 					style={{
-						width: 320,
+						width: '100%',
 						height: 43,
 						backgroundColor: 'red',
 						marginTop: 30,
