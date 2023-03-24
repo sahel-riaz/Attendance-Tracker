@@ -13,6 +13,7 @@ import Students from './pages/Students'
 import Student from './pages/Student'
 import DbStudents from './pages/DbStudents'
 import DbStudent from './pages/DbStudent'
+import Test from './pages/Test'
 
 const Stack = createStackNavigator()
 
@@ -53,6 +54,7 @@ const App = () => {
 				<Stack.Screen name='Student' component={Student} />
 				<Stack.Screen name='DbStudents' component={DbStudents} />
 				<Stack.Screen name='DbStudent' component={DbStudent} />
+				<Stack.Screen name='Test' component={Test} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

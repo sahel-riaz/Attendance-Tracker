@@ -215,7 +215,7 @@ export default function DbStudents({ route, navigation }) {
 					</Text>
 				</TouchableOpacity>
 				{/* Delete button */}
-				<View
+				<TouchableOpacity
 					style={{
 						width: '100%',
 						height: 43,
@@ -257,7 +257,7 @@ export default function DbStudents({ route, navigation }) {
 					>
 						Delete Class
 					</Text>
-				</View>
+				</TouchableOpacity>
 			</ScrollView>
 			<Navbar />
 		</View>
