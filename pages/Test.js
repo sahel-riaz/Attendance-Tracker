@@ -13,7 +13,7 @@ export default function Test() {
 		<View
 			style={{
 				width: 320,
-				height: 358,
+				height: 436,
 				paddingTop: 30,
 				paddingBottom: 30,
 				paddingLeft: 25,
@@ -25,7 +25,13 @@ export default function Test() {
 				borderRadius: 15,
 			}}
 		>
-			<View style={{ width: 270, height: 298, borderWidth: 1 }}>
+			<View
+				style={{
+					width: 270,
+					height: 376,
+					borderWidth: 1,
+				}}
+			>
 				<View>
 					<Text
 						style={{
@@ -88,25 +94,105 @@ export default function Test() {
 					</Text>
 					<View
 						style={{
-							width: 82,
+							width: 270,
 							height: 70,
-							padding: 12,
 							marginTop: 5,
-							borderwidth: 1,
-							borderRadius: 7,
-							borderColor: '#66DDAA',
-							backgroundColor: '#66DDAA',
+							flexDirection: 'row',
+							justifyContent: 'space-between',
 						}}
 					>
-						<View style={{ height: 46, width: 58, alignItems: 'center' }}>
-							<View>
-								<Text>7</Text>
+						<View
+							style={{
+								width: 82,
+								height: 70,
+								padding: 12,
+								borderwidth: 1,
+								borderRadius: 7,
+								borderColor: '#66DDAA',
+								backgroundColor: '#66DDAA',
+							}}
+						>
+							<View style={{ height: 46, width: 58, alignItems: 'center' }}>
+								<View>
+									<Text>7</Text>
+								</View>
+								<View style={{ marginTop: 3 }}>
+									<Text>Present</Text>
+								</View>
 							</View>
-							<View style={{ marginTop: 3 }}>
-								<Text>Present</Text>
+						</View>
+						<View
+							style={{
+								width: 82,
+								height: 70,
+								padding: 12,
+								borderwidth: 1,
+								borderRadius: 7,
+								borderColor: '#FA8072',
+								backgroundColor: '#FA8072',
+							}}
+						>
+							<View style={{ height: 46, width: 58, alignItems: 'center' }}>
+								<View>
+									<Text>3</Text>
+								</View>
+								<View style={{ marginTop: 3 }}>
+									<Text>Absent</Text>
+								</View>
+							</View>
+						</View>
+						<View
+							style={{
+								width: 82,
+								height: 70,
+								padding: 12,
+								borderwidth: 1,
+								borderRadius: 7,
+								borderColor: '#FFD800',
+								backgroundColor: '#FFD800',
+							}}
+						>
+							<View style={{ height: 46, width: 58, alignItems: 'center' }}>
+								<View>
+									<Text>2</Text>
+								</View>
+								<View style={{ marginTop: 3 }}>
+									<Text>Late</Text>
+								</View>
 							</View>
 						</View>
 					</View>
+					<View
+						style={{
+							width: 270,
+							height: 40,
+							marginTop: 12,
+							padding: 12,
+							backgroundColor: '#D9D9D9',
+							alignItems: 'center',
+						}}
+					>
+						<Text
+							style={{
+								fontFamily: FONTS?.bold,
+								color: COLORS?.selectblack,
+								fontWeight: 600,
+								fontSize: 14,
+								lineHeight: 16.8,
+							}}
+						>
+							Out of 10 Classes
+						</Text>
+					</View>
+				</View>
+				<View
+					style={{
+						width: 211,
+						height: 17,
+					}}
+				>
+					<View></View>
+					<View></View>
 				</View>
 			</View>
 		</View>
