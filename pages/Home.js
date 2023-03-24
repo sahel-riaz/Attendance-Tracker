@@ -5,9 +5,59 @@ import Navbar from '../components/Navbar'
 
 import * as LocalAuthentication from 'expo-local-authentication'
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useEffect, useState } from 'react'
+
 import { COLORS, FONTS } from '../styles/theme'
 
 export default function Home() {
+
+	const [courses, setCourses] = useState([])
+	const [classes, setClasses] = useState([])
+
+	const [course, setCourse] = useState(null)
+	const [classs, setClasss] = useState(null)
+
+	/*=============================================
+	=                fetchCourses                 =
+	=============================================*/
+	useEffect(() => {
+		async function fetch() {
+			AsyncStorage.getAllKeys()
+				.then((res) => {
+					setCourses(res.map((item, index) => ({ label: item, value: item })))
+				})
+				.catch((e) => {
+					console.log(e)
+				})
+		}
+		fetch()
+	}, [])
+
+	/*=============================================
+	=                fetchClasses                 =
+	=============================================*/
+	useEffect(() => {
+		if (course == null) return
+		async function fetch() {
+			AsyncStorage.getItem('CS4002D')
+				.then((res) => {
+					res = JSON.parse(res)
+					setRes(res)
+					res = Object.keys(res['classes'])
+					setClasses(res.map((item, index) => ({ label: item, value: item })))
+				})
+				.catch((e) => {
+					console.log(e)
+				})
+		}
+		fetch()
+	}, [course])
+
+
+	console.log(courses)
+	console.log(classes)
+
 	return (
 		<SafeAreaView style={{ backgroundColor: COLORS?.bg, flex: 1 }}>
 			<View style={{ paddingTop: 80 }}>
