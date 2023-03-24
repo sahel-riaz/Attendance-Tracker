@@ -1,19 +1,18 @@
-import { Button, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import Navbar from '../components/Navbar'
-import { StyleSheet } from 'react-native'
-
-import { COLORS, FONTS } from '../styles/theme'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
-
+import { EncodingType } from 'expo-file-system'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StatusBar } from 'expo-status-bar'
 import * as DocumentPicker from 'expo-document-picker'
 import * as FileSystem from 'expo-file-system'
 
-import { EncodingType } from 'expo-file-system'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { StatusBar } from 'expo-status-bar'
+//components
+import Navbar from '../components/Navbar'
+
+//themes
+import { COLORS, FONTS } from '../styles/theme'
 
 export default function Mark() {
 	const navigation = useNavigation()

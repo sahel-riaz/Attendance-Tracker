@@ -1,28 +1,24 @@
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import { Dropdown } from 'react-native-element-dropdown'
-import Navbar from '../components/Navbar'
-import { StyleSheet } from 'react-native'
-
-import { COLORS, FONTS } from '../styles/theme'
 import { useEffect, useState } from 'react'
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { Dropdown } from 'react-native-element-dropdown'
 import { Path, Svg } from 'react-native-svg'
-
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
 import { jsonToCSV } from 'react-native-csv'
-
-import * as FileSystem from 'expo-file-system'
-import * as MediaLibrary from 'expo-media-library'
 import { StorageAccessFramework } from 'expo-file-system'
 import { StatusBar } from 'expo-status-bar'
+
+//components
+import Navbar from '../components/Navbar'
+
+//themes
+import { COLORS, FONTS } from '../styles/theme'
 
 export default function Mark() {
 	const navigation = useNavigation()
 
 	const [courses, setCourses] = useState([])
 	const [classes, setClasses] = useState([])
-
 	const [course, setCourse] = useState(null)
 	const [classs, setClasss] = useState(null)
 

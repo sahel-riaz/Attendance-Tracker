@@ -1,21 +1,15 @@
-import {
-	Image,
-	SafeAreaView,
-	ScrollView,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-} from 'react-native'
-import { Dropdown } from 'react-native-element-dropdown'
-import Navbar from '../components/Navbar'
-import { StyleSheet } from 'react-native'
-
-import { COLORS, FONTS } from '../styles/theme'
 import { useState } from 'react'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StatusBar } from 'expo-status-bar'
+
+//components
+import Navbar from '../components/Navbar'
+
+//themes
+import { COLORS, FONTS } from '../styles/theme'
 
 export default function Mark({ route, navigation }) {
 	const { course, classs } = route.params

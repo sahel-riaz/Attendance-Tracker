@@ -1,11 +1,14 @@
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import Navbar from '../components/Navbar'
-
-import { COLORS, FONTS } from '../styles/theme'
 import { useEffect, useState } from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StatusBar } from 'expo-status-bar'
+
+//components
+import Navbar from '../components/Navbar'
+
+//themes
+import { COLORS, FONTS } from '../styles/theme'
 
 export default function Student({ route, navigation }) {
 	const { course, classs, id, date, dateIndex } = route.params

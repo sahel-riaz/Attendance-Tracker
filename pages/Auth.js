@@ -1,12 +1,12 @@
-import { Text, TouchableOpacity, View } from 'react-native'
-
-import * as LocalAuthentication from 'expo-local-authentication'
-
-import { COLORS, FONTS } from '../styles/theme'
 import { useEffect } from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
+import * as LocalAuthentication from 'expo-local-authentication'
 import { useNavigation } from '@react-navigation/native'
 import { Path, Svg } from 'react-native-svg'
 import { StatusBar } from 'expo-status-bar'
+
+//themes
+import { COLORS, FONTS } from '../styles/theme'
 
 export default function Auth() {
 	const navigation = useNavigation()

@@ -1,13 +1,15 @@
-import { FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { useEffect, useState } from 'react'
+import { FlatList, Text, TouchableOpacity, View } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
+import { Path, Svg } from 'react-native-svg'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+//components
+import ErrorPopUp from '../components/home/ErrorPopUp'
 import Navbar from '../components/Navbar'
 
+//themes
 import { COLORS, FONTS } from '../styles/theme'
-import { useEffect, useState } from 'react'
-import { Path, Svg } from 'react-native-svg'
-
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { StatusBar } from 'expo-status-bar'
-import ErrorPopUp from '../components/home/ErrorPopUp'
 
 export default function Students({ route, navigation }) {
 	const { course, classs, date } = route.params
@@ -21,7 +23,6 @@ export default function Students({ route, navigation }) {
 		COLORS?.yellow,
 		COLORS?.borderGrey,
 	])
-
 	const [trigger, setTrigger] = useState(false)
 
 	useEffect(() => {

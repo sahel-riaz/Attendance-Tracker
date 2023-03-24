@@ -1,20 +1,22 @@
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import Navbar from '../components/Navbar'
-
-import { COLORS, FONTS } from '../styles/theme'
 import { useEffect, useState } from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import email from 'react-native-email'
 import { StatusBar } from 'expo-status-bar'
+
+//components
 import ErrorPopUp from '../components/home/ErrorPopUp'
+import Navbar from '../components/Navbar'
+
+//themes
+import { COLORS, FONTS } from '../styles/theme'
 
 export default function DbStudent({ route, navigation }) {
 	const { course, classs, id } = route.params
 
 	const [studentsCount, setStudentsCount] = useState(0)
 	const [student, setStudent] = useState()
-	const [status, setStatus] = useState()
 	const [stats, setStats] = useState([])
 	const [warning, setWarning] = useState(0)
 	const [res, setRes] = useState({})

@@ -1,8 +1,9 @@
 import { TouchableOpacity, View } from 'react-native'
-import { COLORS } from '../styles/theme'
 import { useRoute } from '@react-navigation/native'
 import { Path, Svg } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
+
+import { COLORS } from '../styles/theme'
 
 export default function Navbar() {
 	const route = useRoute()

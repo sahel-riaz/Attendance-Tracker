@@ -1,12 +1,13 @@
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
+
+//components
 import ClassCard from '../components/home/ClassCard'
 import HomeCard from '../components/home/HomeCard'
 import Navbar from '../components/Navbar'
 
-import * as LocalAuthentication from 'expo-local-authentication'
-
+//themes
 import { COLORS, FONTS } from '../styles/theme'
-import { StatusBar } from 'expo-status-bar'
 
 export default function Home() {
 	return (
