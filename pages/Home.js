@@ -46,7 +46,11 @@ export default function Home() {
 					<Text style={{ fontFamily: FONTS?.bold, fontSize: 18, lineHeight: 22, marginBottom: 22 }}>
 						Courses 💼
 					</Text>
-					<ClassCard />
+					<ClassCard 
+						cid='CS2002D:'
+						cname='Software Engineering Lab'
+						students_qty='150'	
+					/>
 					<ClassCard />
 					<ClassCard />
 					<ClassCard />

@@ -1,7 +1,7 @@
 import { View, Text, Image } from 'react-native'
 import { COLORS, FONTS } from '../../styles/theme'
 
-export default function ClassCard() {
+export default function ClassCard({ cid,cname,students_qty }) {
 	return (
 		<View
 			style={{
@@ -18,15 +18,15 @@ export default function ClassCard() {
 				<Image styles={{ height: 24, width: 24 }} source={require('./icons/book.png')} />
 				<View style={{ paddingLeft: 10 }}>
 					<Text style={{ fontFamily: FONTS?.light, fontSize: 14, lineHeight: 17 }}>
-						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14, lineHeight: 17 }}>CS3004D: </Text>
-						Software Engineering
+						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14, lineHeight: 17 }}>{cid} </Text>
+						{cname}
 					</Text>
 					<View style={{ flexDirection: 'row', paddingTop: 5, alignItems: 'center' }}>
 						<Image styles={{ height: 12, width: 12 }} source={require('./icons/users.png')} />
 						<Text
 							style={{ fontFamily: FONTS?.regular, fontSize: 10, lineHeight: 12, paddingLeft: 4 }}
 						>
-							156 students
+							{students_qty} students
 						</Text>
 					</View>
 				</View>
