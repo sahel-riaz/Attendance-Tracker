@@ -8,14 +8,11 @@ import Mark from './pages/Mark'
 import Export from './pages/Export'
 import AddStudent from './pages/AddStudent'
 import Import from './pages/Import'
-// import newImport from './pages/newImport'
 import Db from './pages/Db'
 import Students from './pages/Students'
 import Student from './pages/Student'
 import DbStudents from './pages/DbStudents'
 import DbStudent from './pages/DbStudent'
-// import Info from './pages/Info'
-import PopUp from './pages/PopUp'
 
 const Stack = createStackNavigator()
 
@@ -48,8 +45,6 @@ const App = () => {
 				<Stack.Screen name='Auth' component={Auth} />
 				<Stack.Screen name='Home' component={Home} />
 				<Stack.Screen name='Import' component={Import} />
-				{/* <Stack.Screen name='Info' component={Info} /> */}
-				<Stack.Screen name='PopUp' component={PopUp} />
 				<Stack.Screen name='Mark' component={Mark} />
 				<Stack.Screen name='Export' component={Export} />
 				<Stack.Screen name='Db' component={Db} />
