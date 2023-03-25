@@ -76,7 +76,7 @@ export default function Home() {
 
 	return (
 		<SafeAreaView style={{ backgroundColor: COLORS?.bg, flex: 1 }}>
-			<StatusBar />
+			<StatusBar style='dark' />
 			<View style={{ paddingTop: 80 }}>
 				<View
 					style={{

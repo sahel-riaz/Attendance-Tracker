@@ -70,7 +70,7 @@ export default function DbStudents({ route, navigation }) {
 
 	return (
 		<View style={{ flex: 1 }}>
-			<StatusBar />
+			<StatusBar style='dark' />
 			<ErrorPopUp
 				data='Are you sure you want to delete this class?'
 				trigger={trigger}

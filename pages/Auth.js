@@ -39,7 +39,7 @@ export default function NewAuth() {
 
 	return (
 		<View>
-			<StatusBar />
+			<StatusBar style='dark' />
 			<View
 				style={{
 					marginTop: 86,

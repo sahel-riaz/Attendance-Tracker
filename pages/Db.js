@@ -66,7 +66,7 @@ export default function Mark() {
 
 	return (
 		<View style={{ flex: 1 }}>
-			<StatusBar />
+			<StatusBar style='dark' />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'
