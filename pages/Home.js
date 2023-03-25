@@ -62,8 +62,8 @@ export default function Home() {
 							const classToAdd = [
 								course,
 								res['courseName'],
-								classList[i],
-								res.classes[classList[i]].students.length,
+								classList[j],
+								res.classes[classList[j]].students.length,
 							]
 							setClasses((classes) => [...classes, classToAdd])
 						}
