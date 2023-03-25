@@ -59,15 +59,13 @@ export default function Home() {
 						res = JSON.parse(res)
 						const classList = Object.keys(res['classes'])
 						for (let j = 0; j < classList.length; j++) {
-							setClasses([
-								...classes,
-								[
-									course,
-									res['courseName'],
-									classList[i],
-									res.classes[classList[i]].students.length,
-								],
-							])
+							const classToAdd = [
+								course,
+								res['courseName'],
+								classList[i],
+								res.classes[classList[i]].students.length,
+							]
+							setClasses((classes) => [...classes, classToAdd])
 						}
 					})
 				}

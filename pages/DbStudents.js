@@ -74,7 +74,7 @@ export default function DbStudents({ route, navigation }) {
 					viewBox='0 0 16 17'
 					fill='none'
 					xmlns='http://www.w3.org/2000/svg'
-					onPress={() => navigation.navigate('Home')}
+					onPress={() => navigation.push('Home')}
 				>
 					<Path
 						d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
@@ -131,17 +131,15 @@ export default function DbStudents({ route, navigation }) {
 					alignItems: 'center',
 					justifyContent: 'center',
 					height: 43,
-					borderColor : COLORS?.borderGrey,
-					borderWidth : 1,
+					borderColor: COLORS?.borderGrey,
+					borderWidth: 1,
 					borderRadius: 10,
 					marginTop: 10,
 					marginLeft: 24,
 					marginRight: 24,
 				}}
 			>
-				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>
-					Average Attendance: 64.3%
-				</Text>
+				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>Average Attendance: 64.3%</Text>
 			</View>
 
 			<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 24, marginTop: 25 }}>

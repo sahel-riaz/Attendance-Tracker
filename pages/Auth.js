@@ -19,13 +19,13 @@ export default function NewAuth() {
 						if (res) {
 							LocalAuthentication.authenticateAsync().then((res) => {
 								if (res.success) {
-									navigation.navigate('Home')
+									navigation.push('Home')
 								}
 							})
 						}
 					})
 				} else {
-					navigation.navigate('Home')
+					navigation.push('Home')
 				}
 			})
 			.catch((e) => {

@@ -55,7 +55,7 @@ export default function Mark() {
 
 	async function handleNavigate() {
 		if (course && classs) {
-			navigation.navigate('DbStudents', {
+			navigation.push('DbStudents', {
 				course: course,
 				classs: classs,
 			})
