@@ -124,6 +124,26 @@ export default function DbStudents({ route, navigation }) {
 					Total students: {students?.length}
 				</Text>
 			</View>
+			{/* avg attendance */}
+			<View
+				style={{
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					height: 43,
+					borderColor : COLORS?.borderGrey,
+					borderWidth : 1,
+					borderRadius: 10,
+					marginTop: 10,
+					marginLeft: 24,
+					marginRight: 24,
+				}}
+			>
+				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>
+					Average Attendance: 64.3%
+				</Text>
+			</View>
+
 			<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 24, marginTop: 25 }}>
 				Students:
 			</Text>
