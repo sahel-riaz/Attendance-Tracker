@@ -130,9 +130,10 @@ export default function Home() {
 						Courses 💼
 					</Text>
 					<ClassCard 
-						cid='CS2002D:'
-						cname='Software Engineering Lab'
-						students_qty='150'	
+						courseId='CS2002D:'
+						courseName='Software Engineering Lab'
+						className
+						students_qty='160'	
 					/>
 					<ClassCard />
 					<ClassCard />
