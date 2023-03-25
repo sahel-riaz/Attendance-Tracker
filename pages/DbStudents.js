@@ -16,6 +16,7 @@ export default function DbStudents({ route, navigation }) {
 
 	const [students, setStudents] = useState([])
 	const [trigger, setTrigger] = useState(false)
+	const [avg, setAvg] = useState()
 
 	useEffect(() => {
 		if (course == null) return
@@ -24,6 +25,15 @@ export default function DbStudents({ route, navigation }) {
 				.then((res) => {
 					res = JSON.parse(res)
 					setStudents(res.classes[classs].students)
+					var tempCount = 0
+					var totalCount = 0
+					for (let i = 0; i < res['classes'][classs].students.length; i++) {
+						for (let j = 0; j < res['classes'][classs].students[i].attendance.length; j++) {
+							if (res['classes'][classs].students[i].attendance[j] == 1) tempCount += 1
+							totalCount += 1
+						}
+					}
+					setAvg(((tempCount / totalCount) * 100).toFixed(2))
 				})
 				.catch((e) => {
 					console.log(e)
@@ -124,7 +134,6 @@ export default function DbStudents({ route, navigation }) {
 					Total students: {students?.length}
 				</Text>
 			</View>
-			{/* avg attendance */}
 			<View
 				style={{
 					display: 'flex',
@@ -139,7 +148,7 @@ export default function DbStudents({ route, navigation }) {
 					marginRight: 24,
 				}}
 			>
-				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>Average Attendance: 64.3%</Text>
+				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>Average Attendance: {avg}%</Text>
 			</View>
 
 			<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 24, marginTop: 25 }}>
