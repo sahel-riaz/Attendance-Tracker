@@ -11,11 +11,17 @@ import { COLORS, FONTS } from '../styles/theme'
 import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/native'
 
 export default function Home() {
 	var [date, setDate] = useState(new Date())
+	const navigation = useNavigation()
+
+	const [courses, setCourses] = useState([])
+	const [classes, setClasses] = useState([])
 
 	const [name, setName] = useState(null)
+	const [warning, setWarning] = useState(false)
 
 	useEffect(() => {
 		var timer = setInterval(() => setDate(new Date()), 1000)
@@ -29,13 +35,23 @@ export default function Home() {
 	=============================================*/
 	useEffect(() => {
 		async function fetch() {
-			AsyncStorage.getItem('data')
-				.then((res) => {
-					console.log(res)
-				})
-				.catch((e) => {
-					console.log(e)
-				})
+			AsyncStorage.getItem('settings').then((res) => {
+				setName(res)
+			})
+		}
+		fetch()
+	}, [])
+
+	/*=============================================
+	=             fetchCourses&Classes            =
+	=============================================*/
+	useEffect(() => {
+		async function fetch() {
+			AsyncStorage.getAllKeys().then((res) => {
+				if (res.includes('settings') && res.length == 1) {
+					setWarning(true)
+				}
+			})
 		}
 		fetch()
 	}, [])
@@ -71,6 +87,9 @@ export default function Home() {
 					<TouchableOpacity
 						style={{ padding: 8, borderRadius: 50, backgroundColor: COLORS?.white }}
 						activeOpacity={0.7}
+						onPress={() => {
+							navigation.push('Settings')
+						}}
 					>
 						<Svg
 							width='20'
@@ -115,26 +134,14 @@ export default function Home() {
 					<Text style={{ fontFamily: FONTS?.bold, fontSize: 18, lineHeight: 22, marginBottom: 22 }}>
 						Courses 💼
 					</Text>
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
+					{warning ? (
+						<Text>Added classes in import tab!</Text>
+					) : (
+						<View>
+							<ClassCard courseId='asd' courseName='sdfa' className='adsfa' students_qty='12' />
+						</View>
+					)}
+
 					<View style={{ height: 400 }}></View>
 				</ScrollView>
 			</View>
