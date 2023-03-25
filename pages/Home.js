@@ -15,8 +15,13 @@ export default function Home() {
 	const [courses, setCourses] = useState([])
 	const [classes, setClasses] = useState([])
 
+	const [res, setRes] = useState({})
+
 	const [course, setCourse] = useState(null)
 	const [classs, setClasss] = useState(null)
+
+	const [coursename, setCourseName] = useState(null)
+	const [studentcount, setStudentCount] = useState(0)
 
 	/*=============================================
 	=                fetchCourses                 =
@@ -26,6 +31,7 @@ export default function Home() {
 			AsyncStorage.getAllKeys()
 				.then((res) => {
 					setCourses(res)
+					console.log(courses)
 				})
 				.catch((e) => {
 					console.log(e)
@@ -40,10 +46,18 @@ export default function Home() {
 	useEffect(() => {
 		if (courses.length == 0) return
 		async function fetch() {
-			AsyncStorage.getItem(courses[0] )
+			AsyncStorage.getItem(courses[0])
 				.then((res) => {
-					setClasses(res[0])
-					// res = JSON.parse(res)
+					res = JSON.parse(res)
+					setRes(res)
+					// console.log(res)
+					res1 = Object.keys(res['classes'])
+					setClasses(res1)
+					console.log(classes)
+					res2 = Object.keys(res['students'])
+					setStudentCount(res2.length)
+					console.log(studentcount)
+
 				})
 				.catch((e) => {
 					console.log(e)
@@ -53,8 +67,28 @@ export default function Home() {
 	}, [course])
 
 
-	console.log(courses)
-	console.log(classes)
+
+
+	// for (let i=0; i<courses.length; i++) {
+	// 	useEffect(() => {
+	// 		if (courses.length == 0) return
+	// 		async function fetch() 
+	// 		{
+	// 			AsyncStorage.getItem(courses[i])
+	// 				.then((res) => {
+	// 					res = JSON.parse(res)
+	// 					setRes(res)
+	// 					res = Object.keys(res['classes'])
+	// 					setClasses(res)
+	
+	// 				})
+	// 				.catch((e) => {
+	// 					console.log(e)
+	// 				})
+	// 		}
+	// 		fetch()
+	// 	}, [course])
+	// }
 
 
 	return (
