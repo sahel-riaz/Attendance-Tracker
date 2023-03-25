@@ -132,7 +132,7 @@ export default function Home() {
 					<ClassCard 
 						courseId='CS2002D:'
 						courseName='Software Engineering Lab'
-						className
+						className='CS01'
 						students_qty='160'	
 					/>
 					<ClassCard />

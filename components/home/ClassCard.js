@@ -39,13 +39,18 @@ export default function ClassCard({ courseId,courseName,className,students_qty }
 							paddingTop : 5,
 							marginRight : 10,
 						}}>
-							<Svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<Svg 
+								width="12"
+								height="12" 
+								viewBox="0 0 12 12" 
+								fill="none" 
+								xmlns="http://www.w3.org/2000/svg">
 								<Path d="M10.5 3.5V8.5C10.5 10 9.75 11 8 11H4C2.25 11 1.5 10 1.5 8.5V3.5C1.5 2 2.25 1 4 1H8C9.75 1 10.5 2 10.5 3.5Z" stroke="#80848A" stroke-width="0.9" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 								<Path d="M6.625 7H8.75M4.5 9H8.75M7.75 1V4.93C7.75 5.15 7.49 5.26 7.33 5.115L6.17 4.045C6.12399 4.00169 6.06319 3.97757 6 3.97757C5.93681 3.97757 5.87601 4.00169 5.83 4.045L4.67 5.115C4.51 5.26 4.25 5.15 4.25 4.93V1H7.75Z" stroke="#80848A" stroke-width="0.9" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 							</Svg>
 
 							<Text style = {{ fontFamily: FONTS?.regular, fontSize: 10, lineHeight: 12, paddingLeft: 4 }}>
-								CS01
+								{className}
 							</Text>
 						</View>
 						{/* Student qty */}
