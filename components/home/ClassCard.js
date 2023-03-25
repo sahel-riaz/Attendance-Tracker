@@ -1,4 +1,4 @@
-import { View, Text, Image, RootTagContext } from 'react-native'
+import { View, Text } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import { COLORS, FONTS } from '../../styles/theme'
 
@@ -35,7 +35,7 @@ export default function ClassCard({ courseId, courseName, className, students_qt
 				<View style={{ paddingLeft: 10 }}>
 					<Text style={{ fontFamily: FONTS?.light, fontSize: 14, lineHeight: 17 }}>
 						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14, lineHeight: 17 }}>
-							{courseId}{' '}
+							{courseId}:&nbsp;
 						</Text>
 						{courseName}
 					</Text>

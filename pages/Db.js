@@ -25,6 +25,9 @@ export default function Mark() {
 		async function fetch() {
 			AsyncStorage.getAllKeys()
 				.then((res) => {
+					for (let i = 0; i < res.length; i++) {
+						if (res[i] === 'settings') res.splice(i, 1)
+					}
 					setCourses(res.map((item, index) => ({ label: item, value: item })))
 				})
 				.catch((e) => {

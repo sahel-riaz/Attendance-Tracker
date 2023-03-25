@@ -56,6 +56,7 @@ export default function Home() {
 				for (let i = 0; i < res.length; i++) {
 					const course = res[i]
 					AsyncStorage.getItem(res[i]).then((res) => {
+						res = JSON.parse(res)
 						const classList = Object.keys(res['classes'])
 						for (let j = 0; j < classList.length; j++) {
 							setClasses([
