@@ -1,15 +1,18 @@
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
+
+//components
 import ClassCard from '../components/home/ClassCard'
 import HomeCard from '../components/home/HomeCard'
 import Navbar from '../components/Navbar'
 
-import * as LocalAuthentication from 'expo-local-authentication'
-
+//themes
 import { COLORS, FONTS } from '../styles/theme'
 
 export default function Home() {
 	return (
 		<SafeAreaView style={{ backgroundColor: COLORS?.bg, flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80 }}>
 				<View style={{ paddingLeft: 30, paddingRight: 30 }}>
 					<Text style={{ fontSize: 32, lineHeight: 32, fontFamily: FONTS?.bold }}>09:12 am</Text>

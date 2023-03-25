@@ -1,10 +1,14 @@
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import Navbar from '../components/Navbar'
-
-import { COLORS, FONTS } from '../styles/theme'
 import { useEffect, useState } from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StatusBar } from 'expo-status-bar'
+
+//components
+import Navbar from '../components/Navbar'
+
+//themes
+import { COLORS, FONTS } from '../styles/theme'
 
 export default function Student({ route, navigation }) {
 	const { course, classs, id, date, dateIndex } = route.params
@@ -63,13 +67,9 @@ export default function Student({ route, navigation }) {
 		if (!student) return
 		var tempStats = [0, 0, 0]
 		for (let i = 0; i < student.attendance.length; i++) {
-			if (student.attendance[i] == 0) {
-				tempStats[0]++
-			} else if (student.attendance[i] == 1) {
-				tempStats[1]++
-			} else if (student.attendance[i] == 2) {
-				tempStats[2]++
-			}
+			if (student.attendance[i] == 0) tempStats[0]++
+			else if (student.attendance[i] == 1) tempStats[1]++
+			else if (student.attendance[i] == 2) tempStats[2]++
 		}
 		setStats(tempStats)
 
@@ -86,8 +86,43 @@ export default function Student({ route, navigation }) {
 		setWarning(absentCount)
 	}, [student])
 
+	function handlePreviousStudent() {
+		if (id > 0) {
+			navigation.push('Student', {
+				course: course,
+				classs: classs,
+				id: id - 1,
+				date: date,
+				dateIndex: dateIndex,
+			})
+		} else {
+			navigation.reset({
+				index: 0,
+				routes: [{ name: 'Students', params: { course: course, classs: classs, date: date } }],
+			})
+		}
+	}
+
+	function handleNextStudent() {
+		if (id < studentsCount - 1) {
+			navigation.push('Student', {
+				course: course,
+				classs: classs,
+				id: id + 1,
+				date: date,
+				dateIndex: dateIndex,
+			})
+		} else {
+			navigation.reset({
+				index: 0,
+				routes: [{ name: 'Students', params: { course: course, classs: classs, date: date } }],
+			})
+		}
+	}
+
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'
@@ -297,7 +332,7 @@ export default function Student({ route, navigation }) {
 						height: 43,
 						marginLeft: 24,
 						flexDirection: 'row',
-						flexGrow: 1,
+						width: 150,
 					}}
 					activeOpacity={0.4}
 					onPress={() => setStatus(2)}
@@ -327,7 +362,7 @@ export default function Student({ route, navigation }) {
 						marginRight: 24,
 						marginLeft: 15,
 						flexDirection: 'row',
-						flexGrow: 1,
+						width: 150,
 					}}
 					activeOpacity={0.4}
 					onPress={() => setStatus(0)}
@@ -346,6 +381,75 @@ export default function Student({ route, navigation }) {
 					</Svg>
 
 					<Text style={{ marginLeft: 10, fontFamily: FONTS?.bold, fontSize: 16 }}>Absent</Text>
+				</TouchableOpacity>
+			</View>
+			<View
+				style={{
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					marginLeft: 24,
+					marginRight: 24,
+				}}
+			>
+				<TouchableOpacity
+					style={{
+						flexDirection: 'row',
+						alignItems: 'center',
+						justifyContent: 'center',
+						height: 43,
+						borderWidth: 1,
+						borderStyle: 'solid',
+						borderColor: COLORS?.borderGrey,
+						borderRadius: 10,
+						marginTop: 15,
+						width: 150,
+					}}
+					onPress={() => handlePreviousStudent()}
+				>
+					<Svg
+						width='19'
+						height='19'
+						viewBox='0 0 19 19'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M12.817 1.58331H6.18284C3.30117 1.58331 1.58325 3.30123 1.58325 6.1829V12.8091C1.58325 15.6987 3.30117 17.4166 6.18284 17.4166H12.8091C15.6908 17.4166 17.4087 15.6987 17.4087 12.8171V6.1829C17.4166 3.30123 15.6987 1.58331 12.817 1.58331ZM11.0199 12.7696H7.12492C6.80033 12.7696 6.53117 12.5004 6.53117 12.1758C6.53117 11.8512 6.80033 11.5821 7.12492 11.5821H11.0199C12.0333 11.5821 12.8645 10.7587 12.8645 9.73748C12.8645 8.71623 12.0412 7.8929 11.0199 7.8929H7.00617L7.212 8.09873C7.44158 8.33623 7.44159 8.70831 7.20409 8.94581C7.08534 9.06456 6.93492 9.11998 6.7845 9.11998C6.63408 9.11998 6.48367 9.06456 6.36492 8.94581L5.122 7.69498C5.01158 7.58325 4.94965 7.43249 4.94965 7.2754C4.94965 7.11831 5.01158 6.96755 5.122 6.85581L6.36492 5.6129C6.5945 5.38331 6.9745 5.38331 7.20409 5.6129C7.43367 5.84248 7.43367 6.22248 7.20409 6.45206L6.94284 6.71331H11.0199C12.6903 6.71331 14.052 8.07498 14.052 9.7454C14.052 11.4158 12.6903 12.7696 11.0199 12.7696Z'
+							fill='black'
+						/>
+					</Svg>
+
+					<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 10 }}>Previous</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={{
+						flexDirection: 'row',
+						alignItems: 'center',
+						justifyContent: 'center',
+						height: 43,
+						borderWidth: 1,
+						borderStyle: 'solid',
+						borderColor: COLORS?.borderGrey,
+						borderRadius: 10,
+						marginTop: 15,
+						width: 150,
+					}}
+					onPress={() => handleNextStudent()}
+				>
+					<Svg
+						width='19'
+						height='19'
+						viewBox='0 0 19 19'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M12.817 1.58331H6.18284C3.30117 1.58331 1.58325 3.30123 1.58325 6.1829V12.8091C1.58325 15.6987 3.30117 17.4166 6.18284 17.4166H12.8091C15.6908 17.4166 17.4087 15.6987 17.4087 12.8171V6.1829C17.4166 3.30123 15.6987 1.58331 12.817 1.58331ZM13.8778 7.69498L12.6349 8.9379C12.5162 9.05665 12.3658 9.11206 12.2153 9.11206C12.0649 9.11206 11.9145 9.05665 11.7958 8.9379C11.6853 8.82616 11.6234 8.6754 11.6234 8.51831C11.6234 8.36122 11.6853 8.21046 11.7958 8.09873L12.0016 7.8929H7.97992C6.96658 7.8929 6.13534 8.71623 6.13534 9.73748C6.13534 10.7587 6.95867 11.5821 7.97992 11.5821H11.8749C12.1995 11.5821 12.4687 11.8512 12.4687 12.1758C12.4687 12.5004 12.1995 12.7696 11.8749 12.7696H7.97992C6.3095 12.7696 4.94784 11.4079 4.94784 9.73748C4.94784 8.06706 6.3095 6.7054 7.97992 6.7054H12.057L11.7958 6.45206C11.6853 6.34033 11.6234 6.18957 11.6234 6.03248C11.6234 5.87539 11.6853 5.72463 11.7958 5.6129C12.0253 5.38331 12.4053 5.38331 12.6349 5.6129L13.8778 6.85581C14.1074 7.09331 14.1074 7.4654 13.8778 7.69498Z'
+							fill='black'
+						/>
+					</Svg>
+
+					<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 10 }}>Skip</Text>
 				</TouchableOpacity>
 			</View>
 			<Navbar />

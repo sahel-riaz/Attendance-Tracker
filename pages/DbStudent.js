@@ -1,21 +1,26 @@
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import Navbar from '../components/Navbar'
-
-import { COLORS, FONTS } from '../styles/theme'
 import { useEffect, useState } from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import email from 'react-native-email'
+import { StatusBar } from 'expo-status-bar'
+
+//components
+import ErrorPopUp from '../components/home/ErrorPopUp'
+import Navbar from '../components/Navbar'
+
+//themes
+import { COLORS, FONTS } from '../styles/theme'
 
 export default function DbStudent({ route, navigation }) {
 	const { course, classs, id } = route.params
 
 	const [studentsCount, setStudentsCount] = useState(0)
 	const [student, setStudent] = useState()
-	const [status, setStatus] = useState()
 	const [stats, setStats] = useState([])
 	const [warning, setWarning] = useState(0)
 	const [res, setRes] = useState({})
+	const [trigger, setTrigger] = useState(false)
 
 	useEffect(() => {
 		if (course == null) return
@@ -98,7 +103,7 @@ export default function DbStudent({ route, navigation }) {
 		}).catch(console.error)
 	}
 
-	async function handleDelete() {
+	async function handleDeleteStudent() {
 		AsyncStorage.getItem(course)
 			.then((res) => {
 				res = JSON.parse(res)
@@ -125,8 +130,54 @@ export default function DbStudent({ route, navigation }) {
 			})
 	}
 
+	function onCancel() {
+		setTrigger(false)
+	}
+
+	function onDelete() {
+		handleDeleteStudent()
+		setTrigger(false)
+	}
+
+	function handlePreviousStudent() {
+		if (id > 0) {
+			navigation.push('DbStudent', {
+				course: course,
+				classs: classs,
+				id: id - 1,
+			})
+		} else {
+			navigation.reset({
+				index: 0,
+				routes: [{ name: 'DbStudents', params: { course: course, classs: classs } }],
+			})
+		}
+	}
+
+	function handleNextStudent() {
+		if (id < studentsCount - 1) {
+			navigation.push('DbStudent', {
+				course: course,
+				classs: classs,
+				id: id + 1,
+			})
+		} else {
+			navigation.reset({
+				index: 0,
+				routes: [{ name: 'DbStudents', params: { course: course, classs: classs } }],
+			})
+		}
+	}
+
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
+			<ErrorPopUp
+				data='Are you sure you want to delete this student?'
+				trigger={trigger}
+				onCancel={onCancel}
+				onDelete={onDelete}
+			/>
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'
@@ -300,7 +351,7 @@ export default function DbStudent({ route, navigation }) {
 					<TouchableOpacity
 						style={{
 							height: 43,
-							width: 160,
+							width: 190,
 							backgroundColor: COLORS?.blue,
 							alignItems: 'center',
 							borderRadius: 10,
@@ -315,14 +366,14 @@ export default function DbStudent({ route, navigation }) {
 						activeOpacity={0.7}
 					>
 						<Svg
-							width='24'
-							height='24'
-							viewBox='0 0 24 24'
+							width='19'
+							height='19'
+							viewBox='0 0 19 19'
 							fill='none'
 							xmlns='http://www.w3.org/2000/svg'
 						>
 							<Path
-								d='M16.14 2.95998L7.11 5.95998C1.04 7.98998 1.04 11.3 7.11 13.32L9.79 14.21L10.68 16.89C12.7 22.96 16.02 22.96 18.04 16.89L21.05 7.86998C22.39 3.81998 20.19 1.60998 16.14 2.95998ZM16.46 8.33998L12.66 12.16C12.51 12.31 12.32 12.38 12.13 12.38C11.94 12.38 11.75 12.31 11.6 12.16C11.4605 12.0188 11.3823 11.8284 11.3823 11.63C11.3823 11.4316 11.4605 11.2411 11.6 11.1L15.4 7.27998C15.69 6.98998 16.17 6.98998 16.46 7.27998C16.75 7.56998 16.75 8.04998 16.46 8.33998Z'
+								d='M12.7775 2.34331L5.62872 4.71831C0.823304 6.32539 0.823304 8.94581 5.62872 10.545L7.75039 11.2496L8.45497 13.3712C10.0541 18.1766 12.6825 18.1766 14.2816 13.3712L16.6646 6.23039C17.7254 3.02414 15.9837 1.27456 12.7775 2.34331ZM13.0308 6.60247L10.0225 9.62664C9.90372 9.74539 9.7533 9.80081 9.60289 9.80081C9.45247 9.80081 9.30205 9.74539 9.1833 9.62664C9.07288 9.51491 9.01096 9.36415 9.01096 9.20706C9.01096 9.04997 9.07288 8.89921 9.1833 8.78747L12.1916 5.76331C12.4212 5.53372 12.8012 5.53372 13.0308 5.76331C13.2604 5.99289 13.2604 6.37289 13.0308 6.60247Z'
 								fill='white'
 							/>
 						</Svg>
@@ -342,7 +393,7 @@ export default function DbStudent({ route, navigation }) {
 						style={{
 							height: 43,
 							width: 43,
-							backgroundColor: COLORS?.blue,
+							backgroundColor: COLORS?.red,
 							alignItems: 'center',
 							borderRadius: 10,
 							flexDirection: 'row',
@@ -351,24 +402,93 @@ export default function DbStudent({ route, navigation }) {
 							alignSelf: 'center',
 						}}
 						onPress={() => {
-							handleDelete()
+							setTrigger(true)
 						}}
 						activeOpacity={0.7}
 					>
 						<Svg
-							width='24'
-							height='24'
-							viewBox='0 0 24 24'
+							width='19'
+							height='19'
+							viewBox='0 0 19 19'
 							fill='none'
 							xmlns='http://www.w3.org/2000/svg'
 						>
 							<Path
-								d='M21.07 5.23C19.46 5.07 17.85 4.95 16.23 4.86V4.85L16.01 3.55C15.86 2.63 15.64 1.25 13.3 1.25H10.68C8.35004 1.25 8.13004 2.57 7.97004 3.54L7.76004 4.82C6.83004 4.88 5.90004 4.94 4.97004 5.03L2.93004 5.23C2.51004 5.27 2.21004 5.64 2.25004 6.05C2.29004 6.46 2.65004 6.76 3.07004 6.72L5.11004 6.52C10.35 6 15.63 6.2 20.93 6.73H21.01C21.39 6.73 21.72 6.44 21.76 6.05C21.7751 5.85024 21.7113 5.65253 21.5823 5.49925C21.4533 5.34596 21.2694 5.24931 21.07 5.23ZM19.23 8.14C18.99 7.89 18.66 7.75 18.32 7.75H5.68004C5.34004 7.75 5.00004 7.89 4.77004 8.14C4.54004 8.39 4.41004 8.73 4.43004 9.08L5.05004 19.34C5.16004 20.86 5.30004 22.76 8.79004 22.76H15.21C18.7 22.76 18.84 20.87 18.95 19.34L19.57 9.09C19.59 8.73 19.46 8.39 19.23 8.14ZM13.66 17.75H10.33C9.92004 17.75 9.58004 17.41 9.58004 17C9.58004 16.59 9.92004 16.25 10.33 16.25H13.66C14.07 16.25 14.41 16.59 14.41 17C14.41 17.41 14.07 17.75 13.66 17.75ZM14.5 13.75H9.50004C9.09004 13.75 8.75004 13.41 8.75004 13C8.75004 12.59 9.09004 12.25 9.50004 12.25H14.5C14.91 12.25 15.25 12.59 15.25 13C15.25 13.41 14.91 13.75 14.5 13.75Z'
+								d='M16.6804 4.1404C15.4059 4.01373 14.1313 3.91873 12.8488 3.84748V3.83956L12.6746 2.8104C12.5559 2.08206 12.3817 0.989563 10.5292 0.989563H8.45502C6.61044 0.989563 6.43627 2.03456 6.30961 2.80248L6.14336 3.81581C5.40711 3.86331 4.67086 3.91081 3.93461 3.98206L2.31961 4.1404C1.98711 4.17206 1.74961 4.46498 1.78127 4.78956C1.81294 5.11415 2.09794 5.35165 2.43044 5.31998L4.04544 5.16165C8.19377 4.74998 12.3738 4.90831 16.5696 5.3279H16.6329C16.9338 5.3279 17.195 5.09831 17.2267 4.78956C17.2386 4.63142 17.1881 4.4749 17.086 4.35355C16.9839 4.2322 16.8383 4.15568 16.6804 4.1404ZM15.2238 6.44415C15.0338 6.24623 14.7725 6.1354 14.5034 6.1354H4.49669C4.22752 6.1354 3.95836 6.24623 3.77627 6.44415C3.59419 6.64206 3.49127 6.91123 3.50711 7.18831L3.99794 15.3108C4.08502 16.5141 4.19586 18.0183 6.95877 18.0183H12.0413C14.8042 18.0183 14.915 16.5221 15.0021 15.3108L15.4929 7.19623C15.5088 6.91123 15.4059 6.64206 15.2238 6.44415ZM10.8142 14.0521H8.17794C7.85336 14.0521 7.58419 13.7829 7.58419 13.4583C7.58419 13.1337 7.85336 12.8646 8.17794 12.8646H10.8142C11.1388 12.8646 11.4079 13.1337 11.4079 13.4583C11.4079 13.7829 11.1388 14.0521 10.8142 14.0521ZM11.4792 10.8854H7.52086C7.19627 10.8854 6.92711 10.6162 6.92711 10.2916C6.92711 9.96706 7.19627 9.6979 7.52086 9.6979H11.4792C11.8038 9.6979 12.0729 9.96706 12.0729 10.2916C12.0729 10.6162 11.8038 10.8854 11.4792 10.8854Z'
 								fill='white'
 							/>
 						</Svg>
 					</TouchableOpacity>
 				</View>
+			</View>
+			<View
+				style={{
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					marginLeft: 24,
+					marginRight: 24,
+				}}
+			>
+				<TouchableOpacity
+					style={{
+						flexDirection: 'row',
+						alignItems: 'center',
+						justifyContent: 'center',
+						height: 43,
+						borderWidth: 1,
+						borderStyle: 'solid',
+						borderColor: COLORS?.borderGrey,
+						borderRadius: 10,
+						marginTop: 30,
+						width: 150,
+					}}
+					onPress={() => handlePreviousStudent()}
+				>
+					<Svg
+						width='19'
+						height='19'
+						viewBox='0 0 19 19'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M12.817 1.58331H6.18284C3.30117 1.58331 1.58325 3.30123 1.58325 6.1829V12.8091C1.58325 15.6987 3.30117 17.4166 6.18284 17.4166H12.8091C15.6908 17.4166 17.4087 15.6987 17.4087 12.8171V6.1829C17.4166 3.30123 15.6987 1.58331 12.817 1.58331ZM11.0199 12.7696H7.12492C6.80033 12.7696 6.53117 12.5004 6.53117 12.1758C6.53117 11.8512 6.80033 11.5821 7.12492 11.5821H11.0199C12.0333 11.5821 12.8645 10.7587 12.8645 9.73748C12.8645 8.71623 12.0412 7.8929 11.0199 7.8929H7.00617L7.212 8.09873C7.44158 8.33623 7.44159 8.70831 7.20409 8.94581C7.08534 9.06456 6.93492 9.11998 6.7845 9.11998C6.63408 9.11998 6.48367 9.06456 6.36492 8.94581L5.122 7.69498C5.01158 7.58325 4.94965 7.43249 4.94965 7.2754C4.94965 7.11831 5.01158 6.96755 5.122 6.85581L6.36492 5.6129C6.5945 5.38331 6.9745 5.38331 7.20409 5.6129C7.43367 5.84248 7.43367 6.22248 7.20409 6.45206L6.94284 6.71331H11.0199C12.6903 6.71331 14.052 8.07498 14.052 9.7454C14.052 11.4158 12.6903 12.7696 11.0199 12.7696Z'
+							fill='black'
+						/>
+					</Svg>
+
+					<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 10 }}>Previous</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={{
+						flexDirection: 'row',
+						alignItems: 'center',
+						justifyContent: 'center',
+						height: 43,
+						borderWidth: 1,
+						borderStyle: 'solid',
+						borderColor: COLORS?.borderGrey,
+						borderRadius: 10,
+						marginTop: 30,
+						width: 150,
+					}}
+					onPress={() => handleNextStudent()}
+				>
+					<Svg
+						width='19'
+						height='19'
+						viewBox='0 0 19 19'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M12.817 1.58331H6.18284C3.30117 1.58331 1.58325 3.30123 1.58325 6.1829V12.8091C1.58325 15.6987 3.30117 17.4166 6.18284 17.4166H12.8091C15.6908 17.4166 17.4087 15.6987 17.4087 12.8171V6.1829C17.4166 3.30123 15.6987 1.58331 12.817 1.58331ZM13.8778 7.69498L12.6349 8.9379C12.5162 9.05665 12.3658 9.11206 12.2153 9.11206C12.0649 9.11206 11.9145 9.05665 11.7958 8.9379C11.6853 8.82616 11.6234 8.6754 11.6234 8.51831C11.6234 8.36122 11.6853 8.21046 11.7958 8.09873L12.0016 7.8929H7.97992C6.96658 7.8929 6.13534 8.71623 6.13534 9.73748C6.13534 10.7587 6.95867 11.5821 7.97992 11.5821H11.8749C12.1995 11.5821 12.4687 11.8512 12.4687 12.1758C12.4687 12.5004 12.1995 12.7696 11.8749 12.7696H7.97992C6.3095 12.7696 4.94784 11.4079 4.94784 9.73748C4.94784 8.06706 6.3095 6.7054 7.97992 6.7054H12.057L11.7958 6.45206C11.6853 6.34033 11.6234 6.18957 11.6234 6.03248C11.6234 5.87539 11.6853 5.72463 11.7958 5.6129C12.0253 5.38331 12.4053 5.38331 12.6349 5.6129L13.8778 6.85581C14.1074 7.09331 14.1074 7.4654 13.8778 7.69498Z'
+							fill='black'
+						/>
+					</Svg>
+
+					<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 10 }}>Next</Text>
+				</TouchableOpacity>
 			</View>
 			<Navbar />
 		</View>
