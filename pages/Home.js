@@ -137,8 +137,8 @@ export default function Home() {
 						justifyContent: 'space-between',
 					}}
 				>
-					<HomeCard />
-					<HomeCard />
+					<HomeCard count={courses.length} isCourse={true} />
+					<HomeCard count={classes.length} />
 				</View>
 				<View
 					style={{
