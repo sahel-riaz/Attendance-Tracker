@@ -16,6 +16,8 @@ import DbStudents from './pages/DbStudents'
 import DbStudent from './pages/DbStudent'
 import Info from './pages/Info'
 import PopUp from './pages/PopUp'
+import NewAuth from './pages/NewAuth'
+
 
 const Stack = createStackNavigator()
 
@@ -58,6 +60,7 @@ const App = () => {
 				<Stack.Screen name='Student' component={Student} />
 				<Stack.Screen name='DbStudents' component={DbStudents} />
 				<Stack.Screen name='DbStudent' component={DbStudent} />
+				<Stack.Screen name='NewAuth' component={NewAuth} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

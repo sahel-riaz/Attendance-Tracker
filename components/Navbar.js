@@ -66,7 +66,7 @@ export default function Navbar() {
 				</TouchableOpacity>
 				<TouchableOpacity //mine
 					onPress={() => {
-						navigation.push('PopUp')
+						navigation.push('NewAuth')
 					}}
 					activeOpacity={0.7}
 					style={{ marginRight: 42 }}
