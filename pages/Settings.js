@@ -94,7 +94,7 @@ export default function Settings() {
 						/>
 					</Svg>
 				</View>
-				<View>
+				<View style={{ marginBottom: 40 }}>
 					<Text
 						style={{
 							fontFamily: FONTS?.bold,
@@ -123,7 +123,6 @@ export default function Settings() {
 						borderRadius: 10,
 						flexDirection: 'row',
 						justifyContent: 'center',
-						marginTop: 40,
 					}}
 					onPress={handlePress}
 					activeOpacity={0.7}

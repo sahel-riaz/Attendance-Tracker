@@ -21,7 +21,6 @@ export default function Home() {
 	const [classes, setClasses] = useState([])
 
 	const [name, setName] = useState(null)
-	const [warning, setWarning] = useState(false)
 
 	useEffect(() => {
 		var timer = setInterval(() => setDate(new Date()), 1000)
@@ -43,13 +42,33 @@ export default function Home() {
 	}, [])
 
 	/*=============================================
-	=             fetchCourses&Classes            =
+	=            fetchCoursesAndClasses           =
 	=============================================*/
 	useEffect(() => {
 		async function fetch() {
 			AsyncStorage.getAllKeys().then((res) => {
-				if (res.includes('settings') && res.length == 1) {
-					setWarning(true)
+				for (let i = 0; i < res.length; i++) {
+					if (res[i] === 'settings') res.splice(i, 1)
+				}
+				if (res.length < 1) return
+				setCourses(res)
+
+				for (let i = 0; i < res.length; i++) {
+					const course = res[i]
+					AsyncStorage.getItem(res[i]).then((res) => {
+						const classList = Object.keys(res['classes'])
+						for (let j = 0; j < classList.length; j++) {
+							setClasses([
+								...classes,
+								[
+									course,
+									res['courseName'],
+									classList[i],
+									res.classes[classList[i]].students.length,
+								],
+							])
+						}
+					})
 				}
 			})
 		}
@@ -121,7 +140,7 @@ export default function Home() {
 					<HomeCard />
 					<HomeCard />
 				</View>
-				<ScrollView
+				<View
 					style={{
 						backgroundColor: COLORS?.white,
 						marginTop: 28,
@@ -134,16 +153,25 @@ export default function Home() {
 					<Text style={{ fontFamily: FONTS?.bold, fontSize: 18, lineHeight: 22, marginBottom: 22 }}>
 						Courses 💼
 					</Text>
-					{warning ? (
+					{courses.length < 1 ? (
 						<Text>Added classes in import tab!</Text>
 					) : (
-						<View>
-							<ClassCard courseId='asd' courseName='sdfa' className='adsfa' students_qty='12' />
-						</View>
+						<ScrollView>
+							{classes.map((item, index) => (
+								<View key={index}>
+									<ClassCard
+										courseId={item[0]}
+										courseName={item[1]}
+										className={item[2]}
+										students_qty={item[3]}
+									/>
+								</View>
+							))}
+						</ScrollView>
 					)}
 
 					<View style={{ height: 400 }}></View>
-				</ScrollView>
+				</View>
 			</View>
 			<Navbar />
 		</SafeAreaView>
