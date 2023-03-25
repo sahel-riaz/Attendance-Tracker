@@ -1,17 +1,18 @@
-import { Button, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import Navbar from '../components/Navbar'
-import { StyleSheet } from 'react-native'
-
-import { COLORS, FONTS } from '../styles/theme'
-import { useEffect, useState } from 'react'
+import { useRef, useState } from 'react'
+import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
-
+import { EncodingType } from 'expo-file-system'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StatusBar } from 'expo-status-bar'
 import * as DocumentPicker from 'expo-document-picker'
 import * as FileSystem from 'expo-file-system'
 
-import { EncodingType } from 'expo-file-system'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+//components
+import Navbar from '../components/Navbar'
+
+//themes
+import { COLORS, FONTS } from '../styles/theme'
 
 export default function Mark() {
 	const navigation = useNavigation()
@@ -22,6 +23,9 @@ export default function Mark() {
 	const [path, setPath] = useState('')
 	const [error, setError] = useState('')
 	const [docPicker, setDocPicker] = useState([true, ''])
+
+	const courseNameRef = useRef()
+	const classRef = useRef()
 
 	const pickDocument = async () => {
 		await DocumentPicker.getDocumentAsync({ type: 'text/*' }).then((res) => {
@@ -42,7 +46,12 @@ export default function Mark() {
 		let info = []
 		for (let i = 0; i < dirInfoSplit.length; i++) {
 			const values = dirInfoSplit[i].split(',')
-			if (values[0] != undefined || values[1] != undefined) {
+			if (
+				values[0] != undefined ||
+				values[1] != undefined ||
+				values[0] != ' ' ||
+				values[1] != ' '
+			) {
 				info.push({ studentName: values[0], rollNumber: values[1], attendance: [] })
 			}
 		}
@@ -103,29 +112,20 @@ export default function Mark() {
 			})
 	}
 
+	/*=============================================
+	=         Clear storage - for testing         =
+	=============================================*/
+
 	// useEffect(() => {
 	// 	async function handleDelete() {
-	// 		// await AsyncStorage.getAllKeys().then((res) => {
-	// 		// 	console.log(res)
-	// 		// 	AsyncStorage.getItem(res[0]).then((res) => {
-	// 		// 		res = JSON.parse(res)
-	// 		// 		console.log(res)
-	// 		// 	})
-	// 		// })
-
 	// 		await AsyncStorage.clear()
-	// 		// await AsyncStorage.getItem(courseID).then((res) => {
-	// 		// 	res = JSON.parse(res)
-	// 		// 	console.log(res)
-	// 		// 	// console.log(res['classes']['CS01']['students'][0]['attendance'])
-	// 		// 	// console.log(res['CS02'])
-	// 		// })
 	// 	}
 	// 	handleDelete()
 	// }, [])
 
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'
@@ -207,7 +207,16 @@ export default function Mark() {
 					>
 						Course ID:
 					</Text>
-					<TextInput style={styles.dropdown} value={courseID} onChangeText={setCourseID} />
+					<TextInput
+						style={styles.dropdown}
+						value={courseID}
+						onChangeText={setCourseID}
+						onSubmitEditing={() => {
+							courseNameRef.current.focus()
+						}}
+						placeholder='eg: CS3045CS'
+						placeholderTextColor={COLORS?.placeholder}
+					/>
 				</View>
 				<View>
 					<Text
@@ -226,6 +235,12 @@ export default function Mark() {
 						value={courseName}
 						onChangeText={setCourseName}
 						onPressIn={setCourseNameHandle}
+						onSubmitEditing={() => {
+							classRef.current.focus()
+						}}
+						ref={courseNameRef}
+						placeholder='eg: Software Engineering'
+						placeholderTextColor={COLORS?.placeholder}
 					/>
 				</View>
 				<View>
@@ -240,7 +255,14 @@ export default function Mark() {
 					>
 						Class:
 					</Text>
-					<TextInput style={styles.dropdown} value={classs} onChangeText={setClasss} />
+					<TextInput
+						style={styles.dropdown}
+						value={classs}
+						onChangeText={setClasss}
+						ref={classRef}
+						placeholder='eg: CS01'
+						placeholderTextColor={COLORS?.placeholder}
+					/>
 				</View>
 				<View>
 					<Text
@@ -353,9 +375,9 @@ const styles = StyleSheet.create({
 		borderRadius: 7,
 	},
 	placeholderStyle: {
-		fontFamily: FONTS?.regular,
+		fontFamily: FONTS?.light,
 		fontSize: 14,
-		color: COLORS?.selectGrey,
+		color: COLORS?.placeholder,
 	},
 	selectedTextStyle: {
 		fontFamily: FONTS?.regular,

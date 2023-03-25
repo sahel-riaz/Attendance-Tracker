@@ -1,11 +1,15 @@
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
-import { Dropdown } from 'react-native-element-dropdown'
 import { useEffect, useState } from 'react'
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { Dropdown } from 'react-native-element-dropdown'
 import { Path, Svg } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StatusBar } from 'expo-status-bar'
 
+//components
 import Navbar from '../components/Navbar'
+
+//themes
 import { COLORS, FONTS } from '../styles/theme'
 
 export default function Mark() {
@@ -124,6 +128,7 @@ export default function Mark() {
 
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'
@@ -412,7 +417,7 @@ const styles = StyleSheet.create({
 	placeholderStyle: {
 		fontFamily: FONTS?.regular,
 		fontSize: 14,
-		color: COLORS?.selectGrey,
+		color: COLORS?.placeholder,
 	},
 	selectedTextStyle: {
 		fontFamily: FONTS?.regular,

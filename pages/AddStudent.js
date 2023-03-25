@@ -1,23 +1,18 @@
-import {
-	Image,
-	SafeAreaView,
-	ScrollView,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-} from 'react-native'
-import { Dropdown } from 'react-native-element-dropdown'
-import Navbar from '../components/Navbar'
-import { StyleSheet } from 'react-native'
-
-import { COLORS, FONTS } from '../styles/theme'
 import { useState } from 'react'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StatusBar } from 'expo-status-bar'
+
+//components
+import Navbar from '../components/Navbar'
+
+//themes
+import { COLORS, FONTS } from '../styles/theme'
 
 export default function Mark({ route, navigation }) {
-	const { course, classs, date } = route.params
+	const { course, classs } = route.params
 
 	const [studentName, setStudentName] = useState()
 	const [studentID, setStudentID] = useState()
@@ -43,10 +38,9 @@ export default function Mark({ route, navigation }) {
 					AsyncStorage.setItem(course, res)
 				})
 				.then(() => {
-					navigation.push('Students', {
+					navigation.push('DbStudents', {
 						course: course,
 						classs: classs,
-						date: date,
 					})
 				})
 		}
@@ -54,6 +48,7 @@ export default function Mark({ route, navigation }) {
 
 	return (
 		<View style={{ flex: 1 }}>
+			<StatusBar />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
 				<Svg
 					width='20'
@@ -140,7 +135,13 @@ export default function Mark({ route, navigation }) {
 					>
 						Student Name:
 					</Text>
-					<TextInput style={styles.dropdown} value={studentName} onChangeText={setStudentName} />
+					<TextInput
+						style={styles.dropdown}
+						value={studentName}
+						onChangeText={setStudentName}
+						placeholder='Enter student name'
+						placeholderTextColor={COLORS?.placeholder}
+					/>
 					<Text
 						style={{
 							fontFamily: FONTS?.bold,
@@ -152,7 +153,13 @@ export default function Mark({ route, navigation }) {
 					>
 						Student Roll no:
 					</Text>
-					<TextInput style={styles.dropdown} value={studentID} onChangeText={setStudentID} />
+					<TextInput
+						style={styles.dropdown}
+						value={studentID}
+						onChangeText={setStudentID}
+						placeholder='Enter student roll number'
+						placeholderTextColor={COLORS?.placeholder}
+					/>
 					<Text
 						style={{
 							fontFamily: FONTS?.bold,
@@ -234,6 +241,7 @@ const styles = StyleSheet.create({
 		paddingLeft: 10,
 		paddingRight: 10,
 		borderRadius: 7,
+		fontFamily: FONTS?.regular,
 	},
 	placeholderStyle: {
 		fontFamily: FONTS?.regular,

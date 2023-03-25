@@ -40,7 +40,7 @@ export default function Home() {
 	useEffect(() => {
 		if (courses.length == 0) return
 		async function fetch() {
-			AsyncStorage.getItem(courses[0])
+			AsyncStorage.getItem(courses[0] )
 				.then((res) => {
 					setClasses(res[0])
 					// res = JSON.parse(res)
