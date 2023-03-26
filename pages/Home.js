@@ -74,6 +74,19 @@ export default function Home() {
 		fetch()
 	}, [])
 
+	/*=============================================
+	=               preventGoingBack              =
+	=============================================*/
+
+	navigation.addListener(
+		'beforeRemove',
+		(e) => {
+			e.preventDefault()
+			navigation.push('Home')
+		},
+		[navigation]
+	)
+
 	return (
 		<SafeAreaView style={{ backgroundColor: COLORS?.bg, flex: 1 }}>
 			<StatusBar style='dark' />

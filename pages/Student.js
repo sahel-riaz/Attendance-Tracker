@@ -135,6 +135,22 @@ export default function Student({ route, navigation }) {
 		}
 	}
 
+	/*=============================================
+	=               preventGoingBack              =
+	=============================================*/
+
+	navigation.addListener(
+		'beforeRemove',
+		(e) => {
+			e.preventDefault()
+			navigation.reset({
+				index: 0,
+				routes: [{ name: 'Students', params: { course: course, classs: classs, date: date } }],
+			})
+		},
+		[navigation]
+	)
+
 	return (
 		<View style={{ flex: 1 }}>
 			<StatusBar style='dark' />

@@ -28,6 +28,19 @@ export default function Settings() {
 		})
 	}
 
+	/*=============================================
+	=               preventGoingBack              =
+	=============================================*/
+
+	navigation.addListener(
+		'beforeRemove',
+		(e) => {
+			e.preventDefault()
+			navigation.push('Home')
+		},
+		[navigation]
+	)
+
 	return (
 		<View style={{ flex: 1 }}>
 			<StatusBar style='dark' />

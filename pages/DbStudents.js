@@ -68,6 +68,19 @@ export default function DbStudents({ route, navigation }) {
 		setTrigger(false)
 	}
 
+	/*=============================================
+	=               preventGoingBack              =
+	=============================================*/
+
+	navigation.addListener(
+		'beforeRemove',
+		(e) => {
+			e.preventDefault()
+			navigation.push('Db')
+		},
+		[navigation]
+	)
+
 	return (
 		<View style={{ flex: 1 }}>
 			<StatusBar style='dark' />

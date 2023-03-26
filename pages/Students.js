@@ -80,6 +80,19 @@ export default function Students({ route, navigation }) {
 		setTrigger(false)
 	}
 
+	/*=============================================
+	=               preventGoingBack              =
+	=============================================*/
+
+	navigation.addListener(
+		'beforeRemove',
+		(e) => {
+			e.preventDefault()
+			navigation.push('Mark')
+		},
+		[navigation]
+	)
+
 	return (
 		<View style={{ flex: 1 }}>
 			<StatusBar style='dark' />

@@ -26,22 +26,6 @@ export default function Mark() {
 	const [date, setDate] = useState(null)
 
 	/*=============================================
-	=               preventGoingBack              =
-	=============================================*/
-
-	navigation.addListener(
-		'beforeRemove',
-		(e) => {
-			e.preventDefault()
-			navigation.reset({
-				index: 0,
-				routes: [{ name: 'Home' }],
-			})
-		},
-		[navigation]
-	)
-
-	/*=============================================
 	=                fetchCourses                 =
 	=============================================*/
 	useEffect(() => {
@@ -144,6 +128,22 @@ export default function Mark() {
 			//error
 		}
 	}
+
+	/*=============================================
+	=               preventGoingBack              =
+	=============================================*/
+
+	navigation.addListener(
+		'beforeRemove',
+		(e) => {
+			e.preventDefault()
+			navigation.reset({
+				index: 0,
+				routes: [{ name: 'Home' }],
+			})
+		},
+		[navigation]
+	)
 
 	return (
 		<View style={{ flex: 1 }}>
