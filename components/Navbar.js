@@ -17,10 +17,8 @@ export default function Navbar() {
 				borderTopStartRadius: 20,
 				borderTopEndRadius: 20,
 				borderWidth: 1,
-				paddingTop: 20,
-				paddingBottom: 20,
-				paddingLeft: 30,
-				paddingRight: 30,
+				paddingLeft: 10,
+				paddingRight: 10,
 				flexDirection: 'row',
 				position: 'absolute',
 				bottom: 0,
@@ -34,7 +32,7 @@ export default function Navbar() {
 						navigation.push('Home')
 					}}
 					activeOpacity={0.7}
-					style={{ marginRight: 42 }}
+					style={{ marginRight: 2, padding: 20 }}
 				>
 					{route.name == 'Home' ? (
 						<Svg
@@ -69,6 +67,7 @@ export default function Navbar() {
 						navigation.push('Import')
 					}}
 					activeOpacity={0.7}
+					style={{ padding: 20 }}
 				>
 					{route.name == 'Import' ? (
 						<Svg
@@ -105,9 +104,7 @@ export default function Navbar() {
 				}}
 				activeOpacity={0.7}
 				style={{
-					position: 'absolute',
 					top: -33,
-					right: '50%',
 					backgroundColor: COLORS.blue,
 					borderRadius: 100,
 					height: 64,
@@ -140,7 +137,7 @@ export default function Navbar() {
 						navigation.push('Export')
 					}}
 					activeOpacity={0.7}
-					style={{ marginRight: 42 }}
+					style={{ marginRight: 2, padding: 20 }}
 				>
 					{route.name == 'Export' ? (
 						<Svg
@@ -183,6 +180,7 @@ export default function Navbar() {
 						navigation.push('Db')
 					}}
 					activeOpacity={0.7}
+					style={{ padding: 20 }}
 				>
 					{route.name == 'Db' ? (
 						<Svg

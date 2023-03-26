@@ -290,6 +290,7 @@ export default function Students({ route, navigation }) {
 					paddingRight: 24,
 					width: '100%',
 					marginTop: 10,
+					marginBottom: 450,
 				}}
 			>
 				{students.length > 1 && (
@@ -367,6 +368,7 @@ export default function Students({ route, navigation }) {
 					</Text>
 				</TouchableOpacity>
 			</View>
+
 			<Navbar />
 		</View>
 	)
