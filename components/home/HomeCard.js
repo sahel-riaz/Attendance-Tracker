@@ -12,7 +12,7 @@ export default function HomeCard({ count, isCourse = false }) {
 				backgroundColor: COLORS?.white,
 				borderRadius: 20,
 				alignItems: 'center',
-				elevation: 3,
+				elevation: 5,
 			}}
 		>
 			<View

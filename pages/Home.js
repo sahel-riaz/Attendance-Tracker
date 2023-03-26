@@ -103,7 +103,7 @@ export default function Home() {
 						</Text>
 					</View>
 					<TouchableOpacity
-						style={{ padding: 8, borderRadius: 50, backgroundColor: COLORS?.white }}
+						style={{ padding: 8, borderRadius: 50, backgroundColor: COLORS?.white, elevation: 3 }}
 						activeOpacity={0.7}
 						onPress={() => {
 							navigation.push('Settings')
@@ -153,7 +153,7 @@ export default function Home() {
 						Courses 💼
 					</Text>
 					{courses.length < 1 ? (
-						<Text>Added classes in import tab!</Text>
+						<Text style={{ fontFamily: FONTS?.regular }}>Add classes in import tab!</Text>
 					) : (
 						<ScrollView>
 							{classes.map((item, index) => (
