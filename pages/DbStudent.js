@@ -179,12 +179,8 @@ export default function DbStudent({ route, navigation }) {
 				onDelete={onDelete}
 			/>
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
-				<Svg
-					width='20'
-					height='20'
-					viewBox='0 0 16 17'
-					fill='none'
-					xmlns='http://www.w3.org/2000/svg'
+				<TouchableOpacity
+					style={{ padding: 20 }}
 					onPress={() =>
 						navigation.reset({
 							index: 0,
@@ -194,16 +190,23 @@ export default function DbStudent({ route, navigation }) {
 						})
 					}
 				>
-					<Path
-						d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
-						stroke='#525058'
-						stroke-width='1.5'
-						stroke-miterlimit='10'
-						stroke-linecap='round'
-						stroke-linejoin='round'
-					/>
-				</Svg>
-
+					<Svg
+						width='20'
+						height='20'
+						viewBox='0 0 16 17'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
+							stroke='#525058'
+							stroke-width='1.5'
+							stroke-miterlimit='10'
+							stroke-linecap='round'
+							stroke-linejoin='round'
+						/>
+					</Svg>
+				</TouchableOpacity>
 				<View
 					style={{
 						position: 'absolute',

@@ -49,24 +49,33 @@ export default function Mark({ route, navigation }) {
 	return (
 		<View style={{ flex: 1 }}>
 			<StatusBar style='dark' />
-			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
-				<Svg
-					width='20'
-					height='20'
-					viewBox='0 0 16 17'
-					fill='none'
-					xmlns='http://www.w3.org/2000/svg'
-					onPress={() => navigation.goBack()}
+			<View style={{ paddingTop: 60, flexDirection: 'row' }}>
+				<TouchableOpacity
+					style={{ padding: 20 }}
+					onPress={() =>
+						navigation.push('DbStudents', {
+							course: course,
+							classs: classs,
+						})
+					}
 				>
-					<Path
-						d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
-						stroke='#525058'
-						stroke-width='1.5'
-						stroke-miterlimit='10'
-						stroke-linecap='round'
-						stroke-linejoin='round'
-					/>
-				</Svg>
+					<Svg
+						width='20'
+						height='20'
+						viewBox='0 0 16 17'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
+							stroke='#525058'
+							stroke-width='1.5'
+							stroke-miterlimit='10'
+							stroke-linecap='round'
+							stroke-linejoin='round'
+						/>
+					</Svg>
+				</TouchableOpacity>
 
 				<View
 					style={{
