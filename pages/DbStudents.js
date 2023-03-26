@@ -168,58 +168,66 @@ export default function DbStudents({ route, navigation }) {
 			<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 24, marginTop: 25 }}>
 				Students:
 			</Text>
-			<ScrollView
-				style={{ paddingLeft: 24, paddingRight: 24, marginTop: 10, marginBottom: 120 }}
-				contentContainerStyle={{ alignItems: 'center' }}
+			<View
+				style={{
+					paddingLeft: 24,
+					paddingRight: 24,
+					width: '100%',
+					marginTop: 10,
+					marginBottom: 450,
+				}}
 			>
-				{!students.length < 1 &&
-					students.map((student, id) => (
-						<TouchableOpacity
-							key={id}
-							style={{
-								marginTop: 8,
-								paddingLeft: 16,
-								paddingRight: 10,
-								paddingBottom: 12,
-								paddingTop: 12,
-								borderColor: COLORS?.borderGrey,
-								borderWidth: 1,
-								borderRadius: 10,
-								width: '100%',
-								flexDirection: 'row',
-								justifyContent: 'space-between',
-								alignItems: 'center',
-							}}
-							activeOpacity={0.4}
-							onPress={() =>
-								navigation.push('DbStudent', {
-									course: course,
-									classs: classs,
-									id: id,
-								})
-							}
-						>
-							<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>
-								{student.studentName}
-							</Text>
-							<Svg
-								width='24'
-								height='26'
-								viewBox='0 0 24 26'
-								fill='none'
-								xmlns='http://www.w3.org/2000/svg'
+				{students.length > 1 && (
+					<FlatList
+						keyExtractor={(student) => student.rollNumber}
+						data={students}
+						renderItem={({ item, index }) => (
+							<TouchableOpacity
+								rollNumber={item.rollNumber}
+								style={{
+									marginTop: 8,
+									paddingLeft: 16,
+									paddingRight: 10,
+									paddingBottom: 12,
+									paddingTop: 12,
+									borderColor: COLORS?.borderGrey,
+									borderWidth: 1,
+									borderRadius: 10,
+									width: '100%',
+									flexDirection: 'row',
+									justifyContent: 'space-between',
+									alignItems: 'center',
+								}}
+								activeOpacity={0.4}
+								onPress={() =>
+									navigation.push('DbStudent', {
+										course: course,
+										classs: classs,
+										id: id,
+									})
+								}
 							>
-								<Path
-									d='M6.00751 13.1777V10.5077C6.00751 7.19766 8.35751 5.83766 11.2275 7.49766L13.5375 8.83766L15.8475 10.1777C18.7175 11.8377 18.7175 14.5477 15.8475 16.2077L13.5375 17.5477L11.2275 18.8877C8.35751 20.5177 6.00751 19.1677 6.00751 15.8477V13.1777Z'
-									stroke='black'
-									stroke-width='1.5'
-									stroke-miterlimit='10'
-									stroke-linecap='round'
-									stroke-linejoin='round'
-								/>
-							</Svg>
-						</TouchableOpacity>
-					))}
+								<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>{item.studentName}</Text>
+								<Svg
+									width='24'
+									height='26'
+									viewBox='0 0 24 26'
+									fill='none'
+									xmlns='http://www.w3.org/2000/svg'
+								>
+									<Path
+										d='M6.00751 13.1777V10.5077C6.00751 7.19766 8.35751 5.83766 11.2275 7.49766L13.5375 8.83766L15.8475 10.1777C18.7175 11.8377 18.7175 14.5477 15.8475 16.2077L13.5375 17.5477L11.2275 18.8877C8.35751 20.5177 6.00751 19.1677 6.00751 15.8477V13.1777Z'
+										stroke='black'
+										stroke-width='1.5'
+										stroke-miterlimit='10'
+										stroke-linecap='round'
+										stroke-linejoin='round'
+									/>
+								</Svg>
+							</TouchableOpacity>
+						)}
+					/>
+				)}
 				<TouchableOpacity
 					style={{
 						marginTop: 20,
@@ -297,7 +305,7 @@ export default function DbStudents({ route, navigation }) {
 						Delete class
 					</Text>
 				</TouchableOpacity>
-			</ScrollView>
+			</View>
 			<Navbar />
 		</View>
 	)
