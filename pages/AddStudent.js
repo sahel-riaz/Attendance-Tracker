@@ -33,7 +33,6 @@ export default function Mark({ route, navigation }) {
 						studentName: studentName,
 					}
 					res.classes[classs].students = [...res.classes[classs].students, student]
-					console.log(res.classes[classs].students)
 					res = JSON.stringify(res)
 					AsyncStorage.setItem(course, res)
 				})

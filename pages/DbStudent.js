@@ -179,7 +179,7 @@ export default function DbStudent({ route, navigation }) {
 			e.preventDefault()
 			navigation.reset({
 				index: 0,
-				routes: [{ name: 'Students', params: { course: course, classs: classs, date: date } }],
+				routes: [{ name: 'DbStudents', params: { course: course, classs: classs } }],
 			})
 		},
 		[navigation]
@@ -201,7 +201,7 @@ export default function DbStudent({ route, navigation }) {
 						navigation.reset({
 							index: 0,
 							routes: [
-								{ name: 'Students', params: { course: course, classs: classs, date: date } },
+								{ name: 'DbStudents', params: { course: course, classs: classs } },
 							],
 						})
 					}

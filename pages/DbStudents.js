@@ -10,6 +10,7 @@ import Navbar from '../components/Navbar'
 
 //themes
 import { COLORS, FONTS } from '../styles/theme'
+import { FlatList } from 'react-native-gesture-handler'
 
 export default function DbStudents({ route, navigation }) {
 	const { course, classs } = route.params
@@ -174,7 +175,7 @@ export default function DbStudents({ route, navigation }) {
 					paddingRight: 24,
 					width: '100%',
 					marginTop: 10,
-					marginBottom: 450,
+					marginBottom: 550,
 				}}
 			>
 				{students.length > 1 && (
@@ -203,7 +204,7 @@ export default function DbStudents({ route, navigation }) {
 									navigation.push('DbStudent', {
 										course: course,
 										classs: classs,
-										id: id,
+										id: index,
 									})
 								}
 							>
