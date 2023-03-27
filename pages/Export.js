@@ -100,12 +100,24 @@ export default function Mark() {
 
 				for (let i = 0; i < results['classes'][classs].students.length; i++) {
 					let temp = []
+					let tempAttendance = []
 					if (results['classes'][classs].students[i].studentName != '') {
+						for (let j = 0; j < results['classes'][classs].students[i].attendance.length; j++) {
+							if (results['classes'][classs].students[i].attendance[j] == 0) {
+								tempAttendance.push('A')
+							} else if (results['classes'][classs].students[i].attendance[j] == 1) {
+								tempAttendance.push('P')
+							} else if (results['classes'][classs].students[i].attendance[j] == 2) {
+								tempAttendance.push('L')
+							} else if (results['classes'][classs].students[i].attendance[j] == 3) {
+								tempAttendance.push('N')
+							}
+						}
 						temp = [
 							...temp,
 							results['classes'][classs].students[i].studentName,
 							results['classes'][classs].students[i].rollNumber.trim(),
-							...results['classes'][classs].students[i].attendance,
+							...tempAttendance,
 						]
 					}
 					student = [...student, temp]
