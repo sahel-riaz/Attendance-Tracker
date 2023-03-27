@@ -4,6 +4,7 @@ import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import email from 'react-native-email'
 import { StatusBar } from 'expo-status-bar'
+import * as MailComposer from 'expo-mail-composer'
 
 //components
 import ErrorPopUp from '../components/home/ErrorPopUp'
@@ -97,10 +98,21 @@ export default function DbStudent({ route, navigation }) {
 			to = names[0].toLowerCase() + '_' + student.rollNumber.toLowerCase() + '@nitc.ac.in'
 		}
 
-		email([to], {
-			subject: 'Test 3 subject',
-			body: 'Test 3 body',
-		}).catch(console.error)
+		// email([to], {
+		// 	subject: 'Test 3 subject',
+		// 	body: 'Test 3 body',
+		// }).catch(console.error)
+
+		MailComposer.composeAsync({
+			recipients: [to],
+			subject: `Low attendance in ${course} - ${classs}`,
+			body: `Dear ${student.studentName},
+
+				Your attendance in the course ${course} is noted to be low. Please attend the next class without fail.
+				
+				Regards
+			`,
+		})
 	}
 
 	async function handleDeleteStudent() {
@@ -200,9 +212,7 @@ export default function DbStudent({ route, navigation }) {
 					onPress={() =>
 						navigation.reset({
 							index: 0,
-							routes: [
-								{ name: 'DbStudents', params: { course: course, classs: classs } },
-							],
+							routes: [{ name: 'DbStudents', params: { course: course, classs: classs } }],
 						})
 					}
 				>
