@@ -19,6 +19,7 @@ export default function Home() {
 
 	const [courses, setCourses] = useState([])
 	const [classes, setClasses] = useState([])
+	const [markDate, setMarkDate] = useState(null)
 
 	const [name, setName] = useState(null)
 
@@ -73,6 +74,33 @@ export default function Home() {
 		}
 		fetch()
 	}, [])
+
+	/*=============================================
+	=                fetchMarkDate                =
+	=============================================*/
+	useEffect(() => {
+		const jsDate = new Date()
+		const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+		const [dotw, day, month, year, hours, minutes, seconds] = [
+			weekday[jsDate.getDay()],
+			jsDate.getDate(),
+			jsDate.getMonth() + 1,
+			jsDate.getFullYear(),
+			jsDate.getHours(),
+			jsDate.getMinutes(),
+			jsDate.getSeconds(),
+		]
+
+		var date = String(
+			dotw + ', ' + day + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ':' + seconds
+		)
+		setMarkDate(date)
+	}, [])
+
+	function handleCourseClick(course, classs) {
+		console.log(course, classs)
+		navigation.push('Students', { course: course, classs: classs, date: markDate })
+	}
 
 	/*=============================================
 	=               preventGoingBack              =

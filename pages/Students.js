@@ -7,7 +7,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 //components
 import ErrorPopUp from '../components/home/ErrorPopUp'
 import Navbar from '../components/Navbar'
-import StatCard from '../components/home/StatCard'
 
 //themes
 import { COLORS, FONTS } from '../styles/theme'

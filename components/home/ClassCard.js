@@ -1,10 +1,65 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/core'
+import { useEffect } from 'react'
 import { View, Text } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Path, Svg } from 'react-native-svg'
 import { COLORS, FONTS } from '../../styles/theme'
 
 export default function ClassCard({ courseId, courseName, className, students_qty }) {
+	const navigation = useNavigation()
+
+	/*=============================================
+	=                fetchMarkDate                =
+	=============================================*/
+	function handleCourseClick() {
+		const jsDate = new Date()
+		const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+		const [dotw, day, month, year, hours, minutes, seconds] = [
+			weekday[jsDate.getDay()],
+			jsDate.getDate(),
+			jsDate.getMonth() + 1,
+			jsDate.getFullYear(),
+			jsDate.getHours(),
+			jsDate.getMinutes(),
+			jsDate.getSeconds(),
+		]
+
+		var date = String(
+			dotw + ', ' + day + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ':' + seconds
+		)
+
+		AsyncStorage.getItem(courseId)
+			.then((res) => {
+				res = JSON.parse(res)
+				/*=====  check if the selected date already exists  ======*/
+				if (!Object.values(res.classes[className].date).includes(date)) {
+					/*=====  insert selected date and time; push 3 into every students attendance  ======*/
+					res.classes[className]['date'] = [...res.classes[className]['date'], date]
+					for (let i = 0; i < res.classes[className].students.length; i++) {
+						res.classes[className].students[i].attendance = [
+							...res.classes[className].students[i].attendance,
+							3,
+						]
+					}
+				}
+				res = JSON.stringify(res)
+				AsyncStorage.setItem(courseId, res)
+			})
+			.then(() => {
+				navigation.push('Students', {
+					course: courseId,
+					classs: className,
+					date: date,
+				})
+			})
+			.catch((e) => {
+				console.log(e)
+			})
+	}
+
 	return (
-		<View
+		<TouchableOpacity
 			style={{
 				flexDirection: 'row',
 				justifyContent: 'space-between',
@@ -14,6 +69,7 @@ export default function ClassCard({ courseId, courseName, className, students_qt
 				borderBottomColor: COLORS?.borderGrey,
 				borderBottomWidth: 1,
 			}}
+			onPress={() => handleCourseClick()}
 		>
 			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 				<Svg
@@ -139,6 +195,6 @@ export default function ClassCard({ courseId, courseName, className, students_qt
 					fill='#80848A'
 				/>
 			</Svg>
-		</View>
+		</TouchableOpacity>
 	)
 }

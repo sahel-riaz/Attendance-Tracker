@@ -104,7 +104,7 @@ export default function Mark() {
 						temp = [
 							...temp,
 							results['classes'][classs].students[i].studentName,
-							results['classes'][classs].students[i].rollNumber,
+							results['classes'][classs].students[i].rollNumber.trim(),
 							...results['classes'][classs].students[i].attendance,
 						]
 					}
