@@ -38,11 +38,11 @@ export default function NewAuth() {
 	}, [])
 
 	return (
-		<View>
+		<View style={{ flex: 1, justifyContent: 'center' }}>
 			<StatusBar style='dark' />
 			<View
 				style={{
-					marginTop: 86,
+					marginTop: -50,
 					alignItems: 'center',
 					paddingLeft: 72,
 					paddingRight: 72,
@@ -74,8 +74,6 @@ export default function NewAuth() {
 				>
 					<View
 						style={{
-							width: 182,
-							height: 48,
 							marginTop: 48,
 						}}
 					>
@@ -92,8 +90,6 @@ export default function NewAuth() {
 					<View
 						style={{
 							marginTop: 48,
-							width: '100%',
-							height: 34,
 							alignItems: 'center',
 							justifyContent: 'center',
 						}}

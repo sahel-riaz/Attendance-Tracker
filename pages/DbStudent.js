@@ -22,6 +22,7 @@ export default function DbStudent({ route, navigation }) {
 	const [warning, setWarning] = useState(0)
 	const [res, setRes] = useState({})
 	const [trigger, setTrigger] = useState(false)
+	const [faculty, setFaculty] = useState('')
 
 	useEffect(() => {
 		if (course == null) return
@@ -36,6 +37,9 @@ export default function DbStudent({ route, navigation }) {
 				.catch((e) => {
 					console.log(e)
 				})
+			AsyncStorage.getItem('settings').then((res) => {
+				setFaculty(res)
+			})
 		}
 		fetch()
 	}, [])
@@ -92,12 +96,20 @@ export default function DbStudent({ route, navigation }) {
 					student.rollNumber.toLowerCase() +
 					'@nitc.ac.in'
 			} else {
-				to = names[1].toLowerCase() + '_' + student.rollNumber.toLowerCase() + '@nitc.ac.in'
+				to =
+					names[1].toLowerCase().trim() +
+					'_' +
+					student.rollNumber.toLowerCase().trim() +
+					'@nitc.ac.in'
 			}
 		} else {
-			to = names[0].toLowerCase() + '_' + student.rollNumber.toLowerCase() + '@nitc.ac.in'
+			to =
+				names[0].toLowerCase().trim() +
+				'_' +
+				student.rollNumber.toLowerCase().trim() +
+				'@nitc.ac.in'
 		}
-
+		// console.log(to)
 		MailComposer.composeAsync({
 			recipients: [to],
 			subject: `Low attendance in ${course} - ${classs}`,
@@ -106,6 +118,8 @@ export default function DbStudent({ route, navigation }) {
 				Your attendance in the course ${course} is noted to be low. Please attend the next class without fail.
 				
 				Regards
+				${faculty}
+				${course}
 			`,
 		})
 	}
@@ -201,7 +215,7 @@ export default function DbStudent({ route, navigation }) {
 				onCancel={onCancel}
 				onDelete={onDelete}
 			/>
-			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
+			<View style={{ paddingTop: 60, flexDirection: 'row' }}>
 				<TouchableOpacity
 					style={{ padding: 20 }}
 					onPress={() =>
