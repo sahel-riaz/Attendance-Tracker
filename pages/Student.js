@@ -45,32 +45,18 @@ export default function Student({ route, navigation }) {
 			tempJson = JSON.stringify(tempJson)
 			AsyncStorage.setItem(course, tempJson).then(() => {
 				if (id < studentsCount - 1) {
-					if (id > 15 && id % 15 == 0) {
-						navigation.reset({
-							index: 0,
-							routes: [
-								{
-									course: course,
-									classs: classs,
-									id: id + 1,
-									date: date,
-									dateIndex: dateIndex,
-								},
-							],
-						})
-					} else {
-						navigation.push('Student', {
-							course: course,
-							classs: classs,
-							id: id + 1,
-							date: date,
-							dateIndex: dateIndex,
-						})
-					}
+					navigation.push('Student', {
+						course: course,
+						classs: classs,
+						id: id + 1,
+						date: date,
+						dateIndex: dateIndex,
+					})
 				} else {
-					navigation.reset({
-						index: 0,
-						routes: [{ name: 'Students', params: { course: course, classs: classs, date: date } }],
+					navigation.push('Students', {
+						course: course,
+						classs: classs,
+						date: date,
 					})
 				}
 			})
@@ -111,9 +97,10 @@ export default function Student({ route, navigation }) {
 				dateIndex: dateIndex,
 			})
 		} else {
-			navigation.reset({
-				index: 0,
-				routes: [{ name: 'Students', params: { course: course, classs: classs, date: date } }],
+			navigation.push('Students', {
+				course: course,
+				classs: classs,
+				date: date,
 			})
 		}
 	}
@@ -128,9 +115,10 @@ export default function Student({ route, navigation }) {
 				dateIndex: dateIndex,
 			})
 		} else {
-			navigation.reset({
-				index: 0,
-				routes: [{ name: 'Students', params: { course: course, classs: classs, date: date } }],
+			navigation.push('Students', {
+				course: course,
+				classs: classs,
+				date: date,
 			})
 		}
 	}
@@ -143,9 +131,10 @@ export default function Student({ route, navigation }) {
 		'beforeRemove',
 		(e) => {
 			e.preventDefault()
-			navigation.reset({
-				index: 0,
-				routes: [{ name: 'Students', params: { course: course, classs: classs, date: date } }],
+			navigation.push('Students', {
+				course: course,
+				classs: classs,
+				date: date,
 			})
 		},
 		[navigation]
@@ -158,11 +147,10 @@ export default function Student({ route, navigation }) {
 				<TouchableOpacity
 					style={{ padding: 20 }}
 					onPress={() =>
-						navigation.reset({
-							index: 0,
-							routes: [
-								{ name: 'Students', params: { course: course, classs: classs, date: date } },
-							],
+						navigation.push('Students', {
+							course: course,
+							classs: classs,
+							date: date,
 						})
 					}
 				>

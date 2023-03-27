@@ -137,10 +137,7 @@ export default function Mark() {
 		'beforeRemove',
 		(e) => {
 			e.preventDefault()
-			navigation.reset({
-				index: 0,
-				routes: [{ name: 'Home' }],
-			})
+			navigation.push('Home')
 		},
 		[navigation]
 	)

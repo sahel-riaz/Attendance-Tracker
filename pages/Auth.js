@@ -83,7 +83,6 @@ export default function NewAuth() {
 							style={{
 								fontFamily: FONTS?.bold,
 								fontSize: 40,
-								fontWeight: 700,
 								lineHeight: 48,
 							}}
 						>
@@ -103,7 +102,6 @@ export default function NewAuth() {
 							style={{
 								fontFamily: FONTS?.regular,
 								fontSize: 14,
-								fontWeight: 400,
 								lineHeight: 17,
 								textAlign: 'center',
 							}}
@@ -156,7 +154,6 @@ export default function NewAuth() {
 								color: COLORS?.white,
 								fontSize: 16,
 								lineHeight: 19,
-								fontWeight: 500,
 							}}
 						>
 							Try again!

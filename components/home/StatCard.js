@@ -18,14 +18,19 @@ export default function StatCard({ val, border_color, back_color, path_d, fill }
 				justifyContent: 'center',
 			}}
 		>
-            <Svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <Path d={path_d} fill={fill} />
-            </Svg>
+			<Svg
+				width='19'
+				height='20'
+				viewBox='0 0 19 20'
+				fill='none'
+				xmlns='http://www.w3.org/2000/svg'
+			>
+				<Path d={path_d} fill={fill} />
+			</Svg>
 
 			<Text
 				style={{
 					fontFamily: FONTS?.regular,
-					fontWeight: 500,
 					fontSize: 16,
 					lineHeight: 19.2,
 					marginLeft: 8,

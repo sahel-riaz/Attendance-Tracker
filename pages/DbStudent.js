@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Text, TouchableOpacity, View, Linking } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import email from 'react-native-email'
+// import email from 'react-native-email'
 import { StatusBar } from 'expo-status-bar'
 import * as MailComposer from 'expo-mail-composer'
 
@@ -68,7 +68,7 @@ export default function DbStudent({ route, navigation }) {
 	}, [student])
 
 	function handleEmail() {
-		/**
+		/*
 		 *
 		 * 3 different cases:
 		 *
@@ -97,11 +97,6 @@ export default function DbStudent({ route, navigation }) {
 		} else {
 			to = names[0].toLowerCase() + '_' + student.rollNumber.toLowerCase() + '@nitc.ac.in'
 		}
-
-		// email([to], {
-		// 	subject: 'Test 3 subject',
-		// 	body: 'Test 3 body',
-		// }).catch(console.error)
 
 		MailComposer.composeAsync({
 			recipients: [to],
@@ -159,9 +154,9 @@ export default function DbStudent({ route, navigation }) {
 				id: id - 1,
 			})
 		} else {
-			navigation.reset({
-				index: 0,
-				routes: [{ name: 'DbStudents', params: { course: course, classs: classs } }],
+			navigation.push('DbStudents', {
+				course: course,
+				classs: classs,
 			})
 		}
 	}
@@ -174,9 +169,9 @@ export default function DbStudent({ route, navigation }) {
 				id: id + 1,
 			})
 		} else {
-			navigation.reset({
-				index: 0,
-				routes: [{ name: 'DbStudents', params: { course: course, classs: classs } }],
+			navigation.push('DbStudents', {
+				course: course,
+				classs: classs,
 			})
 		}
 	}
@@ -189,9 +184,9 @@ export default function DbStudent({ route, navigation }) {
 		'beforeRemove',
 		(e) => {
 			e.preventDefault()
-			navigation.reset({
-				index: 0,
-				routes: [{ name: 'DbStudents', params: { course: course, classs: classs } }],
+			navigation.push('DbStudents', {
+				course: course,
+				classs: classs,
 			})
 		},
 		[navigation]
@@ -210,9 +205,9 @@ export default function DbStudent({ route, navigation }) {
 				<TouchableOpacity
 					style={{ padding: 20 }}
 					onPress={() =>
-						navigation.reset({
-							index: 0,
-							routes: [{ name: 'DbStudents', params: { course: course, classs: classs } }],
+						navigation.push('DbStudents', {
+							course: course,
+							classs: classs,
 						})
 					}
 				>
