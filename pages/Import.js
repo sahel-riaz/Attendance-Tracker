@@ -104,7 +104,7 @@ export default function Mark() {
 			.then((res) => {
 				res = JSON.parse(res)
 				if (res != null) {
-					setCourseName(res[0]?.courseName)
+					setCourseName(res.courseName)
 				}
 			})
 			.catch((e) => {

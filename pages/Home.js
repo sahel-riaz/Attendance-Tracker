@@ -198,14 +198,13 @@ export default function Home() {
 					) : (
 						<ScrollView>
 							{classes.map((item, index) => (
-								<View key={index}>
-									<ClassCard
-										courseId={item[0]}
-										courseName={item[1]}
-										className={item[2]}
-										students_qty={item[3]}
-									/>
-								</View>
+								<ClassCard
+									key={index}
+									courseId={item[0]}
+									courseName={item[1]}
+									className={item[2]}
+									students_qty={item[3]}
+								/>
 							))}
 						</ScrollView>
 					)}
