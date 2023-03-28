@@ -2,9 +2,9 @@
 	"expo": {
 		"name": "Attendance",
 		"slug": "attendance",
-		"version": "1.0.0",
+		"version": "1.1.0",
 		"orientation": "portrait",
-		"icon": "./assets/expo/icon.png",
+		"icon": "./assets/expo/icon-app.png",
 		"userInterfaceStyle": "light",
 		"splash": {
 			"image": "./assets/expo/splash.png",
