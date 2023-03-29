@@ -76,13 +76,18 @@ export default function StudentDetails({
 			<View style={{ paddingTop: 60, flexDirection: 'row' }}>
 				<TouchableOpacity
 					style={{ padding: 20 }}
-					onPress={() =>
-						navigation.push('Students', {
-							course: course,
-							classs: classs,
-							date: date,
-						})
-					}
+					onPress={() => {
+						mark
+							? navigation.push('Students', {
+									course: course,
+									classs: classs,
+									date: date,
+							  })
+							: navigation.push('DbStudents', {
+									course: course,
+									classs: classs,
+							  })
+					}}
 				>
 					<Svg
 						width='20'
