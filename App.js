@@ -15,6 +15,7 @@ import DbStudents from './pages/DbStudents'
 import DbStudent from './pages/DbStudent'
 import Settings from './pages/Settings'
 import DbSettings from './pages/DbSettings'
+import LessAttendance from './pages/LessAttendance'
 
 const Stack = createStackNavigator()
 
@@ -57,6 +58,7 @@ const App = () => {
 				<Stack.Screen name='DbStudents' component={DbStudents} />
 				<Stack.Screen name='DbStudent' component={DbStudent} />
 				<Stack.Screen name='DbSettings' component={DbSettings} />
+				<Stack.Screen name='LessAttendance' component={LessAttendance} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

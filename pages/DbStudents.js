@@ -172,6 +172,41 @@ export default function DbStudents({ route, navigation }) {
 			>
 				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>Average Attendance: {avg}%</Text>
 			</View>
+			<TouchableOpacity
+				style={{
+					flexDirection: 'row',
+					alignItems: 'center',
+					justifyContent: 'center',
+					height: 43,
+					borderColor: COLORS?.borderGrey,
+					borderWidth: 1,
+					borderRadius: 10,
+					marginTop: 10,
+					marginLeft: 24,
+					marginRight: 24,
+				}}
+				onPress={() => navigation.push('LessAttendance', { course: course, classs: classs })}
+			>
+				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, marginRight: 20 }}>
+					Students with attendance {'<'} 80%
+				</Text>
+				<Svg
+					width='19'
+					height='19'
+					viewBox='0 0 19 19'
+					fill='none'
+					xmlns='http://www.w3.org/2000/svg'
+				>
+					<Path
+						d='M11.4237 4.69458L16.2291 9.5L11.4237 14.3054M2.77075 9.5H16.0945'
+						stroke='black'
+						stroke-width='1.5'
+						stroke-miterlimit='10'
+						stroke-linecap='round'
+						stroke-linejoin='round'
+					/>
+				</Svg>
+			</TouchableOpacity>
 
 			<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 24, marginTop: 25 }}>
 				Students:

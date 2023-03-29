@@ -22,8 +22,8 @@ export default function DbStudent({ route, navigation }) {
 	const [stats, setStats] = useState([])
 	const [warning, setWarning] = useState(0)
 	const [res, setRes] = useState({})
-	const [trigger, setTrigger] = useState(false)
 	const [faculty, setFaculty] = useState('')
+	const [studentId, setStudentId] = useState(id)
 
 	useEffect(() => {
 		if (course == null) return
@@ -33,7 +33,7 @@ export default function DbStudent({ route, navigation }) {
 					res = JSON.parse(res)
 					setRes(res)
 					setStudentsCount(res.classes[classs].students.length)
-					setStudent(res.classes[classs].students[id])
+					setStudent(res.classes[classs].students[studentId])
 				})
 				.catch((e) => {
 					console.log(e)
@@ -43,7 +43,7 @@ export default function DbStudent({ route, navigation }) {
 			})
 		}
 		fetch()
-	}, [])
+	}, [studentId])
 
 	useEffect(() => {
 		if (!student) return
@@ -126,11 +126,9 @@ export default function DbStudent({ route, navigation }) {
 	}
 
 	function handlePreviousStudent() {
-		if (id > 0) {
-			navigation.push('DbStudent', {
-				course: course,
-				classs: classs,
-				id: id - 1,
+		if (studentId > 0) {
+			setStudentId((currentId) => {
+				return currentId - 1
 			})
 		} else {
 			navigation.push('DbStudents', {
@@ -141,11 +139,9 @@ export default function DbStudent({ route, navigation }) {
 	}
 
 	function handleNextStudent() {
-		if (id < studentsCount - 1) {
-			navigation.push('DbStudent', {
-				course: course,
-				classs: classs,
-				id: id + 1,
+		if (studentId < studentsCount - 1) {
+			setStudentId((currentId) => {
+				return currentId + 1
 			})
 		} else {
 			navigation.push('DbStudents', {
