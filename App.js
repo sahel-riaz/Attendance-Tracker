@@ -38,7 +38,7 @@ const App = () => {
 	return (
 		<NavigationContainer theme={theme}>
 			<Stack.Navigator
-				initialRouteName='Db'
+				initialRouteName='Auth'
 				screenOptions={{
 					headerShown: false,
 					gestureEnabled: false,

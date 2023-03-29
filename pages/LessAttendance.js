@@ -124,7 +124,7 @@ export default function LessAttendance({ route, navigation }) {
 					paddingRight: 24,
 					width: '100%',
 					marginTop: 10,
-					marginBottom: 374,
+					marginBottom: 320,
 				}}
 			>
 				{students.length > 1 && (

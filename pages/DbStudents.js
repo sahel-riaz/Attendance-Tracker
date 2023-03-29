@@ -178,16 +178,23 @@ export default function DbStudents({ route, navigation }) {
 					alignItems: 'center',
 					justifyContent: 'center',
 					height: 43,
-					borderColor: COLORS?.borderGrey,
-					borderWidth: 1,
+					// borderColor: COLORS?.borderGrey,
 					borderRadius: 10,
 					marginTop: 10,
 					marginLeft: 24,
 					marginRight: 24,
+					backgroundColor: COLORS?.blue,
 				}}
 				onPress={() => navigation.push('LessAttendance', { course: course, classs: classs })}
 			>
-				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, marginRight: 20 }}>
+				<Text
+					style={{
+						fontFamily: FONTS?.bold,
+						fontSize: 16,
+						marginRight: 20,
+						color: COLORS?.white,
+					}}
+				>
 					Students with attendance {'<'} 80%
 				</Text>
 				<Svg
@@ -199,7 +206,7 @@ export default function DbStudents({ route, navigation }) {
 				>
 					<Path
 						d='M11.4237 4.69458L16.2291 9.5L11.4237 14.3054M2.77075 9.5H16.0945'
-						stroke='black'
+						stroke='white'
 						stroke-width='1.5'
 						stroke-miterlimit='10'
 						stroke-linecap='round'
@@ -217,7 +224,7 @@ export default function DbStudents({ route, navigation }) {
 					paddingRight: 24,
 					width: '100%',
 					marginTop: 10,
-					marginBottom: 374,
+					marginBottom: 426,
 				}}
 			>
 				{students.length > 1 && (
