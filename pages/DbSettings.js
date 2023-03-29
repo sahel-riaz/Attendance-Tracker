@@ -65,7 +65,7 @@ export default function DbSettings({ route, navigation }) {
 			<View style={{ paddingTop: 60, flexDirection: 'row' }}>
 				<TouchableOpacity
 					style={{ padding: 20, paddingLeft: 0 }}
-					onPress={() => navigation.push('Home')}
+					onPress={() => navigation.push('DbStudents', { course: course, classs: classs })}
 				>
 					<Svg
 						width='20'

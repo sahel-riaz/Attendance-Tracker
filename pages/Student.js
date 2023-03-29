@@ -191,6 +191,7 @@ export default function Student({ route, navigation }) {
 			handleLate={handleLate}
 			handleNextStudent={handleNextStudent}
 			handlePreviousStudent={handlePreviousStudent}
+			mark={true}
 		/>
 	)
 }
