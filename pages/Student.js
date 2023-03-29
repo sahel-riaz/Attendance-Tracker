@@ -146,7 +146,7 @@ export default function Student({ route, navigation }) {
 	}
 
 	function handleNextStudent() {
-		if (id < studentsCount - 1) {
+		if (studentId < studentsCount - 1) {
 			setStudentId((currentId) => {
 				return currentId + 1
 			})

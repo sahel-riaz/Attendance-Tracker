@@ -14,6 +14,7 @@ import Student from './pages/Student'
 import DbStudents from './pages/DbStudents'
 import DbStudent from './pages/DbStudent'
 import Settings from './pages/Settings'
+import DbSettings from './pages/DbSettings'
 
 const Stack = createStackNavigator()
 
@@ -36,7 +37,7 @@ const App = () => {
 	return (
 		<NavigationContainer theme={theme}>
 			<Stack.Navigator
-				initialRouteName='Auth'
+				initialRouteName='Db'
 				screenOptions={{
 					headerShown: false,
 					gestureEnabled: false,
@@ -55,6 +56,7 @@ const App = () => {
 				<Stack.Screen name='Student' component={Student} />
 				<Stack.Screen name='DbStudents' component={DbStudents} />
 				<Stack.Screen name='DbStudent' component={DbStudent} />
+				<Stack.Screen name='DbSettings' component={DbSettings} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)
