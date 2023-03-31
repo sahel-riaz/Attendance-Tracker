@@ -52,7 +52,12 @@ export default function Mark() {
 				values[0] != ' ' ||
 				values[1] != ' '
 			) {
-				info.push({ studentName: values[0], rollNumber: values[1], attendance: [] })
+				info.push({
+					rollNumber: values[0],
+					studentName: values[1],
+					emailId: values[2],
+					attendance: [],
+				})
 			}
 		}
 

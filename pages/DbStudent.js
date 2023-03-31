@@ -90,48 +90,54 @@ export default function DbStudent({ route, navigation }) {
 	}, [student])
 
 	function handleEmail() {
-		/*
-		 *
-		 * 3 different cases:
-		 *
-		 *   -> {FName} .. {LName} = {FName}_Rollno@nitc.ac.in
-		 *   -> {I} {FName} .. {LName} = {FName}_Rollno@nitc.ac.in
-		 *   -> {I} {I} {FName} .. {LName} = {I}{I}{FName}_Rollno@nitc.ac.in
-		 *
-		 */
-
 		let to = ''
 
-		const names = student.studentName.split(' ')
+		if (student.emailId != null) {
+			to = student.emailId
+		} else {
+			/*
+			 *
+			 * emailId is not there -> generate emailId from name and rollNumber
+			 *
+			 * 3 different cases:
+			 *
+			 *   -> {FName} .. {LName} = {FName}_Rollno@nitc.ac.in
+			 *   -> {I} {FName} .. {LName} = {FName}_Rollno@nitc.ac.in
+			 *   -> {I} {I} {FName} .. {LName} = {I}{I}{FName}_Rollno@nitc.ac.in
+			 *
+			 */
 
-		if (names[0].length == 1) {
-			if (names[1].length == 1) {
-				to =
-					names[0].toLowerCase() +
-					names[1].toLowerCase() +
-					names[2].toLowerCase() +
-					'_' +
-					student.rollNumber.toLowerCase() +
-					'@nitc.ac.in'
+			const names = student.studentName.split(' ')
+
+			if (names[0].length == 1) {
+				if (names[1].length == 1) {
+					to =
+						names[0].toLowerCase() +
+						names[1].toLowerCase() +
+						names[2].toLowerCase() +
+						'_' +
+						student.rollNumber.toLowerCase() +
+						'@nitc.ac.in'
+				} else {
+					to =
+						names[1].toLowerCase().trim() +
+						'_' +
+						student.rollNumber.toLowerCase().trim() +
+						'@nitc.ac.in'
+				}
 			} else {
 				to =
-					names[1].toLowerCase().trim() +
+					names[0].toLowerCase().trim() +
 					'_' +
 					student.rollNumber.toLowerCase().trim() +
 					'@nitc.ac.in'
 			}
-		} else {
-			to =
-				names[0].toLowerCase().trim() +
-				'_' +
-				student.rollNumber.toLowerCase().trim() +
-				'@nitc.ac.in'
 		}
-		// console.log(to)
+
 		MailComposer.composeAsync({
 			recipients: [to],
 			subject: `Low attendance in ${course} - ${classs}`,
-			body: `Dear ${student.studentName},
+			body: `Dear ${student.studentName}
 
 				Your attendance in the course ${course} is noted to be low. Please attend the next class without fail.
 				
