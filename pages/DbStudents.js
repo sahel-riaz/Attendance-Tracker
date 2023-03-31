@@ -30,7 +30,11 @@ export default function DbStudents({ route, navigation }) {
 					var totalCount = 0
 					for (let i = 0; i < res['classes'][classs].students.length; i++) {
 						for (let j = 0; j < res['classes'][classs].students[i].attendance.length; j++) {
-							if (res['classes'][classs].students[i].attendance[j] == 1) tempCount += 1
+							if (
+								res['classes'][classs].students[i].attendance[j] == 1 || //present
+								res['classes'][classs].students[i].attendance[j] == 2 //late
+							)
+								tempCount += 1
 							totalCount += 1
 						}
 					}
@@ -257,7 +261,9 @@ export default function DbStudents({ route, navigation }) {
 									})
 								}
 							>
-								<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }}>{item.studentName}</Text>
+								<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }} numberOfLines={1}>
+									{item.studentName}
+								</Text>
 								<Svg
 									width='24'
 									height='26'

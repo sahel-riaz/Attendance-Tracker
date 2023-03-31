@@ -21,6 +21,7 @@ export default function Student({ route, navigation }) {
 	const [warning, setWarning] = useState(0)
 	const [res, setRes] = useState({})
 	const [studentId, setStudentId] = useState(id)
+	const [avg, setAvg] = useState(0)
 
 	/*=============================================
 	=                 InitalFetch                 =
@@ -44,7 +45,7 @@ export default function Student({ route, navigation }) {
 	}, [studentId])
 
 	/*=============================================
-	=                CalculateStats               =
+	=              CalculateStats&Avg             =
 	=============================================*/
 
 	useEffect(() => {
@@ -68,6 +69,14 @@ export default function Student({ route, navigation }) {
 			}
 		}
 		setWarning(absentCount)
+
+		/*=====  calculateAvgAttendance  ======*/
+
+		let tempCount = 0
+		for (let i = 0; i < student.attendance.length; i++) {
+			if (student.attendance[i] == 1 || student.attendance[i] == 2) tempCount += 1
+		}
+		setAvg(((tempCount / student.attendance.length) * 100).toFixed(2))
 	}, [student])
 
 	/*=============================================
@@ -182,6 +191,7 @@ export default function Student({ route, navigation }) {
 		<StudentDetails
 			student={student}
 			stats={stats}
+			avg={avg}
 			warning={warning}
 			course={course}
 			classs={classs}

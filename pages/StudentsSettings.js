@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import React, { useState } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -10,24 +9,23 @@ import { COLORS, FONTS } from '../styles/theme'
 import ErrorPopUp from '../components/home/ErrorPopUp'
 
 export default function DbSettings({ route, navigation }) {
-	const { course, classs } = route.params
+	const { course, classs, date, dateIndex } = route.params
 
 	const [trigger, setTrigger] = useState(false)
 
-	function handleDeleteClass() {
+	function handleDeleteSession() {
 		AsyncStorage.getItem(course)
 			.then((res) => {
 				res = JSON.parse(res)
-				if (Object.keys(res['classes']).length == 1) {
-					AsyncStorage.removeItem(course)
-				} else {
-					delete res['classes'][classs]
-					res = JSON.stringify(res)
-					AsyncStorage.setItem(course, res)
+				res['classes'][classs]['date'].splice(dateIndex, 1)
+				for (let i = 0; i < res['classes'][classs]['students'].length; i++) {
+					res['classes'][classs]['students'][i]['attendance'].splice(dateIndex, 1)
 				}
+				res = JSON.stringify(res)
+				AsyncStorage.setItem(course, res)
 			})
 			.then(() => {
-				navigation.push('Db')
+				navigation.push('Mark')
 			})
 	}
 
@@ -36,7 +34,7 @@ export default function DbSettings({ route, navigation }) {
 	}
 
 	function onDelete() {
-		handleDeleteClass()
+		handleDeleteSession()
 		setTrigger(false)
 	}
 
@@ -48,7 +46,7 @@ export default function DbSettings({ route, navigation }) {
 		'beforeRemove',
 		(e) => {
 			e.preventDefault()
-			navigation.push('DbStudents', { course: course, classs: classs })
+			navigation.push('Students', { course: course, classs: classs, date: date })
 		},
 		[navigation]
 	)
@@ -57,7 +55,7 @@ export default function DbSettings({ route, navigation }) {
 		<View style={{ flex: 1, paddingLeft: 20, paddingRight: 20 }}>
 			<StatusBar style='dark' />
 			<ErrorPopUp
-				data='Are you sure you want to delete this class?'
+				data='Are you sure you want to delete this session?'
 				trigger={trigger}
 				onCancel={onCancel}
 				onDelete={onDelete}
@@ -65,7 +63,9 @@ export default function DbSettings({ route, navigation }) {
 			<View style={{ paddingTop: 60, flexDirection: 'row' }}>
 				<TouchableOpacity
 					style={{ padding: 20, paddingLeft: 0 }}
-					onPress={() => navigation.push('DbStudents', { course: course, classs: classs })}
+					onPress={() =>
+						navigation.push('Students', { course: course, classs: classs, date: date })
+					}
 				>
 					<Svg
 						width='20'
@@ -101,47 +101,11 @@ export default function DbSettings({ route, navigation }) {
 							lineHeight: 19,
 						}}
 					>
-						Class Settings
+						Session Settings
 					</Text>
 				</View>
 			</View>
-			<TouchableOpacity
-				style={{
-					marginTop: 20,
-					paddingBottom: 12,
-					paddingTop: 12,
-					borderColor: COLORS?.black,
-					borderStyle: 'dashed',
-					borderWidth: 1,
-					borderRadius: 10,
-					width: '100%',
-					flexDirection: 'row',
-					alignItems: 'center',
-					justifyContent: 'center',
-				}}
-				activeOpacity={0.4}
-				onPress={() => navigation.push('AddStudent', { course: course, classs: classs })}
-			>
-				<Svg
-					width='25'
-					height='24'
-					viewBox='0 0 25 24'
-					fill='none'
-					xmlns='http://www.w3.org/2000/svg'
-				>
-					<Path
-						d='M6.5 12H18.5M12.5 18V6'
-						stroke='black'
-						stroke-width='1.5'
-						stroke-linecap='round'
-						stroke-linejoin='round'
-					/>
-				</Svg>
 
-				<Text style={{ fontSize: 18, fontFamily: FONTS?.regular, marginLeft: 10 }}>
-					Add student to class
-				</Text>
-			</TouchableOpacity>
 			<TouchableOpacity
 				style={{
 					height: 43,
@@ -179,7 +143,7 @@ export default function DbSettings({ route, navigation }) {
 						color: COLORS?.white,
 					}}
 				>
-					Delete class
+					Delete session
 				</Text>
 			</TouchableOpacity>
 		</View>

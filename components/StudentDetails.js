@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function StudentDetails({
 	student,
 	stats,
+	avg,
 	warning,
 	course,
 	classs,
@@ -35,13 +36,11 @@ export default function StudentDetails({
 
 				const toRemove = String(student.rollNumber)
 				let temp = []
-
 				for (let i = 0; i < res.classes[classs].students.length; i++) {
 					if (res.classes[classs].students[i].rollNumber !== toRemove) {
 						temp = [...temp, res.classes[classs].students[i]]
 					}
 				}
-
 				res.classes[classs].students = temp
 
 				res = JSON.stringify(res)
@@ -146,8 +145,8 @@ export default function StudentDetails({
 					marginLeft: 24,
 					marginRight: 24,
 					marginTop: 32,
-					borderColor: COLORS?.borderGrey,
-					borderWidth: 1,
+					borderColor: avg < 80 ? COLORS?.red : COLORS?.borderGrey,
+					borderWidth: 2,
 					borderRadius: 15,
 					paddingBottom: 24,
 					paddingTop: 24,
@@ -155,7 +154,7 @@ export default function StudentDetails({
 					paddingRight: 24,
 				}}
 			>
-				<View style={{}}>
+				<View>
 					<Text
 						style={{
 							fontFamily: FONTS?.bold,
@@ -247,7 +246,7 @@ export default function StudentDetails({
 						}}
 					>
 						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>
-							Out of {student && student.attendance.length - 1} classes
+							Out of {student && student.attendance.length - 1} classes - {avg}%
 						</Text>
 					</View>
 				</View>
@@ -391,6 +390,7 @@ export default function StudentDetails({
 						marginRight: 24,
 						marginTop: 30,
 						flexDirection: 'row',
+						elevation: 2,
 					}}
 					activeOpacity={0.4}
 					onPress={handlePresent}
@@ -425,6 +425,7 @@ export default function StudentDetails({
 							flexDirection: 'row',
 							width: 150,
 							flex: 3 / 8,
+							elevation: 2,
 						}}
 						activeOpacity={0.4}
 						onPress={handleLate}
@@ -456,6 +457,7 @@ export default function StudentDetails({
 							flexDirection: 'row',
 							width: 150,
 							flex: 5 / 8,
+							elevation: 2,
 						}}
 						activeOpacity={0.4}
 						onPress={handleAbsent}
