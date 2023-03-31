@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
+import { FlatList } from 'react-native-gesture-handler'
+import { ScrollableComponent } from 'react-native-keyboard-aware-scroll-view'
 
 export default function Home() {
 	var [date, setDate] = useState(new Date())
@@ -183,11 +185,12 @@ export default function Home() {
 				<View
 					style={{
 						backgroundColor: COLORS?.white,
-						marginTop: 28,
+						marginTop: 35,
 						borderRadius: 20,
 						paddingTop: 40,
 						paddingLeft: 30,
 						paddingRight: 30,
+						marginBottom: 650,
 					}}
 				>
 					<Text style={{ fontFamily: FONTS?.bold, fontSize: 18, lineHeight: 22, marginBottom: 22 }}>
@@ -196,8 +199,9 @@ export default function Home() {
 					{courses.length < 1 ? (
 						<Text style={{ fontFamily: FONTS?.regular }}>Add classes in import tab!</Text>
 					) : (
-						<ScrollView>
-							{classes.map((item, index) => (
+						<FlatList
+							data={classes}
+							renderItem={({ item, index }) => (
 								<ClassCard
 									key={index}
 									courseId={item[0]}
@@ -205,11 +209,9 @@ export default function Home() {
 									className={item[2]}
 									students_qty={item[3]}
 								/>
-							))}
-						</ScrollView>
+							)}
+						/>
 					)}
-
-					<View style={{ height: 400 }}></View>
 				</View>
 			</View>
 			<Navbar />

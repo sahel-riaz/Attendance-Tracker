@@ -24,6 +24,7 @@ export default function Navbar() {
 				bottom: 0,
 				justifyContent: 'space-between',
 				width: '100%',
+				zIndex: 99999,
 			}}
 		>
 			<View style={{ flexDirection: 'row' }}>
