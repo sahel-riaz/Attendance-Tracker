@@ -1,5 +1,10 @@
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
+import { useEffect, useState } from 'react'
+import { Path, Svg } from 'react-native-svg'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/native'
+import { FlatList } from 'react-native-gesture-handler'
 
 //components
 import ClassCard from '../components/home/ClassCard'
@@ -8,12 +13,6 @@ import Navbar from '../components/Navbar'
 
 //themes
 import { COLORS, FONTS } from '../styles/theme'
-import { useEffect, useState } from 'react'
-import { Path, Svg } from 'react-native-svg'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useNavigation } from '@react-navigation/native'
-import { FlatList } from 'react-native-gesture-handler'
-import { ScrollableComponent } from 'react-native-keyboard-aware-scroll-view'
 
 export default function Home() {
 	var [date, setDate] = useState(new Date())

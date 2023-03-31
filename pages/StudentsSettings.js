@@ -4,9 +4,11 @@ import { StatusBar } from 'expo-status-bar'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Path, Svg } from 'react-native-svg'
 
+//components
+import ErrorPopUp from '../components/ErrorPopUp'
+
 //themes
 import { COLORS, FONTS } from '../styles/theme'
-import ErrorPopUp from '../components/home/ErrorPopUp'
 
 export default function DbSettings({ route, navigation }) {
 	const { course, classs, date, dateIndex } = route.params

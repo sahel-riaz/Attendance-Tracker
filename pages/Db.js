@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
-import { StyleSheet } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'

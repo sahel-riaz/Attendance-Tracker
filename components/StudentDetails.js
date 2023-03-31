@@ -3,7 +3,7 @@ import { Line, Path, Polygon, Svg } from 'react-native-svg'
 
 //components
 import { StatusBar } from 'expo-status-bar'
-import ErrorPopUp from '../components/home/ErrorPopUp'
+import ErrorPopUp from '../components/ErrorPopUp'
 //themes
 import { COLORS, FONTS } from '../styles/theme'
 import { useNavigation } from '@react-navigation/core'

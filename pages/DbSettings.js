@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import React, { useState } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Path, Svg } from 'react-native-svg'
 
+//components
+import ErrorPopUp from '../components/ErrorPopUp'
+
 //themes
 import { COLORS, FONTS } from '../styles/theme'
-import ErrorPopUp from '../components/home/ErrorPopUp'
 
 export default function DbSettings({ route, navigation }) {
 	const { course, classs } = route.params

@@ -1,18 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Text, TouchableOpacity, View, Linking } from 'react-native'
-import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-// import email from 'react-native-email'
-import { StatusBar } from 'expo-status-bar'
-import * as MailComposer from 'expo-mail-composer'
 
 //components
-import ErrorPopUp from '../components/home/ErrorPopUp'
-import Navbar from '../components/Navbar'
 import StudentDetails from '../components/StudentDetails'
-
-//themes
-import { COLORS, FONTS } from '../styles/theme'
 
 export default function DbStudent({ route, navigation }) {
 	const { course, classs, id } = route.params

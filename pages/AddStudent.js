@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { StyleSheet } from 'react-native'
+import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StatusBar } from 'expo-status-bar'

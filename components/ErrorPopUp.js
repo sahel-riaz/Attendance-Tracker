@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
-import { COLORS, FONTS } from '../../styles/theme'
+import { COLORS, FONTS } from '../styles/theme'
 import { TouchableOpacity } from 'react-native'
 import { Modal } from 'react-native'
 
