@@ -18,6 +18,7 @@ export default function StudentDetails({
 	course,
 	classs,
 	date,
+	marked,
 	handlePresent,
 	handleAbsent,
 	handleLate,
@@ -247,7 +248,8 @@ export default function StudentDetails({
 						}}
 					>
 						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>
-							Out of {student && student.attendance.length - 1} classes
+							Out of {student && marked ? student.attendance.length : student.attendance.length - 1}
+							classes
 						</Text>
 						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>Avg: {avg}%</Text>
 					</View>

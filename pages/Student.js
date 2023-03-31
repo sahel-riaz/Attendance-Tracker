@@ -14,6 +14,7 @@ export default function Student({ route, navigation }) {
 	const [res, setRes] = useState({})
 	const [studentId, setStudentId] = useState(id)
 	const [avg, setAvg] = useState(0)
+	const [marked, setMarked] = useState(false)
 
 	/*=============================================
 	=                 InitalFetch                 =
@@ -69,6 +70,11 @@ export default function Student({ route, navigation }) {
 			if (student.attendance[i] == 1 || student.attendance[i] == 2) tempCount += 1
 		}
 		setAvg(((tempCount / student.attendance.length) * 100).toFixed(2))
+
+		/*=====  check if attendace is already marked for this date  ======*/
+
+		if (student.attendance[dateIndex] != 3) setMarked(true)
+		else setMarked(false)
 	}, [student])
 
 	/*=============================================
@@ -188,12 +194,13 @@ export default function Student({ route, navigation }) {
 			course={course}
 			classs={classs}
 			date={date}
+			marked={marked} //check if attendance is already marked for that date
 			handlePresent={handlePresent}
 			handleAbsent={handleAbsent}
 			handleLate={handleLate}
 			handleNextStudent={handleNextStudent}
 			handlePreviousStudent={handlePreviousStudent}
-			mark={true}
+			mark={true} //mark mode - display present, absent and late buttons
 		/>
 	)
 }
