@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity, View } from 'react-native'
-import { Path, Svg } from 'react-native-svg'
+import { Line, Path, Polygon, Svg } from 'react-native-svg'
 
 //components
 import { StatusBar } from 'expo-status-bar'
@@ -246,7 +246,8 @@ export default function StudentDetails({
 						}}
 					>
 						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>
-							Out of {student && student.attendance.length - 1} classes - {avg}%
+							Out of {student && student.attendance.length - 1} classes -
+							<Text style={{ color: avg < 80 ? 'red' : 'black' }}>&nbsp;{avg}%</Text>
 						</Text>
 					</View>
 				</View>
@@ -261,21 +262,14 @@ export default function StudentDetails({
 								xmlns='http://www.w3.org/2000/svg'
 							>
 								<Path
-									d='M9.43246 3.53834L1.66829 16.5C1.50821 16.7772 1.42351 17.0915 1.42261 17.4116C1.42172 17.7318 1.50466 18.0465 1.66318 18.3247C1.82171 18.6028 2.05029 18.8345 2.32619 18.9969C2.60209 19.1592 2.91569 19.2465 3.23579 19.25H18.7641C19.0842 19.2465 19.3978 19.1592 19.6737 18.9969C19.9496 18.8345 20.1782 18.6028 20.3367 18.3247C20.4953 18.0465 20.5782 17.7318 20.5773 17.4116C20.5764 17.0915 20.4917 16.7772 20.3316 16.5L12.5675 3.53834C12.404 3.26894 12.174 3.0462 11.8994 2.89161C11.6248 2.73703 11.315 2.65582 11 2.65582C10.6849 2.65582 10.3751 2.73703 10.1005 2.89161C9.82596 3.0462 9.59587 3.26894 9.43246 3.53834Z'
+									d='M10.9999 7V12M10.9999 19.6258H5.4449C2.26406 19.6258 0.934898 17.3525 2.4749 14.575L5.3349 9.42334L8.0299 4.58334C9.66156 1.64084 12.3382 1.64084 13.9699 4.58334L16.6649 9.43251L19.5249 14.5842C21.0649 17.3617 19.7266 19.635 16.5549 19.635H10.9999V19.6258Z'
 									stroke='#FF0000'
 									stroke-width='2'
 									stroke-linecap='round'
 									stroke-linejoin='round'
 								/>
 								<Path
-									d='M11 8.25V11.9167'
-									stroke='#FF0000'
-									stroke-width='2'
-									stroke-linecap='round'
-									stroke-linejoin='round'
-								/>
-								<Path
-									d='M11 15.5833H11.01'
+									d='M10.9999 16.4167L11.0001 15'
 									stroke='#FF0000'
 									stroke-width='2'
 									stroke-linecap='round'
