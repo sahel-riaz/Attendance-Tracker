@@ -24,6 +24,7 @@ export default function DbStudent({ route, navigation }) {
 	const [res, setRes] = useState({})
 	const [faculty, setFaculty] = useState('')
 	const [studentId, setStudentId] = useState(id)
+	const [avg, setAvg] = useState(0)
 
 	useEffect(() => {
 		if (course == null) return
@@ -34,6 +35,22 @@ export default function DbStudent({ route, navigation }) {
 					setRes(res)
 					setStudentsCount(res.classes[classs].students.length)
 					setStudent(res.classes[classs].students[studentId])
+
+					/*=====  calculateAvgAttendance  ======*/
+
+					var tempCount = 0
+					var totalCount = 0
+					for (let i = 0; i < res['classes'][classs].students.length; i++) {
+						for (let j = 0; j < res['classes'][classs].students[i].attendance.length; j++) {
+							if (
+								res['classes'][classs].students[i].attendance[j] == 1 || //present
+								res['classes'][classs].students[i].attendance[j] == 2 //late
+							)
+								tempCount += 1
+							totalCount += 1
+						}
+					}
+					setAvg(((tempCount / totalCount) * 100).toFixed(2))
 				})
 				.catch((e) => {
 					console.log(e)
@@ -171,6 +188,7 @@ export default function DbStudent({ route, navigation }) {
 		<StudentDetails
 			student={student}
 			stats={stats}
+			avg={avg}
 			warning={warning}
 			course={course}
 			classs={classs}

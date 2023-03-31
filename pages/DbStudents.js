@@ -142,13 +142,14 @@ export default function DbStudents({ route, navigation }) {
 					</Text>
 				</View>
 			</View>
-
 			<View
 				style={{
-					display: 'flex',
+					flexDirection: 'row',
 					alignItems: 'center',
 					justifyContent: 'center',
 					height: 43,
+					borderRadius: 10,
+					justifyContent: 'space-around',
 					backgroundColor: COLORS?.borderGrey,
 					borderRadius: 10,
 					marginTop: 25,
@@ -159,22 +160,7 @@ export default function DbStudents({ route, navigation }) {
 				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>
 					Total students: {students?.length}
 				</Text>
-			</View>
-			<View
-				style={{
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					height: 43,
-					borderColor: COLORS?.borderGrey,
-					borderWidth: 1,
-					borderRadius: 10,
-					marginTop: 10,
-					marginLeft: 24,
-					marginRight: 24,
-				}}
-			>
-				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>Average Attendance: {avg}%</Text>
+				<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>Avg: {avg}%</Text>
 			</View>
 			<TouchableOpacity
 				style={{
@@ -182,12 +168,12 @@ export default function DbStudents({ route, navigation }) {
 					alignItems: 'center',
 					justifyContent: 'center',
 					height: 43,
-					// borderColor: COLORS?.borderGrey,
 					borderRadius: 10,
 					marginTop: 10,
 					marginLeft: 24,
 					marginRight: 24,
 					backgroundColor: COLORS?.blue,
+					elevation: 10,
 				}}
 				onPress={() => navigation.push('LessAttendance', { course: course, classs: classs })}
 			>
@@ -211,7 +197,7 @@ export default function DbStudents({ route, navigation }) {
 					<Path
 						d='M11.4237 4.69458L16.2291 9.5L11.4237 14.3054M2.77075 9.5H16.0945'
 						stroke='white'
-						stroke-width='1.5'
+						stroke-width='2.5'
 						stroke-miterlimit='10'
 						stroke-linecap='round'
 						stroke-linejoin='round'
@@ -266,13 +252,13 @@ export default function DbStudents({ route, navigation }) {
 								</Text>
 								<Svg
 									width='24'
-									height='26'
-									viewBox='0 0 24 26'
+									height='24'
+									viewBox='0 0 24 24'
 									fill='none'
 									xmlns='http://www.w3.org/2000/svg'
 								>
 									<Path
-										d='M6.00751 13.1777V10.5077C6.00751 7.19766 8.35751 5.83766 11.2275 7.49766L13.5375 8.83766L15.8475 10.1777C18.7175 11.8377 18.7175 14.5477 15.8475 16.2077L13.5375 17.5477L11.2275 18.8877C8.35751 20.5177 6.00751 19.1677 6.00751 15.8477V13.1777Z'
+										d='M14.43 5.93005L20.5 12.0001L14.43 18.0701M3.5 12.0001H20.33'
 										stroke='black'
 										stroke-width='1.5'
 										stroke-miterlimit='10'

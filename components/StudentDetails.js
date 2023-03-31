@@ -239,16 +239,17 @@ export default function StudentDetails({
 						style={{
 							backgroundColor: COLORS?.borderGrey,
 							marginTop: 10,
-							justifyContent: 'center',
+							justifyContent: 'space-evenly',
 							borderRadius: 7,
 							alignItems: 'center',
 							height: 40,
+							flexDirection: 'row',
 						}}
 					>
 						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>
-							Out of {student && student.attendance.length - 1} classes -
-							<Text style={{ color: avg < 80 ? 'red' : 'black' }}>&nbsp;{avg}%</Text>
+							Out of {student && student.attendance.length - 1} classes
 						</Text>
+						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>Avg: {avg}%</Text>
 					</View>
 				</View>
 				<View style={{ flexDirection: 'row', marginTop: 25, height: 20 }}>
