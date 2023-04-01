@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as MailComposer from 'expo-mail-composer'
 
 //components
 import StudentDetails from '../components/StudentDetails'
@@ -16,6 +17,10 @@ export default function DbStudent({ route, navigation }) {
 	const [studentId, setStudentId] = useState(id)
 	const [avg, setAvg] = useState(0)
 
+	/*=============================================
+	=         initialFetch&avgCalculation         =
+	=============================================*/
+
 	useEffect(() => {
 		if (course == null) return
 		async function fetch() {
@@ -29,18 +34,19 @@ export default function DbStudent({ route, navigation }) {
 					/*=====  calculateAvgAttendance  ======*/
 
 					var tempCount = 0
-					var totalCount = 0
-					for (let i = 0; i < res['classes'][classs].students.length; i++) {
-						for (let j = 0; j < res['classes'][classs].students[i].attendance.length; j++) {
-							if (
-								res['classes'][classs].students[i].attendance[j] == 1 || //present
-								res['classes'][classs].students[i].attendance[j] == 2 //late
-							)
-								tempCount += 1
-							totalCount += 1
-						}
+					for (let i = 0; i < res['classes'][classs].students[studentId].attendance.length; i++) {
+						if (
+							res['classes'][classs].students[studentId].attendance[i] == 1 || //present
+							res['classes'][classs].students[studentId].attendance[i] == 2 //late
+						)
+							tempCount += 1
 					}
-					setAvg(((tempCount / totalCount) * 100).toFixed(2))
+					setAvg(
+						(
+							(tempCount / res['classes'][classs].students[studentId].attendance.length) *
+							100
+						).toFixed(2)
+					)
 				})
 				.catch((e) => {
 					console.log(e)
@@ -51,6 +57,10 @@ export default function DbStudent({ route, navigation }) {
 		}
 		fetch()
 	}, [studentId])
+
+	/*=============================================
+	=              calculatingStats               =
+	=============================================*/
 
 	useEffect(() => {
 		if (!student) return
@@ -78,6 +88,10 @@ export default function DbStudent({ route, navigation }) {
 		}
 		setWarning(absentCount)
 	}, [student])
+
+	/*=============================================
+	=                  handleEmail                =
+	=============================================*/
 
 	function handleEmail() {
 		let to = ''
@@ -137,6 +151,10 @@ export default function DbStudent({ route, navigation }) {
 			`,
 		})
 	}
+
+	/*=============================================
+	=                handleRoutinig               =
+	=============================================*/
 
 	function handlePreviousStudent() {
 		if (studentId > 0) {

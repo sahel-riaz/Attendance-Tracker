@@ -213,7 +213,7 @@ export default function DbStudents({ route, navigation }) {
 					paddingRight: 24,
 					width: '100%',
 					marginTop: 10,
-					marginBottom: 426,
+					marginBottom: 375,
 				}}
 			>
 				{students.length > 1 && (
