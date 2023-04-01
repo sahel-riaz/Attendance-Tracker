@@ -32,8 +32,11 @@ export default function LessAttendance({ route, navigation }) {
 							)
 								tempCount += 1
 						}
-						if ((tempCount / res['classes'][classs].students[i].attendance.length) * 100 < 80)
+						console.log(tempCount / res['classes'][classs].students[i].attendance.length)
+						if (tempCount / res['classes'][classs].students[i].attendance.length < 0.8) {
 							tempStudents.push(res['classes'][classs].students[i])
+							// console.log(res['classes'][classs].students[i])
+						}
 					}
 					setStudents(tempStudents)
 				})

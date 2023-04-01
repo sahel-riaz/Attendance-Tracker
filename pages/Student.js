@@ -63,18 +63,28 @@ export default function Student({ route, navigation }) {
 		}
 		setWarning(absentCount)
 
-		/*=====  calculateAvgAttendance  ======*/
-
-		let tempCount = 0
-		for (let i = 0; i < student.attendance.length; i++) {
-			if (student.attendance[i] == 1 || student.attendance[i] == 2) tempCount += 1
-		}
-		setAvg(((tempCount / student.attendance.length) * 100).toFixed(2))
-
 		/*=====  check if attendace is already marked for this date  ======*/
 
 		if (student.attendance[dateIndex] != 3) setMarked(true)
 		else setMarked(false)
+
+		/*=====  calculateAvgAttendance  ======*/
+
+		let tempCount = 0
+
+		if (student.attendance[dateIndex] != 3) {
+			//if attendance is marked
+			for (let i = 0; i < student.attendance.length; i++) {
+				if (student.attendance[i] == 1 || student.attendance[i] == 2) tempCount += 1
+			}
+			setAvg(((tempCount / student.attendance.length) * 100).toFixed(2))
+		} else {
+			//if attendance is not marked yet
+			for (let i = 0; i < student.attendance.length - 1; i++) {
+				if (student.attendance[i] == 1 || student.attendance[i] == 2) tempCount += 1
+			}
+			setAvg(((tempCount / student.attendance.length - 1) * 100).toFixed(2))
+		}
 	}, [student])
 
 	/*=============================================
@@ -165,8 +175,6 @@ export default function Student({ route, navigation }) {
 			})
 		}
 	}
-
-	/*=========  End of HandleRouting  ==========*/
 
 	/*=============================================
 	=               preventGoingBack              =
