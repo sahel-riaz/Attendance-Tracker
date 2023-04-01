@@ -34,7 +34,7 @@ export default function DbStudent({ route, navigation }) {
 					/*=====  calculateAvgAttendance  ======*/
 
 					var tempCount = 0
-					for (let i = 0; j < res['classes'][classs].students[studentId].attendance.length; i++) {
+					for (let i = 0; i < res['classes'][classs].students[studentId].attendance.length; i++) {
 						if (
 							res['classes'][classs].students[studentId].attendance[i] == 1 || //present
 							res['classes'][classs].students[studentId].attendance[i] == 2 //late

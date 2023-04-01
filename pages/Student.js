@@ -83,7 +83,7 @@ export default function Student({ route, navigation }) {
 			for (let i = 0; i < student.attendance.length - 1; i++) {
 				if (student.attendance[i] == 1 || student.attendance[i] == 2) tempCount += 1
 			}
-			setAvg(((tempCount / student.attendance.length - 1) * 100).toFixed(2))
+			setAvg(((tempCount / (student.attendance.length - 1)) * 100).toFixed(2))
 		}
 	}, [student])
 
