@@ -209,7 +209,7 @@ export default function Mark() {
 					</Text>
 					<TextInput
 						style={styles.dropdown}
-						value={courseID.toUpperCase()}
+						value={courseID}
 						onChangeText={setCourseID}
 						onSubmitEditing={() => {
 							courseNameRef.current.focus()
