@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
-import { COLORS, FONTS } from '../../styles/theme'
+// import { COLORS, FONTS } from '../../styles/theme'
 import { TouchableOpacity } from 'react-native'
 
 export default function NewButtons() {
@@ -20,11 +20,11 @@ export default function NewButtons() {
             borderRadius : 15,
             alignItems : 'center',
         }}>
-            <Text style = {{
+            {/* <Text style = {{
                 // fontFamily: FONTS?.regular,
                 // color : COLORS?.white,
             }}>
-                Import</Text>
+                Import</Text> */}
         </View>
 
     </View>

@@ -52,7 +52,12 @@ export default function Mark() {
 				values[0] != ' ' ||
 				values[1] != ' '
 			) {
-				info.push({ studentName: values[0], rollNumber: values[1], attendance: [] })
+				info.push({
+					rollNumber: values[0],
+					studentName: values[1],
+					emailId: values[2],
+					attendance: [],
+				})
 			}
 		}
 
@@ -104,7 +109,7 @@ export default function Mark() {
 			.then((res) => {
 				res = JSON.parse(res)
 				if (res != null) {
-					setCourseName(res[0]?.courseName)
+					setCourseName(res.courseName)
 				}
 			})
 			.catch((e) => {
@@ -123,28 +128,23 @@ export default function Mark() {
 	// 	handleDelete()
 	// }, [])
 
+	/*=============================================
+	=               preventGoingBack              =
+	=============================================*/
+
+	navigation.addListener(
+		'beforeRemove',
+		(e) => {
+			e.preventDefault()
+			navigation.push('Home')
+		},
+		[navigation]
+	)
+
 	return (
 		<View style={{ flex: 1 }}>
-			<StatusBar />
+			<StatusBar style='dark' />
 			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
-				<Svg
-					width='20'
-					height='20'
-					viewBox='0 0 16 17'
-					fill='none'
-					xmlns='http://www.w3.org/2000/svg'
-					onPress={() => navigation.goBack()}
-				>
-					<Path
-						d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
-						stroke='#525058'
-						stroke-width='1.5'
-						stroke-miterlimit='10'
-						stroke-linecap='round'
-						stroke-linejoin='round'
-					/>
-				</Svg>
-
 				<View
 					style={{
 						position: 'absolute',
@@ -209,7 +209,7 @@ export default function Mark() {
 					</Text>
 					<TextInput
 						style={styles.dropdown}
-						value={courseID}
+						value={courseID.toUpperCase()}
 						onChangeText={setCourseID}
 						onSubmitEditing={() => {
 							courseNameRef.current.focus()
