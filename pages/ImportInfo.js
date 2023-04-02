@@ -104,7 +104,7 @@ export default function ImportInfo() {
 						}}
 					>
 						Enter the course ID for the particular course.{'\n'}
-						eg. CS4012D
+						eg. CS3004D
 					</Text>
 					<Text
 						style={{
@@ -148,8 +148,9 @@ export default function ImportInfo() {
 							marginTop: 6,
 						}}
 					>
-						If you are adding a batch to a pre-existing course, this field will be filled
-						automatically when the course ID is entered.
+						If you are adding a new batch to a pre-existing course, this field will be filled
+						automatically when the course ID is entered. If not please check the entered course ID
+						again.
 					</Text>
 				</View>
 

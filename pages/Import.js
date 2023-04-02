@@ -13,6 +13,7 @@ import Navbar from '../components/Navbar'
 
 //themes
 import { COLORS, FONTS } from '../styles/theme'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default function Mark() {
 	const navigation = useNavigation()
@@ -208,7 +209,7 @@ export default function Mark() {
 							lineHeight: 19,
 						}}
 					>
-						Import data
+						Import student roll list
 					</Text>
 				</View>
 			</View>
@@ -261,7 +262,7 @@ export default function Mark() {
 						onSubmitEditing={() => {
 							courseNameRef.current.focus()
 						}}
-						placeholder='eg: CS3045CS'
+						placeholder='eg: CS3004D'
 						placeholderTextColor={COLORS?.placeholder}
 					/>
 				</View>
@@ -376,7 +377,7 @@ export default function Mark() {
 							marginTop: 6,
 						}}
 					>
-						* Check file format before importing
+						* Read instructions before importing
 					</Text>
 				</View>
 				<TouchableOpacity
