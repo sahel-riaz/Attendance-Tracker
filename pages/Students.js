@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar'
 
 //themes
 import { COLORS, FONTS } from '../styles/theme'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default function Students({ route, navigation }) {
 	const { course, batch, date } = route.params
@@ -335,16 +336,16 @@ export default function Students({ route, navigation }) {
 			<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 24, marginTop: 25 }}>
 				Students:
 			</Text>
-			<View
+			<ScrollView
 				style={{
 					paddingLeft: 24,
 					paddingRight: 24,
 					width: '100%',
 					marginTop: 10,
-					marginBottom: 378,
+					marginBottom: 90,
 				}}
 			>
-				{students.length > 0 && (
+				{/* {students.length > 0 && (
 					<FlatList
 						keyExtractor={(student) => student.rollNumber}
 						data={students}
@@ -379,8 +380,40 @@ export default function Students({ route, navigation }) {
 							</TouchableOpacity>
 						)}
 					/>
-				)}
-			</View>
+				)} */}
+				{students.length > 0 &&
+					students.map((item, index) => (
+						<TouchableOpacity
+							rollNumber={item.rollNumber}
+							style={{
+								marginTop: 8,
+								paddingLeft: 16,
+								paddingBottom: 12,
+								paddingTop: 12,
+								borderColor: `${status[item.attendance[dateIndex]]}`,
+								backgroundColor: `${status[item.attendance[dateIndex]]}`,
+								borderWidth: 1,
+								borderRadius: 10,
+								width: '100%',
+							}}
+							key={index}
+							activeOpacity={0.4}
+							onPress={() =>
+								navigation.push('Student', {
+									course: course,
+									batch: batch,
+									id: index,
+									date: date,
+									dateIndex: dateIndex,
+								})
+							}
+						>
+							<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }} numberOfLines={1}>
+								{item.studentName}
+							</Text>
+						</TouchableOpacity>
+					))}
+			</ScrollView>
 
 			<Navbar />
 		</View>

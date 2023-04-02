@@ -134,7 +134,7 @@ export default function Home() {
 							{date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
 						</Text>
 						<Text style={{ paddingTop: 6 }}>
-							Good morning
+							Good day
 							{name != null ? (
 								<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, lineHeight: 19 }}>
 									,&nbsp;{name}&nbsp;👋
