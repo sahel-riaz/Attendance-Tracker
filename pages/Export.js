@@ -90,10 +90,10 @@ export default function Mark() {
 				)
 				const fileName = course + '|' + batch + ' || ' + date
 
-				var dates = ['Student Name', 'Student Roll Number']
+				var header = ['Roll No.', 'Student Name']
 
 				for (let i = 0; i < results['batches'][batch].date.length; i++) {
-					dates = [...dates, results['batches'][batch].date[i]]
+					header = [...header, results['batches'][batch].date[i]]
 				}
 
 				var student = []
@@ -115,8 +115,8 @@ export default function Mark() {
 						}
 						temp = [
 							...temp,
-							results['batches'][batch].students[i].studentName,
 							results['batches'][batch].students[i].rollNumber.trim(),
+							results['batches'][batch].students[i].studentName,
 							...tempAttendance,
 						]
 					}
@@ -127,7 +127,7 @@ export default function Mark() {
 					.then((res) => {
 						const folderLocation = res['directoryUri']
 						const results = jsonToCSV({
-							fields: dates,
+							fields: header,
 							data: student,
 						})
 						StorageAccessFramework.createFileAsync(folderLocation, fileName, 'text/csv').then(

@@ -256,7 +256,7 @@ export default function StudentDetails({
 										? student.attendance.length
 										: student.attendance.length - 1
 									: student.attendance.length)}
-							&nbsp;batches
+							&nbsp;sessions
 						</Text>
 						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>Avg: {avg}%</Text>
 					</View>
