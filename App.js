@@ -17,6 +17,7 @@ import Settings from './pages/Settings'
 import DbSettings from './pages/DbSettings'
 import LessAttendance from './pages/LessAttendance'
 import StudentsSettings from './pages/StudentsSettings'
+import ImportInfo from './pages/ImportInfo'
 
 const Stack = createStackNavigator()
 
@@ -39,7 +40,7 @@ const App = () => {
 	return (
 		<NavigationContainer theme={theme}>
 			<Stack.Navigator
-				initialRouteName='Auth'
+				initialRouteName='ImportInfo'
 				screenOptions={{
 					headerShown: false,
 					gestureEnabled: false,
@@ -61,6 +62,7 @@ const App = () => {
 				<Stack.Screen name='DbSettings' component={DbSettings} />
 				<Stack.Screen name='LessAttendance' component={LessAttendance} />
 				<Stack.Screen name='StudentsSettings' component={StudentsSettings} />
+				<Stack.Screen name='ImportInfo' component={ImportInfo} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

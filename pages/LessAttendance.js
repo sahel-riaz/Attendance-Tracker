@@ -34,12 +34,12 @@ export default function LessAttendance({ route, navigation }) {
 							)
 								tempCount += 1
 						}
-						console.log(tempCount / res['classes'][classs].students[i].attendance.length)
 						if (tempCount / res['classes'][classs].students[i].attendance.length < 0.8) {
 							tempStudents.push(res['classes'][classs].students[i])
 						}
 					}
 					setStudents(tempStudents)
+					// console.log(tempStudents)
 				})
 				.catch((e) => {
 					console.log(e)
@@ -199,12 +199,12 @@ export default function LessAttendance({ route, navigation }) {
 					marginBottom: 320,
 				}}
 			>
-				{students.length > 1 && (
+				{students.length > 0 && (
 					<FlatList
 						keyExtractor={(student) => student.rollNumber}
 						data={students}
 						renderItem={({ item, index }) => (
-							<TouchableOpacity
+							<View
 								rollNumber={item.rollNumber}
 								style={{
 									marginTop: 8,
@@ -220,35 +220,11 @@ export default function LessAttendance({ route, navigation }) {
 									justifyContent: 'space-between',
 									alignItems: 'center',
 								}}
-								activeOpacity={0.4}
-								onPress={() =>
-									navigation.push('DbStudent', {
-										course: course,
-										classs: classs,
-										id: index,
-									})
-								}
 							>
 								<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }} numberOfLines={1}>
 									{item.studentName}
 								</Text>
-								<Svg
-									width='24'
-									height='24'
-									viewBox='0 0 24 24'
-									fill='none'
-									xmlns='http://www.w3.org/2000/svg'
-								>
-									<Path
-										d='M14.43 5.93005L20.5 12.0001L14.43 18.0701M3.5 12.0001H20.33'
-										stroke='black'
-										stroke-width='1.5'
-										stroke-miterlimit='10'
-										stroke-linecap='round'
-										stroke-linejoin='round'
-									/>
-								</Svg>
-							</TouchableOpacity>
+							</View>
 						)}
 					/>
 				)}

@@ -334,7 +334,7 @@ export default function Students({ route, navigation }) {
 					marginBottom: 378,
 				}}
 			>
-				{students.length > 1 && (
+				{students.length > 0 && (
 					<FlatList
 						keyExtractor={(student) => student.rollNumber}
 						data={students}

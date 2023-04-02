@@ -188,6 +188,7 @@ export default function StudentDetails({
 							fontSize: 26,
 							height: 34,
 						}}
+						numberOfLines={1}
 					>
 						{student && student.rollNumber}
 					</Text>
@@ -551,8 +552,11 @@ export default function StudentDetails({
 							fill='black'
 						/>
 					</Svg>
-
-					<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 10 }}>Skip</Text>
+					{mark ? (
+						<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 10 }}>Skip</Text>
+					) : (
+						<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 10 }}>Next</Text>
+					)}
 				</TouchableOpacity>
 			</View>
 		</View>

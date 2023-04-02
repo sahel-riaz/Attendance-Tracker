@@ -81,20 +81,20 @@ export default function Mark() {
 
 		await AsyncStorage.getAllKeys()
 			.then((allKeys) => {
-				if (allKeys.includes(courseID)) {
+				if (allKeys.includes(courseID.toUpperCase())) {
 					/*=====  key (courseID) already exists  ======*/
-					AsyncStorage.getItem(courseID).then((fetchedData) => {
+					AsyncStorage.getItem(courseID.toUpperCase()).then((fetchedData) => {
 						fetchedData = JSON.parse(fetchedData)
 						fetchedData['classes'][classs] = { date: [], students: info }
 						fetchedData = JSON.stringify(fetchedData)
-						AsyncStorage.setItem(courseID, fetchedData).then(() => {
+						AsyncStorage.setItem(courseID.toUpperCase(), fetchedData).then(() => {
 							navigation.push('Home')
 						})
 					})
 				} else {
 					/*=====  key (courseID) does not exist  ======*/
 					const temp_json = JSON.stringify(dataToSet)
-					AsyncStorage.setItem(courseID, temp_json).then(() => {
+					AsyncStorage.setItem(courseID.toUpperCase(), temp_json).then(() => {
 						navigation.push('Home')
 					})
 				}
@@ -105,7 +105,7 @@ export default function Mark() {
 	}
 
 	async function setCourseNameHandle() {
-		await AsyncStorage.getItem(courseID)
+		await AsyncStorage.getItem(courseID.toUpperCase())
 			.then((res) => {
 				res = JSON.parse(res)
 				if (res != null) {
@@ -144,7 +144,53 @@ export default function Mark() {
 	return (
 		<View style={{ flex: 1 }}>
 			<StatusBar style='dark' />
-			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
+
+			<View
+				style={{
+					paddingTop: 60,
+					flexDirection: 'row',
+					paddingRight: 20,
+					justifyContent: 'flex-end',
+					alignItems: 'center',
+				}}
+			>
+				<TouchableOpacity
+					style={{
+						padding: 8,
+						borderRadius: 50,
+						backgroundColor: COLORS?.white,
+						elevation: 3,
+						marginTop: 10,
+					}}
+					activeOpacity={0.7}
+					onPress={() => {
+						navigation.push('ImportInfo')
+					}}
+				>
+					<Svg
+						width='20'
+						height='21'
+						viewBox='0 0 20 21'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M10 9.45834C10.3452 9.45834 10.625 9.73818 10.625 10.0833V14.25C10.625 14.5952 10.3452 14.875 10 14.875C9.65483 14.875 9.375 14.5952 9.375 14.25V10.0833C9.375 9.73818 9.65483 9.45834 10 9.45834Z'
+							fill='black'
+						/>
+						<Path
+							d='M10 8.5C10.4602 8.5 10.8332 7.62691 10.8332 7.16668C10.8332 6.70644 10.4601 6.33334 9.99984 6.33334C9.53959 6.33334 9.1665 6.70644 9.1665 7.16668C9.1665 7.62691 9.53975 8.5 10 8.5Z'
+							fill='black'
+						/>
+						<Path
+							fill-rule='evenodd'
+							clip-rule='evenodd'
+							d='M2.7085 10.5C2.7085 6.47294 5.97309 3.20834 10.0002 3.20834C14.0272 3.20834 17.2918 6.47294 17.2918 10.5C17.2918 14.5271 14.0272 17.7917 10.0002 17.7917C5.97309 17.7917 2.7085 14.5271 2.7085 10.5ZM10.0002 4.45834C6.66345 4.45834 3.9585 7.16329 3.9585 10.5C3.9585 13.8368 6.66345 16.5417 10.0002 16.5417C13.3369 16.5417 16.0418 13.8368 16.0418 10.5C16.0418 7.16329 13.3369 4.45834 10.0002 4.45834Z'
+							fill='black'
+						/>
+					</Svg>
+				</TouchableOpacity>
+
 				<View
 					style={{
 						position: 'absolute',
@@ -166,6 +212,7 @@ export default function Mark() {
 					</Text>
 				</View>
 			</View>
+
 			<View style={{ alignItems: 'center', marginTop: 32 }}>
 				<View
 					style={{
@@ -209,7 +256,7 @@ export default function Mark() {
 					</Text>
 					<TextInput
 						style={styles.dropdown}
-						value={courseID.toUpperCase()}
+						value={courseID}
 						onChangeText={setCourseID}
 						onSubmitEditing={() => {
 							courseNameRef.current.focus()
@@ -320,6 +367,17 @@ export default function Mark() {
 							</>
 						)}
 					</TouchableOpacity>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 12,
+							color: COLORS?.selectGrey,
+							alignSelf: 'center',
+							marginTop: 6,
+						}}
+					>
+						* Check file format before importing
+					</Text>
 				</View>
 				<TouchableOpacity
 					style={{
@@ -330,7 +388,7 @@ export default function Mark() {
 						borderRadius: 10,
 						flexDirection: 'row',
 						justifyContent: 'center',
-						marginTop: 40,
+						marginTop: 24,
 					}}
 					onPress={handlePress}
 					activeOpacity={0.7}

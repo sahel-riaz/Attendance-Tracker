@@ -108,7 +108,7 @@ export default function DbSettings({ route, navigation }) {
 			</View>
 			<TouchableOpacity
 				style={{
-					marginTop: 20,
+					marginTop: 40,
 					paddingBottom: 12,
 					paddingTop: 12,
 					borderColor: COLORS?.black,

@@ -117,7 +117,7 @@ export default function DbSettings({ route, navigation }) {
 					borderRadius: 10,
 					flexDirection: 'row',
 					justifyContent: 'center',
-					marginTop: 20,
+					marginTop: 40,
 				}}
 				onPress={() => {
 					setTrigger(true)

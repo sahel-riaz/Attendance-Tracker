@@ -216,7 +216,7 @@ export default function DbStudents({ route, navigation }) {
 					marginBottom: 375,
 				}}
 			>
-				{students.length > 1 && (
+				{students.length > 0 && (
 					<FlatList
 						keyExtractor={(student) => student.rollNumber}
 						data={students}
