@@ -141,7 +141,11 @@ export default function LessAttendance({ route, navigation }) {
 			for (let i = 0; i < students.length; i++) {
 				student = [
 					...student,
-					[students[i].rollNumber.trim(), students[i].studentName, percentages[i].toFixed(2)],
+					[
+						students[i].rollNumber.trim(),
+						students[i].studentName,
+						(percentages[i] * 100).toFixed(2),
+					],
 				]
 			}
 

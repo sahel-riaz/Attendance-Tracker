@@ -198,7 +198,7 @@ export default function Mark() {
 							lineHeight: 19,
 						}}
 					>
-						Export data
+						Export attendance
 					</Text>
 				</View>
 			</View>
@@ -338,7 +338,7 @@ export default function Mark() {
 				<TouchableOpacity
 					style={{
 						height: 43,
-						width: 160,
+						width: 190,
 						backgroundColor: COLORS?.blue,
 						alignItems: 'center',
 						borderRadius: 10,
@@ -377,7 +377,7 @@ export default function Mark() {
 							color: COLORS?.white,
 						}}
 					>
-						Export data
+						Export attendance
 					</Text>
 				</TouchableOpacity>
 			</View>

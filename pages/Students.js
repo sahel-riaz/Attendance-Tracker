@@ -35,19 +35,29 @@ export default function Students({ route, navigation }) {
 
 					/*=====  calculateAvgAttendance  ======*/
 
-					var tempCount = 0
-					var totalCount = 0
+					let tempCount = 0
+					let totalCount = 0
+					// for (let i = 0; i < res['batches'][batch].students.length; i++) {
+					// 	for (let j = 0; j < res['batches'][batch].students[i].attendance.length; j++) {
+					// 		if (
+					// 			res['batches'][batch].students[i].attendance[j] == 1 || //present
+					// 			res['batches'][batch].students[i].attendance[j] == 2 //late
+					// 		)
+					// 			tempCount += 1
+					// 		totalCount += 1
+					// 	}
+					// }
+
 					for (let i = 0; i < res['batches'][batch].students.length; i++) {
-						for (let j = 0; j < res['batches'][batch].students[i].attendance.length; j++) {
-							if (
-								res['batches'][batch].students[i].attendance[j] == 1 || //present
-								res['batches'][batch].students[i].attendance[j] == 2 //late
-							)
-								tempCount += 1
-							totalCount += 1
-						}
+						if (
+							res['batches'][batch].students[i].attendance[dateIndex] == 1 || //present
+							res['batches'][batch].students[i].attendance[dateIndex] == 2 //late
+						)
+							tempCount += 1
+						totalCount += 1
 					}
 					setAvg(((tempCount / totalCount) * 100).toFixed(2))
+					console.log(((tempCount / totalCount) * 100).toFixed(2))
 				})
 				.catch((e) => {
 					console.log(e)
