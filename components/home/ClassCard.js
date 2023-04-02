@@ -33,12 +33,12 @@ export default function ClassCard({ courseId, courseName, className, students_qt
 			.then((res) => {
 				res = JSON.parse(res)
 				/*=====  check if the selected date already exists  ======*/
-				if (!Object.values(res.classes[className].date).includes(date)) {
+				if (!Object.values(res.batches[className].date).includes(date)) {
 					/*=====  insert selected date and time; push 3 into every students attendance  ======*/
-					res.classes[className]['date'] = [...res.classes[className]['date'], date]
-					for (let i = 0; i < res.classes[className].students.length; i++) {
-						res.classes[className].students[i].attendance = [
-							...res.classes[className].students[i].attendance,
+					res.batches[className]['date'] = [...res.batches[className]['date'], date]
+					for (let i = 0; i < res.batches[className].students.length; i++) {
+						res.batches[className].students[i].attendance = [
+							...res.batches[className].students[i].attendance,
 							3,
 						]
 					}
@@ -49,7 +49,7 @@ export default function ClassCard({ courseId, courseName, className, students_qt
 			.then(() => {
 				navigation.push('Students', {
 					course: courseId,
-					classs: className,
+					batch: className,
 					date: date,
 				})
 			})
@@ -100,7 +100,7 @@ export default function ClassCard({ courseId, courseName, className, students_qt
 							flexDirection: 'row',
 						}}
 					>
-						{/* class name */}
+						{/* batch name */}
 						<View
 							style={{
 								flexDirection: 'row',

@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import StudentDetails from '../components/StudentDetails'
 
 export default function Student({ route, navigation }) {
-	const { course, classs, id, date, dateIndex } = route.params
+	const { course, batch, id, date, dateIndex } = route.params
 
 	const [studentsCount, setStudentsCount] = useState(0)
 	const [student, setStudent] = useState()
@@ -27,8 +27,8 @@ export default function Student({ route, navigation }) {
 				.then((res) => {
 					res = JSON.parse(res)
 					setRes(res)
-					setStudentsCount(res.classes[classs].students.length)
-					setStudent(res.classes[classs].students[studentId])
+					setStudentsCount(res.batches[batch].students.length)
+					setStudent(res.batches[batch].students[studentId])
 				})
 				.catch((e) => {
 					console.log(e)
@@ -93,7 +93,7 @@ export default function Student({ route, navigation }) {
 
 	async function handlePresent() {
 		var tempJson = res
-		tempJson.classes[classs].students[studentId].attendance[dateIndex] = 1
+		tempJson.batches[batch].students[studentId].attendance[dateIndex] = 1
 		tempJson = JSON.stringify(tempJson)
 		AsyncStorage.setItem(course, tempJson)
 
@@ -104,7 +104,7 @@ export default function Student({ route, navigation }) {
 		else {
 			navigation.push('Students', {
 				course: course,
-				classs: classs,
+				batch: batch,
 				date: date,
 			})
 		}
@@ -112,7 +112,7 @@ export default function Student({ route, navigation }) {
 
 	async function handleAbsent() {
 		var tempJson = res
-		tempJson.classes[classs].students[studentId].attendance[dateIndex] = 0
+		tempJson.batches[batch].students[studentId].attendance[dateIndex] = 0
 		tempJson = JSON.stringify(tempJson)
 		AsyncStorage.setItem(course, tempJson)
 
@@ -123,7 +123,7 @@ export default function Student({ route, navigation }) {
 		else {
 			navigation.push('Students', {
 				course: course,
-				classs: classs,
+				batch: batch,
 				date: date,
 			})
 		}
@@ -131,7 +131,7 @@ export default function Student({ route, navigation }) {
 
 	async function handleLate() {
 		var tempJson = res
-		tempJson.classes[classs].students[studentId].attendance[dateIndex] = 2
+		tempJson.batches[batch].students[studentId].attendance[dateIndex] = 2
 		tempJson = JSON.stringify(tempJson)
 		AsyncStorage.setItem(course, tempJson)
 
@@ -142,7 +142,7 @@ export default function Student({ route, navigation }) {
 		else {
 			navigation.push('Students', {
 				course: course,
-				classs: classs,
+				batch: batch,
 				date: date,
 			})
 		}
@@ -156,7 +156,7 @@ export default function Student({ route, navigation }) {
 		} else {
 			navigation.push('Students', {
 				course: course,
-				classs: classs,
+				batch: batch,
 				date: date,
 			})
 		}
@@ -170,7 +170,7 @@ export default function Student({ route, navigation }) {
 		} else {
 			navigation.push('Students', {
 				course: course,
-				classs: classs,
+				batch: batch,
 				date: date,
 			})
 		}
@@ -186,7 +186,7 @@ export default function Student({ route, navigation }) {
 			e.preventDefault()
 			navigation.push('Students', {
 				course: course,
-				classs: classs,
+				batch: batch,
 				date: date,
 			})
 		},
@@ -200,7 +200,7 @@ export default function Student({ route, navigation }) {
 			avg={avg}
 			warning={warning}
 			course={course}
-			classs={classs}
+			batch={batch}
 			date={date}
 			marked={marked} //check if attendance is already marked for that date
 			handlePresent={handlePresent}

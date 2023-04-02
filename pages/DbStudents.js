@@ -12,7 +12,7 @@ import Navbar from '../components/Navbar'
 import { COLORS, FONTS } from '../styles/theme'
 
 export default function DbStudents({ route, navigation }) {
-	const { course, classs } = route.params
+	const { course, batch } = route.params
 
 	const [students, setStudents] = useState([])
 
@@ -24,14 +24,14 @@ export default function DbStudents({ route, navigation }) {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					setStudents(res.classes[classs].students)
+					setStudents(res.batches[batch].students)
 					var tempCount = 0
 					var totalCount = 0
-					for (let i = 0; i < res['classes'][classs].students.length; i++) {
-						for (let j = 0; j < res['classes'][classs].students[i].attendance.length; j++) {
+					for (let i = 0; i < res['batches'][batch].students.length; i++) {
+						for (let j = 0; j < res['batches'][batch].students[i].attendance.length; j++) {
 							if (
-								res['classes'][classs].students[i].attendance[j] == 1 || //present
-								res['classes'][classs].students[i].attendance[j] == 2 //late
+								res['batches'][batch].students[i].attendance[j] == 1 || //present
+								res['batches'][batch].students[i].attendance[j] == 2 //late
 							)
 								tempCount += 1
 							totalCount += 1
@@ -99,7 +99,7 @@ export default function DbStudents({ route, navigation }) {
 					}}
 					activeOpacity={0.7}
 					onPress={() => {
-						navigation.push('DbSettings', { course: course, classs: classs })
+						navigation.push('DbSettings', { course: course, batch: batch })
 					}}
 				>
 					<Svg
@@ -174,7 +174,7 @@ export default function DbStudents({ route, navigation }) {
 					backgroundColor: COLORS?.blue,
 					elevation: 10,
 				}}
-				onPress={() => navigation.push('LessAttendance', { course: course, classs: classs })}
+				onPress={() => navigation.push('LessAttendance', { course: course, batch: batch })}
 			>
 				<Text
 					style={{
@@ -241,7 +241,7 @@ export default function DbStudents({ route, navigation }) {
 								onPress={() =>
 									navigation.push('DbStudent', {
 										course: course,
-										classs: classs,
+										batch: batch,
 										id: index,
 									})
 								}

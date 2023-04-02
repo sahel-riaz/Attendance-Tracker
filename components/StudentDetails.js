@@ -16,7 +16,7 @@ export default function StudentDetails({
 	avg,
 	warning,
 	course,
-	classs,
+	batch,
 	date,
 	marked,
 	handlePresent,
@@ -37,12 +37,12 @@ export default function StudentDetails({
 
 				const toRemove = String(student.rollNumber)
 				let temp = []
-				for (let i = 0; i < res.classes[classs].students.length; i++) {
-					if (res.classes[classs].students[i].rollNumber !== toRemove) {
-						temp = [...temp, res.classes[classs].students[i]]
+				for (let i = 0; i < res.batches[batch].students.length; i++) {
+					if (res.batches[batch].students[i].rollNumber !== toRemove) {
+						temp = [...temp, res.batches[batch].students[i]]
 					}
 				}
-				res.classes[classs].students = temp
+				res.batches[batch].students = temp
 
 				res = JSON.stringify(res)
 				AsyncStorage.setItem(course, res)
@@ -50,7 +50,7 @@ export default function StudentDetails({
 			.then(() => {
 				navigation.push('DbStudents', {
 					course: course,
-					classs: classs,
+					batch: batch,
 				})
 			})
 	}
@@ -80,12 +80,12 @@ export default function StudentDetails({
 						mark
 							? navigation.push('Students', {
 									course: course,
-									classs: classs,
+									batch: batch,
 									date: date,
 							  })
 							: navigation.push('DbStudents', {
 									course: course,
-									classs: classs,
+									batch: batch,
 							  })
 					}}
 				>
@@ -256,7 +256,7 @@ export default function StudentDetails({
 										? student.attendance.length
 										: student.attendance.length - 1
 									: student.attendance.length)}
-							&nbsp;classes
+							&nbsp;batches
 						</Text>
 						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>Avg: {avg}%</Text>
 					</View>

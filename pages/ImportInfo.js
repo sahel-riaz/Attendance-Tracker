@@ -114,7 +114,7 @@ export default function ImportInfo() {
 							marginTop: 6,
 						}}
 					>
-						If you want to add another class to the same course, make sure to enter the course ID
+						If you want to add another batch to the same course, make sure to enter the course ID
 						correctly.
 					</Text>
 				</View>
@@ -148,7 +148,7 @@ export default function ImportInfo() {
 							marginTop: 6,
 						}}
 					>
-						If you are adding a class to a pre-existing course, this field will be filled
+						If you are adding a batch to a pre-existing course, this field will be filled
 						automatically when the course ID is entered.
 					</Text>
 				</View>
@@ -161,7 +161,7 @@ export default function ImportInfo() {
 							lineHeight: 19,
 						}}
 					>
-						Class name:
+						Batch:
 					</Text>
 					<Text
 						style={{
@@ -171,7 +171,7 @@ export default function ImportInfo() {
 							marginTop: 8,
 						}}
 					>
-						Enter the class name for the particular course.{'\n'}
+						Enter the batch code.{'\n'}
 						eg. CS01
 					</Text>
 				</View>
@@ -228,7 +228,7 @@ export default function ImportInfo() {
 							// marginBottom: 20,
 						}}
 					>
-						The file above contains the template that is supported by the app.
+						The file below contains the template that is supported by the app.
 					</Text>
 				</View>
 			</ScrollView>

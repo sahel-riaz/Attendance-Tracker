@@ -16,9 +16,9 @@ export default function Mark() {
 	const navigation = useNavigation()
 
 	const [courses, setCourses] = useState([])
-	const [classes, setClasses] = useState([])
+	const [batches, setBatches] = useState([])
 	const [course, setCourse] = useState(null)
-	const [classs, setClasss] = useState(null)
+	const [batch, setBatch] = useState(null)
 
 	useEffect(() => {
 		async function fetch() {
@@ -42,8 +42,8 @@ export default function Mark() {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					res = Object.keys(res['classes'])
-					setClasses(res.map((item, index) => ({ label: item, value: item })))
+					res = Object.keys(res['batches'])
+					setBatches(res.map((item, index) => ({ label: item, value: item })))
 				})
 				.catch((e) => {
 					console.log(e)
@@ -53,10 +53,10 @@ export default function Mark() {
 	}, [course])
 
 	async function handleNavigate() {
-		if (course && classs) {
+		if (course && batch) {
 			navigation.push('DbStudents', {
 				course: course,
-				classs: classs,
+				batch: batch,
 			})
 		} else {
 			//error
@@ -192,14 +192,14 @@ export default function Mark() {
 							marginTop: 15,
 						}}
 					>
-						Class:
+						Batch:
 					</Text>
 					<Dropdown
 						style={styles.dropdown}
-						placeholder='Select class'
+						placeholder='Select batch'
 						placeholderStyle={styles.placeholderStyle}
 						selectedTextStyle={styles.selectedTextStyle}
-						data={classes}
+						data={batches}
 						autoScroll={false}
 						maxHeight={300}
 						containerStyle={{ marginTop: -50, borderRadius: 7 }}
@@ -210,9 +210,9 @@ export default function Mark() {
 						}}
 						labelField='label'
 						valueField='value'
-						value={classs}
+						value={batch}
 						onChange={(item) => {
-							setClasss(item.value)
+							setBatch(item.value)
 						}}
 						renderRightIcon={() => (
 							<Svg

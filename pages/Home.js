@@ -19,7 +19,7 @@ export default function Home() {
 	const navigation = useNavigation()
 
 	const [courses, setCourses] = useState([])
-	const [classes, setClasses] = useState([])
+	const [batches, setBatches] = useState([])
 	const [markDate, setMarkDate] = useState(null)
 
 	const [name, setName] = useState(null)
@@ -59,15 +59,15 @@ export default function Home() {
 					const course = res[i]
 					AsyncStorage.getItem(res[i]).then((res) => {
 						res = JSON.parse(res)
-						const classList = Object.keys(res['classes'])
+						const classList = Object.keys(res['batches'])
 						for (let j = 0; j < classList.length; j++) {
 							const classToAdd = [
 								course,
 								res['courseName'],
 								classList[j],
-								res.classes[classList[j]].students.length,
+								res.batches[classList[j]].students.length,
 							]
-							setClasses((classes) => [...classes, classToAdd])
+							setBatches((batches) => [...batches, classToAdd])
 						}
 					})
 				}
@@ -98,9 +98,9 @@ export default function Home() {
 		setMarkDate(date)
 	}, [])
 
-	function handleCourseClick(course, classs) {
-		console.log(course, classs)
-		navigation.push('Students', { course: course, classs: classs, date: markDate })
+	function handleCourseClick(course, batch) {
+		console.log(course, batch)
+		navigation.push('Students', { course: course, batch: batch, date: markDate })
 	}
 
 	/*=============================================
@@ -179,7 +179,7 @@ export default function Home() {
 					}}
 				>
 					<HomeCard count={courses.length} isCourse={true} />
-					<HomeCard count={classes.length} />
+					<HomeCard count={batches.length} />
 				</View>
 				<View
 					style={{
@@ -196,10 +196,10 @@ export default function Home() {
 						Courses 💼
 					</Text>
 					{courses.length < 1 ? (
-						<Text style={{ fontFamily: FONTS?.regular }}>Add classes in import tab!</Text>
+						<Text style={{ fontFamily: FONTS?.regular }}>Add batches in import tab!</Text>
 					) : (
 						<FlatList
-							data={classes}
+							data={batches}
 							renderItem={({ item, index }) => (
 								<ClassCard
 									key={index}

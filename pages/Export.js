@@ -18,9 +18,9 @@ export default function Mark() {
 	const navigation = useNavigation()
 
 	const [courses, setCourses] = useState([])
-	const [classes, setClasses] = useState([])
+	const [batches, setBatches] = useState([])
 	const [course, setCourse] = useState(null)
-	const [classs, setClasss] = useState(null)
+	const [batch, setBatch] = useState(null)
 
 	/*=============================================
 	=                fetchCourses                 =
@@ -50,8 +50,8 @@ export default function Mark() {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					res = Object.keys(res['classes'])
-					setClasses(res.map((item, index) => ({ label: item, value: item })))
+					res = Object.keys(res['batches'])
+					setBatches(res.map((item, index) => ({ label: item, value: item })))
 				})
 				.catch((e) => {
 					console.log(e)
@@ -61,7 +61,7 @@ export default function Mark() {
 	}, [course])
 
 	async function handlePress() {
-		if (course && classs) {
+		if (course && batch) {
 			AsyncStorage.getItem(course).then((res) => {
 				const results = JSON.parse(res)
 
@@ -88,35 +88,35 @@ export default function Mark() {
 				const date = String(
 					dotw + ', ' + day + '/' + month + '/' + year + '-' + hours + ':' + minutes + ':' + seconds
 				)
-				const fileName = course + '|' + classs + ' || ' + date
+				const fileName = course + '|' + batch + ' || ' + date
 
 				var dates = ['Student Name', 'Student Roll Number']
 
-				for (let i = 0; i < results['classes'][classs].date.length; i++) {
-					dates = [...dates, results['classes'][classs].date[i]]
+				for (let i = 0; i < results['batches'][batch].date.length; i++) {
+					dates = [...dates, results['batches'][batch].date[i]]
 				}
 
 				var student = []
 
-				for (let i = 0; i < results['classes'][classs].students.length; i++) {
+				for (let i = 0; i < results['batches'][batch].students.length; i++) {
 					let temp = []
 					let tempAttendance = []
-					if (results['classes'][classs].students[i].studentName != '') {
-						for (let j = 0; j < results['classes'][classs].students[i].attendance.length; j++) {
-							if (results['classes'][classs].students[i].attendance[j] == 0) {
+					if (results['batches'][batch].students[i].studentName != '') {
+						for (let j = 0; j < results['batches'][batch].students[i].attendance.length; j++) {
+							if (results['batches'][batch].students[i].attendance[j] == 0) {
 								tempAttendance.push('A')
-							} else if (results['classes'][classs].students[i].attendance[j] == 1) {
+							} else if (results['batches'][batch].students[i].attendance[j] == 1) {
 								tempAttendance.push('P')
-							} else if (results['classes'][classs].students[i].attendance[j] == 2) {
+							} else if (results['batches'][batch].students[i].attendance[j] == 2) {
 								tempAttendance.push('L')
-							} else if (results['classes'][classs].students[i].attendance[j] == 3) {
+							} else if (results['batches'][batch].students[i].attendance[j] == 3) {
 								tempAttendance.push('N')
 							}
 						}
 						temp = [
 							...temp,
-							results['classes'][classs].students[i].studentName,
-							results['classes'][classs].students[i].rollNumber.trim(),
+							results['batches'][batch].students[i].studentName,
+							results['batches'][batch].students[i].rollNumber.trim(),
 							...tempAttendance,
 						]
 					}
@@ -293,14 +293,14 @@ export default function Mark() {
 							marginTop: 15,
 						}}
 					>
-						Class:
+						Batch:
 					</Text>
 					<Dropdown
 						style={styles.dropdown}
-						placeholder='Select class'
+						placeholder='Select batch'
 						placeholderStyle={styles.placeholderStyle}
 						selectedTextStyle={styles.selectedTextStyle}
-						data={classes}
+						data={batches}
 						autoScroll={false}
 						maxHeight={300}
 						containerStyle={{ marginTop: -50, borderRadius: 7 }}
@@ -311,9 +311,9 @@ export default function Mark() {
 						}}
 						labelField='label'
 						valueField='value'
-						value={classs}
+						value={batch}
 						onChange={(item) => {
-							setClasss(item.value)
+							setBatch(item.value)
 						}}
 						renderRightIcon={() => (
 							<Svg

@@ -69,7 +69,7 @@ export default function HomeCard({ count, isCourse = false }) {
 					</Text>
 				) : (
 					<Text style={{ fontSize: 12, fontFamily: FONTS?.regular, lineHeight: 14, paddingTop: 2 }}>
-						Classes
+						Batches
 					</Text>
 				)}
 			</View>

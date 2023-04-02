@@ -11,7 +11,7 @@ import Navbar from '../components/Navbar'
 import { COLORS, FONTS } from '../styles/theme'
 
 export default function Students({ route, navigation }) {
-	const { course, classs, date } = route.params
+	const { course, batch, date } = route.params
 
 	const [students, setStudents] = useState([])
 	const [dateIndex, setDateIndex] = useState()
@@ -30,18 +30,18 @@ export default function Students({ route, navigation }) {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					setDateIndex(res.classes[classs]['date'].indexOf(date))
-					setStudents(res.classes[classs].students)
+					setDateIndex(res.batches[batch]['date'].indexOf(date))
+					setStudents(res.batches[batch].students)
 
 					/*=====  calculateAvgAttendance  ======*/
 
 					var tempCount = 0
 					var totalCount = 0
-					for (let i = 0; i < res['classes'][classs].students.length; i++) {
-						for (let j = 0; j < res['classes'][classs].students[i].attendance.length; j++) {
+					for (let i = 0; i < res['batches'][batch].students.length; i++) {
+						for (let j = 0; j < res['batches'][batch].students[i].attendance.length; j++) {
 							if (
-								res['classes'][classs].students[i].attendance[j] == 1 || //present
-								res['classes'][classs].students[i].attendance[j] == 2 //late
+								res['batches'][batch].students[i].attendance[j] == 1 || //present
+								res['batches'][batch].students[i].attendance[j] == 2 //late
 							)
 								tempCount += 1
 							totalCount += 1
@@ -123,7 +123,7 @@ export default function Students({ route, navigation }) {
 					onPress={() => {
 						navigation.push('StudentsSettings', {
 							course: course,
-							classs: classs,
+							batch: batch,
 							date: date,
 							dateIndex,
 						})
@@ -356,7 +356,7 @@ export default function Students({ route, navigation }) {
 								onPress={() =>
 									navigation.push('Student', {
 										course: course,
-										classs: classs,
+										batch: batch,
 										id: index,
 										date: date,
 										dateIndex: dateIndex,

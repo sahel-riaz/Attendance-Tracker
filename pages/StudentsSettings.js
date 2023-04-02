@@ -11,7 +11,7 @@ import ErrorPopUp from '../components/ErrorPopUp'
 import { COLORS, FONTS } from '../styles/theme'
 
 export default function DbSettings({ route, navigation }) {
-	const { course, classs, date, dateIndex } = route.params
+	const { course, batch, date, dateIndex } = route.params
 
 	const [trigger, setTrigger] = useState(false)
 
@@ -19,9 +19,9 @@ export default function DbSettings({ route, navigation }) {
 		AsyncStorage.getItem(course)
 			.then((res) => {
 				res = JSON.parse(res)
-				res['classes'][classs]['date'].splice(dateIndex, 1)
-				for (let i = 0; i < res['classes'][classs]['students'].length; i++) {
-					res['classes'][classs]['students'][i]['attendance'].splice(dateIndex, 1)
+				res['batches'][batch]['date'].splice(dateIndex, 1)
+				for (let i = 0; i < res['batches'][batch]['students'].length; i++) {
+					res['batches'][batch]['students'][i]['attendance'].splice(dateIndex, 1)
 				}
 				res = JSON.stringify(res)
 				AsyncStorage.setItem(course, res)
@@ -48,7 +48,7 @@ export default function DbSettings({ route, navigation }) {
 		'beforeRemove',
 		(e) => {
 			e.preventDefault()
-			navigation.push('Students', { course: course, classs: classs, date: date })
+			navigation.push('Students', { course: course, batch: batch, date: date })
 		},
 		[navigation]
 	)
@@ -65,9 +65,7 @@ export default function DbSettings({ route, navigation }) {
 			<View style={{ paddingTop: 60, flexDirection: 'row' }}>
 				<TouchableOpacity
 					style={{ padding: 20, paddingLeft: 0 }}
-					onPress={() =>
-						navigation.push('Students', { course: course, classs: classs, date: date })
-					}
+					onPress={() => navigation.push('Students', { course: course, batch: batch, date: date })}
 				>
 					<Svg
 						width='20'

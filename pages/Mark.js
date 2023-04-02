@@ -16,13 +16,13 @@ export default function Mark() {
 	const navigation = useNavigation()
 
 	const [courses, setCourses] = useState([])
-	const [classes, setClasses] = useState([])
+	const [batches, setBatches] = useState([])
 	const [dates, setDates] = useState([])
 
 	const [res, setRes] = useState({})
 
 	const [course, setCourse] = useState(null)
-	const [classs, setClasss] = useState(null)
+	const [batch, setBatch] = useState(null)
 	const [date, setDate] = useState(null)
 
 	/*=============================================
@@ -54,8 +54,8 @@ export default function Mark() {
 				.then((res) => {
 					res = JSON.parse(res)
 					setRes(res)
-					res = Object.keys(res['classes'])
-					setClasses(res.map((item, index) => ({ label: item, value: item })))
+					res = Object.keys(res['batches'])
+					setBatches(res.map((item, index) => ({ label: item, value: item })))
 				})
 				.catch((e) => {
 					console.log(e)
@@ -68,7 +68,7 @@ export default function Mark() {
 	=                 fetchDates                  =
 	=============================================*/
 	useEffect(() => {
-		if (classs == null) return
+		if (batch == null) return
 
 		const jsDate = new Date()
 		const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
@@ -86,27 +86,27 @@ export default function Mark() {
 			dotw + ', ' + day + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ':' + seconds
 		)
 
-		let tempDates = Object.values(res.classes[classs].date)
+		let tempDates = Object.values(res.batches[batch].date)
 		tempDates.push(date)
 		setDate(date)
 		setDates(tempDates.map((item, index) => ({ label: item, value: item })))
-	}, [classs])
+	}, [batch])
 
 	/*=============================================
 	=         Apply button functionality          =
 	=============================================*/
 	async function handleNavigate() {
-		if (course && classs) {
+		if (course && batch) {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
 					/*=====  check if the selected date already exists  ======*/
-					if (!Object.values(res.classes[classs].date).includes(date)) {
+					if (!Object.values(res.batches[batch].date).includes(date)) {
 						/*=====  insert selected date and time; push 3 into every students attendance  ======*/
-						res.classes[classs]['date'] = [...res.classes[classs]['date'], date]
-						for (let i = 0; i < res.classes[classs].students.length; i++) {
-							res.classes[classs].students[i].attendance = [
-								...res.classes[classs].students[i].attendance,
+						res.batches[batch]['date'] = [...res.batches[batch]['date'], date]
+						for (let i = 0; i < res.batches[batch].students.length; i++) {
+							res.batches[batch].students[i].attendance = [
+								...res.batches[batch].students[i].attendance,
 								3,
 							]
 						}
@@ -117,7 +117,7 @@ export default function Mark() {
 				.then(() => {
 					navigation.push('Students', {
 						course: course,
-						classs: classs,
+						batch: batch,
 						date: date,
 					})
 				})
@@ -277,14 +277,14 @@ export default function Mark() {
 							marginTop: 15,
 						}}
 					>
-						Class:
+						Batch:
 					</Text>
 					<Dropdown
 						style={styles.dropdown}
-						placeholder='Select class'
+						placeholder='Select batch'
 						placeholderStyle={styles.placeholderStyle}
 						selectedTextStyle={styles.selectedTextStyle}
-						data={classes}
+						data={batches}
 						autoScroll={false}
 						maxHeight={300}
 						containerStyle={{ marginTop: -50, borderRadius: 7 }}
@@ -295,9 +295,9 @@ export default function Mark() {
 						}}
 						labelField='label'
 						valueField='value'
-						value={classs}
+						value={batch}
 						onChange={(item) => {
-							setClasss(item.value)
+							setBatch(item.value)
 						}}
 						renderRightIcon={() => (
 							<Svg

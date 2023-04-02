@@ -6,7 +6,7 @@ import * as MailComposer from 'expo-mail-composer'
 import StudentDetails from '../components/StudentDetails'
 
 export default function DbStudent({ route, navigation }) {
-	const { course, classs, id } = route.params
+	const { course, batch, id } = route.params
 
 	const [studentsCount, setStudentsCount] = useState(0)
 	const [student, setStudent] = useState()
@@ -28,22 +28,22 @@ export default function DbStudent({ route, navigation }) {
 				.then((res) => {
 					res = JSON.parse(res)
 					setRes(res)
-					setStudentsCount(res.classes[classs].students.length)
-					setStudent(res.classes[classs].students[studentId])
+					setStudentsCount(res.batches[batch].students.length)
+					setStudent(res.batches[batch].students[studentId])
 
 					/*=====  calculateAvgAttendance  ======*/
 
 					var tempCount = 0
-					for (let i = 0; i < res['classes'][classs].students[studentId].attendance.length; i++) {
+					for (let i = 0; i < res['batches'][batch].students[studentId].attendance.length; i++) {
 						if (
-							res['classes'][classs].students[studentId].attendance[i] == 1 || //present
-							res['classes'][classs].students[studentId].attendance[i] == 2 //late
+							res['batches'][batch].students[studentId].attendance[i] == 1 || //present
+							res['batches'][batch].students[studentId].attendance[i] == 2 //late
 						)
 							tempCount += 1
 					}
 					setAvg(
 						(
-							(tempCount / res['classes'][classs].students[studentId].attendance.length) *
+							(tempCount / res['batches'][batch].students[studentId].attendance.length) *
 							100
 						).toFixed(2)
 					)
@@ -140,10 +140,10 @@ export default function DbStudent({ route, navigation }) {
 
 		MailComposer.composeAsync({
 			recipients: [to],
-			subject: `Low attendance in ${course} - ${classs}`,
+			subject: `Low attendance in ${course} - ${batch}`,
 			body: `Dear ${student.studentName}
 
-				Your attendance in the course ${course} is noted to be low. Please attend the next class without fail.
+				Your attendance in the course ${course} is noted to be low. Please attend the next batch without fail.
 				
 				Regards
 				${faculty}
@@ -164,7 +164,7 @@ export default function DbStudent({ route, navigation }) {
 		} else {
 			navigation.push('DbStudents', {
 				course: course,
-				classs: classs,
+				batch: batch,
 			})
 		}
 	}
@@ -177,7 +177,7 @@ export default function DbStudent({ route, navigation }) {
 		} else {
 			navigation.push('DbStudents', {
 				course: course,
-				classs: classs,
+				batch: batch,
 			})
 		}
 	}
@@ -192,7 +192,7 @@ export default function DbStudent({ route, navigation }) {
 			e.preventDefault()
 			navigation.push('DbStudents', {
 				course: course,
-				classs: classs,
+				batch: batch,
 			})
 		},
 		[navigation]
@@ -205,7 +205,7 @@ export default function DbStudent({ route, navigation }) {
 			avg={avg}
 			warning={warning}
 			course={course}
-			classs={classs}
+			batch={batch}
 			handleNextStudent={handleNextStudent}
 			handlePreviousStudent={handlePreviousStudent}
 			mark={false}

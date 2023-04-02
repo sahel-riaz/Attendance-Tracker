@@ -11,7 +11,7 @@ import Navbar from '../components/Navbar'
 import { COLORS, FONTS } from '../styles/theme'
 
 export default function Mark({ route, navigation }) {
-	const { course, classs } = route.params
+	const { course, batch } = route.params
 
 	const [studentName, setStudentName] = useState()
 	const [studentID, setStudentID] = useState()
@@ -21,7 +21,7 @@ export default function Mark({ route, navigation }) {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					const numberOfDays = res.classes[classs].date.length
+					const numberOfDays = res.batches[batch].date.length
 					const fillAttendance = []
 					for (let i = 0; i < numberOfDays; i++) {
 						fillAttendance.push(3)
@@ -31,14 +31,14 @@ export default function Mark({ route, navigation }) {
 						rollNumber: studentID,
 						studentName: studentName,
 					}
-					res.classes[classs].students = [...res.classes[classs].students, student]
+					res.batches[batch].students = [...res.batches[batch].students, student]
 					res = JSON.stringify(res)
 					AsyncStorage.setItem(course, res)
 				})
 				.then(() => {
 					navigation.push('DbStudents', {
 						course: course,
-						classs: classs,
+						batch: batch,
 					})
 				})
 		}
@@ -54,7 +54,7 @@ export default function Mark({ route, navigation }) {
 			e.preventDefault()
 			navigation.push('DbStudents', {
 				course: course,
-				classs: classs,
+				batch: batch,
 			})
 		},
 		[navigation]
@@ -69,7 +69,7 @@ export default function Mark({ route, navigation }) {
 					onPress={() =>
 						navigation.push('DbStudents', {
 							course: course,
-							classs: classs,
+							batch: batch,
 						})
 					}
 				>
@@ -204,9 +204,9 @@ export default function Mark({ route, navigation }) {
 							marginTop: 15,
 						}}
 					>
-						Class:
+						Batch:
 					</Text>
-					<TextInput style={styles.dropdown} value={classs} editable={false} />
+					<TextInput style={styles.dropdown} value={batch} editable={false} />
 				</View>
 
 				<TouchableOpacity

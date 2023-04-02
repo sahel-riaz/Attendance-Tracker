@@ -3,7 +3,7 @@
 const data = {
 	CS4001D: {
 		courseName: 'Software Enginnering',
-		classes: {
+		batches: {
 			CS01: {
 				date: ['12/02/23', '13/02/23', '14/02/23', '25/03/23'],
 				students: [
@@ -36,7 +36,7 @@ const data = {
 	},
 	CS3423D: {
 		courseName: 'Software Enginnering',
-		classes: {
+		batches: {
 			CS01: {
 				date: ['12/02/23', '13/02/23', '14/02/23'],
 				students: [

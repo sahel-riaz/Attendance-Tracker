@@ -13,7 +13,7 @@ import Navbar from '../components/Navbar'
 import { COLORS, FONTS } from '../styles/theme'
 
 export default function LessAttendance({ route, navigation }) {
-	const { course, classs } = route.params
+	const { course, batch } = route.params
 
 	const [students, setStudents] = useState([])
 	const [faculty, setFaculty] = useState('')
@@ -25,17 +25,17 @@ export default function LessAttendance({ route, navigation }) {
 				.then((res) => {
 					res = JSON.parse(res)
 					var tempStudents = []
-					for (let i = 0; i < res['classes'][classs].students.length; i++) {
+					for (let i = 0; i < res['batches'][batch].students.length; i++) {
 						var tempCount = 0
-						for (let j = 0; j < res['classes'][classs].students[i].attendance.length; j++) {
+						for (let j = 0; j < res['batches'][batch].students[i].attendance.length; j++) {
 							if (
-								res['classes'][classs].students[i].attendance[j] == 1 || //present
-								res['classes'][classs].students[i].attendance[j] == 2 //late
+								res['batches'][batch].students[i].attendance[j] == 1 || //present
+								res['batches'][batch].students[i].attendance[j] == 2 //late
 							)
 								tempCount += 1
 						}
-						if (tempCount / res['classes'][classs].students[i].attendance.length < 0.8) {
-							tempStudents.push(res['classes'][classs].students[i])
+						if (tempCount / res['batches'][batch].students[i].attendance.length < 0.8) {
+							tempStudents.push(res['batches'][batch].students[i])
 						}
 					}
 					setStudents(tempStudents)
@@ -100,10 +100,10 @@ export default function LessAttendance({ route, navigation }) {
 
 		MailComposer.composeAsync({
 			recipients: to,
-			subject: `Low attendance in ${course} - ${classs}`,
+			subject: `Low attendance in ${course} - ${batch}`,
 			body: `Dear students
 	
-					Your attendance in the course ${course} is noted to be low. Please attend the next class without fail.
+					Your attendance in the course ${course} is noted to be low. Please attend the next batch without fail.
 					
 					Regards
 					${faculty}
@@ -127,7 +127,7 @@ export default function LessAttendance({ route, navigation }) {
 			>
 				<TouchableOpacity
 					style={{ padding: 20 }}
-					onPress={() => navigation.push('DbStudents', { course: course, classs: classs })}
+					onPress={() => navigation.push('DbStudents', { course: course, batch: batch })}
 				>
 					<Svg
 						width='20'

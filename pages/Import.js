@@ -19,7 +19,7 @@ export default function Mark() {
 
 	const [courseID, setCourseID] = useState('')
 	const [courseName, setCourseName] = useState('')
-	const [classs, setClasss] = useState('')
+	const [batch, setBatch] = useState('')
 	const [path, setPath] = useState('')
 	const [error, setError] = useState('')
 	const [docPicker, setDocPicker] = useState([true, ''])
@@ -37,7 +37,7 @@ export default function Mark() {
 	}
 
 	async function handlePress() {
-		if (!courseID || !courseName || !classs) {
+		if (!courseID || !courseName || !batch) {
 			setError('Please enter the details before uploading!')
 			return
 		}
@@ -63,8 +63,8 @@ export default function Mark() {
 
 		const dataToSet = {
 			courseName: courseName,
-			classes: {
-				[classs]: {
+			batches: {
+				[batch]: {
 					date: [],
 					students: info,
 				},
@@ -85,7 +85,7 @@ export default function Mark() {
 					/*=====  key (courseID) already exists  ======*/
 					AsyncStorage.getItem(courseID.toUpperCase()).then((fetchedData) => {
 						fetchedData = JSON.parse(fetchedData)
-						fetchedData['classes'][classs] = { date: [], students: info }
+						fetchedData['batches'][batch] = { date: [], students: info }
 						fetchedData = JSON.stringify(fetchedData)
 						AsyncStorage.setItem(courseID.toUpperCase(), fetchedData).then(() => {
 							navigation.push('Home')
@@ -300,12 +300,12 @@ export default function Mark() {
 							marginTop: 15,
 						}}
 					>
-						Class:
+						Batch:
 					</Text>
 					<TextInput
 						style={styles.dropdown}
-						value={classs}
-						onChangeText={setClasss}
+						value={batch}
+						onChangeText={setBatch}
 						ref={classRef}
 						placeholder='eg: CS01'
 						placeholderTextColor={COLORS?.placeholder}

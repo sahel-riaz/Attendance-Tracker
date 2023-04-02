@@ -11,7 +11,7 @@ import ErrorPopUp from '../components/ErrorPopUp'
 import { COLORS, FONTS } from '../styles/theme'
 
 export default function DbSettings({ route, navigation }) {
-	const { course, classs } = route.params
+	const { course, batch } = route.params
 
 	const [trigger, setTrigger] = useState(false)
 
@@ -19,10 +19,10 @@ export default function DbSettings({ route, navigation }) {
 		AsyncStorage.getItem(course)
 			.then((res) => {
 				res = JSON.parse(res)
-				if (Object.keys(res['classes']).length == 1) {
+				if (Object.keys(res['batches']).length == 1) {
 					AsyncStorage.removeItem(course)
 				} else {
-					delete res['classes'][classs]
+					delete res['batches'][batch]
 					res = JSON.stringify(res)
 					AsyncStorage.setItem(course, res)
 				}
@@ -49,7 +49,7 @@ export default function DbSettings({ route, navigation }) {
 		'beforeRemove',
 		(e) => {
 			e.preventDefault()
-			navigation.push('DbStudents', { course: course, classs: classs })
+			navigation.push('DbStudents', { course: course, batch: batch })
 		},
 		[navigation]
 	)
@@ -58,7 +58,7 @@ export default function DbSettings({ route, navigation }) {
 		<View style={{ flex: 1, paddingLeft: 20, paddingRight: 20 }}>
 			<StatusBar style='dark' />
 			<ErrorPopUp
-				data='Are you sure you want to delete this class?'
+				data='Are you sure you want to delete this batch?'
 				trigger={trigger}
 				onCancel={onCancel}
 				onDelete={onDelete}
@@ -66,7 +66,7 @@ export default function DbSettings({ route, navigation }) {
 			<View style={{ paddingTop: 60, flexDirection: 'row' }}>
 				<TouchableOpacity
 					style={{ padding: 20, paddingLeft: 0 }}
-					onPress={() => navigation.push('DbStudents', { course: course, classs: classs })}
+					onPress={() => navigation.push('DbStudents', { course: course, batch: batch })}
 				>
 					<Svg
 						width='20'
@@ -102,7 +102,7 @@ export default function DbSettings({ route, navigation }) {
 							lineHeight: 19,
 						}}
 					>
-						Class Settings
+						Batch Settings
 					</Text>
 				</View>
 			</View>
@@ -121,7 +121,7 @@ export default function DbSettings({ route, navigation }) {
 					justifyContent: 'center',
 				}}
 				activeOpacity={0.4}
-				onPress={() => navigation.push('AddStudent', { course: course, classs: classs })}
+				onPress={() => navigation.push('AddStudent', { course: course, batch: batch })}
 			>
 				<Svg
 					width='25'
@@ -140,7 +140,7 @@ export default function DbSettings({ route, navigation }) {
 				</Svg>
 
 				<Text style={{ fontSize: 18, fontFamily: FONTS?.regular, marginLeft: 10 }}>
-					Add student to class
+					Add student to batch
 				</Text>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -180,7 +180,7 @@ export default function DbSettings({ route, navigation }) {
 						color: COLORS?.white,
 					}}
 				>
-					Delete class
+					Delete batch
 				</Text>
 			</TouchableOpacity>
 		</View>
