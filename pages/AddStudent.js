@@ -39,7 +39,7 @@ export default function Mark({ route, navigation }) {
 						attendance: fillAttendance,
 						rollNumber: studentID,
 						studentName: studentName,
-						studentEmailID: studentEmailID,
+						emailId: studentEmailID,
 					}
 					res.batches[batch].students = [...res.batches[batch].students, student]
 					res = JSON.stringify(res)

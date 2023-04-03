@@ -134,16 +134,21 @@ export default function LessAttendance({ route, navigation }) {
 			)
 			const fileName = 'Low Attendance' + ' || ' + date
 
-			var header = ['Roll No.', 'Student Name', 'Percentage']
+			var header = ['Sno.', 'Roll No.', 'Student Name', 'Email ID', 'Percentage']
 
 			var student = []
 
 			for (let i = 0; i < students.length; i++) {
+				let emailId = students[i].emailId
+				if (emailId != null) emailId = emailId.trim()
+
 				student = [
 					...student,
 					[
+						i + 1,
 						students[i].rollNumber.trim(),
 						students[i].studentName,
+						emailId,
 						(percentages[i] * 100).toFixed(2),
 					],
 				]
