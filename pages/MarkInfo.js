@@ -6,7 +6,7 @@ import { Path, Svg } from 'react-native-svg'
 import { COLORS, FONTS } from '../styles/theme'
 import { useNavigation } from '@react-navigation/native'
 
-export default function ExportInfo() {
+export default function MarkInfo() {
 	const navigation = useNavigation()
 
 	return (
@@ -52,7 +52,7 @@ export default function ExportInfo() {
 							lineHeight: 19,
 						}}
 					>
-						Export instructions
+						How to mark attendance?
 					</Text>
 				</View>
 			</View>
@@ -75,7 +75,7 @@ export default function ExportInfo() {
 							marginTop: 8,
 						}}
 					>
-						Select the course of the respective batch you want to export attendance for.
+						Select the course of the respective batch you want to take attendance for.
 					</Text>
 				</View>
 
@@ -120,7 +120,7 @@ export default function ExportInfo() {
 							lineHeight: 19,
 						}}
 					>
-						'Export attendance' button
+						Date / Time:
 					</Text>
 					<Text
 						style={{
@@ -130,7 +130,8 @@ export default function ExportInfo() {
 							marginTop: 8,
 						}}
 					>
-						The app will redirect to you files. Create a new folder to store the CSV file generated.
+						Once the course and batch are selected, the current date and time will automatically be
+						set.
 					</Text>
 					<Text
 						style={{
@@ -140,18 +141,18 @@ export default function ExportInfo() {
 							marginTop: 6,
 						}}
 					>
-						Content of the CSV file will be of the format mentioned below:
+						To take attendance for a new session, click on 'Apply' button.
 					</Text>
 					<Text
 						style={{
 							fontFamily: FONTS?.regular,
 							fontSize: 14,
 							lineHeight: 20,
-							marginTop: 12,
+							marginTop: 6,
 						}}
 					>
-						|&nbsp;Sno.&nbsp;|&nbsp;Roll no.&nbsp;|&nbsp;Student Name&nbsp;|&nbsp;Email
-						ID&nbsp;|&nbsp;Attendance&nbsp;|&nbsp;Percentage&nbsp;|
+						To change attendance of previous sessions, select the respective date/time for that
+						session from the dropdown and click on 'Apply'.
 					</Text>
 				</View>
 			</ScrollView>
