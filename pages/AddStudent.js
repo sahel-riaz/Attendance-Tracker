@@ -1,5 +1,13 @@
 import { useState } from 'react'
-import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
+import {
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+	StyleSheet,
+	KeyboardAvoidingView,
+	Platform,
+} from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StatusBar } from 'expo-status-bar'
@@ -15,6 +23,7 @@ export default function Mark({ route, navigation }) {
 
 	const [studentName, setStudentName] = useState()
 	const [studentID, setStudentID] = useState()
+	const [studentEmailID, setStudentEmailID] = useState()
 
 	async function handlePress() {
 		if (studentName && studentID) {
@@ -30,6 +39,7 @@ export default function Mark({ route, navigation }) {
 						attendance: fillAttendance,
 						rollNumber: studentID,
 						studentName: studentName,
+						studentEmailID: studentEmailID,
 					}
 					res.batches[batch].students = [...res.batches[batch].students, student]
 					res = JSON.stringify(res)
@@ -61,7 +71,7 @@ export default function Mark({ route, navigation }) {
 	)
 
 	return (
-		<View style={{ flex: 1 }}>
+		<KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : null}>
 			<StatusBar style='dark' />
 			<View style={{ paddingTop: 60, flexDirection: 'row' }}>
 				<TouchableOpacity
@@ -112,7 +122,7 @@ export default function Mark({ route, navigation }) {
 					</Text>
 				</View>
 			</View>
-			<View style={{ alignItems: 'center', marginTop: 32 }}>
+			<View style={{ alignItems: 'center', marginTop: 20, justifyContent: 'flex-end' }}>
 				<View
 					style={{
 						height: 54,
@@ -153,10 +163,10 @@ export default function Mark({ route, navigation }) {
 							fontSize: 16,
 							lineHeight: 19,
 							marginBottom: 6,
-							marginTop: 70,
+							marginTop: 60,
 						}}
 					>
-						Student Name:
+						* Student Name:
 					</Text>
 					<TextInput
 						style={styles.dropdown}
@@ -174,7 +184,7 @@ export default function Mark({ route, navigation }) {
 							marginTop: 15,
 						}}
 					>
-						Student Roll no:
+						* Student Roll no:
 					</Text>
 					<TextInput
 						style={styles.dropdown}
@@ -192,21 +202,45 @@ export default function Mark({ route, navigation }) {
 							marginTop: 15,
 						}}
 					>
-						Course:
+						Student Email ID:
 					</Text>
-					<TextInput style={styles.dropdown} value={course} editable={false} />
-					<Text
-						style={{
-							fontFamily: FONTS?.bold,
-							fontSize: 16,
-							lineHeight: 19,
-							marginBottom: 6,
-							marginTop: 15,
-						}}
-					>
-						Batch:
-					</Text>
-					<TextInput style={styles.dropdown} value={batch} editable={false} />
+					<TextInput
+						style={styles.dropdown}
+						value={studentEmailID}
+						onChangeText={setStudentEmailID}
+						placeholder='Enter student email ID'
+						placeholderTextColor={COLORS?.placeholder}
+					/>
+					<View style={{ flexDirection: 'row' }}>
+						<View>
+							<Text
+								style={{
+									fontFamily: FONTS?.bold,
+									fontSize: 16,
+									lineHeight: 19,
+									marginBottom: 6,
+									marginTop: 15,
+								}}
+							>
+								Course:
+							</Text>
+							<TextInput style={styles.smallDropdown} value={course} editable={false} />
+						</View>
+						<View style={{ marginLeft: 20 }}>
+							<Text
+								style={{
+									fontFamily: FONTS?.bold,
+									fontSize: 16,
+									lineHeight: 19,
+									marginBottom: 6,
+									marginTop: 15,
+								}}
+							>
+								Batch:
+							</Text>
+							<TextInput style={styles.smallDropdown} value={batch} editable={false} />
+						</View>
+					</View>
 				</View>
 
 				<TouchableOpacity
@@ -251,7 +285,7 @@ export default function Mark({ route, navigation }) {
 				</TouchableOpacity>
 			</View>
 			<Navbar />
-		</View>
+		</KeyboardAvoidingView>
 	)
 }
 
@@ -283,5 +317,15 @@ const styles = StyleSheet.create({
 	inputSearchStyle: {
 		height: 40,
 		fontSize: 16,
+	},
+	smallDropdown: {
+		height: 50,
+		borderColor: COLORS?.borderGrey,
+		borderWidth: 1,
+		width: 125,
+		paddingLeft: 10,
+		paddingRight: 10,
+		borderRadius: 7,
+		fontFamily: FONTS?.regular,
 	},
 })

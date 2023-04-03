@@ -1,5 +1,13 @@
 import { useRef, useState } from 'react'
-import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
+import {
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+	StyleSheet,
+	KeyboardAvoidingView,
+	Platform,
+} from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
 import { EncodingType } from 'expo-file-system'
@@ -143,7 +151,7 @@ export default function Mark() {
 	)
 
 	return (
-		<View style={{ flex: 1 }}>
+		<KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : null}>
 			<StatusBar style='dark' />
 
 			<View
@@ -214,7 +222,7 @@ export default function Mark() {
 				</View>
 			</View>
 
-			<View style={{ alignItems: 'center', marginTop: 32 }}>
+			<View style={{ alignItems: 'center', marginTop: 20, justifyContent: 'flex-end' }}>
 				<View
 					style={{
 						height: 54,
@@ -246,7 +254,7 @@ export default function Mark() {
 							fontSize: 16,
 							lineHeight: 19,
 							marginBottom: 6,
-							marginTop: 70,
+							marginTop: 60,
 						}}
 					>
 						Course ID:
@@ -415,7 +423,7 @@ export default function Mark() {
 				</TouchableOpacity>
 			</View>
 			<Navbar />
-		</View>
+		</KeyboardAvoidingView>
 	)
 }
 
