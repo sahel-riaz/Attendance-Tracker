@@ -33,32 +33,6 @@ export default function Students({ route, navigation }) {
 					res = JSON.parse(res)
 					setDateIndex(res.batches[batch]['date'].indexOf(date))
 					setStudents(res.batches[batch].students)
-
-					/*=====  calculateAvgAttendance  ======*/
-
-					let tempCount = 0
-					let totalCount = 0
-					// for (let i = 0; i < res['batches'][batch].students.length; i++) {
-					// 	for (let j = 0; j < res['batches'][batch].students[i].attendance.length; j++) {
-					// 		if (
-					// 			res['batches'][batch].students[i].attendance[j] == 1 || //present
-					// 			res['batches'][batch].students[i].attendance[j] == 2 //late
-					// 		)
-					// 			tempCount += 1
-					// 		totalCount += 1
-					// 	}
-					// }
-
-					for (let i = 0; i < res['batches'][batch].students.length; i++) {
-						if (
-							res['batches'][batch].students[i].attendance[dateIndex] == 1 || //present
-							res['batches'][batch].students[i].attendance[dateIndex] == 2 //late
-						)
-							tempCount += 1
-						totalCount += 1
-					}
-					setAvg(((tempCount / totalCount) * 100).toFixed(2))
-					console.log(((tempCount / totalCount) * 100).toFixed(2))
 				})
 				.catch((e) => {
 					console.log(e)
@@ -78,6 +52,10 @@ export default function Students({ route, navigation }) {
 			else tempStats[0]++
 		}
 		setStats(tempStats)
+
+		/*=====  calculateAvgAttendance  ======*/
+
+		setAvg((((tempStats[1] + tempStats[3]) / students.length) * 100).toFixed(2))
 	}, [students])
 
 	/*=============================================
@@ -336,16 +314,16 @@ export default function Students({ route, navigation }) {
 			<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 24, marginTop: 25 }}>
 				Students:
 			</Text>
-			<ScrollView
+			<View
 				style={{
 					paddingLeft: 24,
 					paddingRight: 24,
 					width: '100%',
 					marginTop: 10,
-					marginBottom: 90,
+					marginBottom: 378,
 				}}
 			>
-				{/* {students.length > 0 && (
+				{students.length > 0 && (
 					<FlatList
 						keyExtractor={(student) => student.rollNumber}
 						data={students}
@@ -380,40 +358,8 @@ export default function Students({ route, navigation }) {
 							</TouchableOpacity>
 						)}
 					/>
-				)} */}
-				{students.length > 0 &&
-					students.map((item, index) => (
-						<TouchableOpacity
-							rollNumber={item.rollNumber}
-							style={{
-								marginTop: 8,
-								paddingLeft: 16,
-								paddingBottom: 12,
-								paddingTop: 12,
-								borderColor: `${status[item.attendance[dateIndex]]}`,
-								backgroundColor: `${status[item.attendance[dateIndex]]}`,
-								borderWidth: 1,
-								borderRadius: 10,
-								width: '100%',
-							}}
-							key={index}
-							activeOpacity={0.4}
-							onPress={() =>
-								navigation.push('Student', {
-									course: course,
-									batch: batch,
-									id: index,
-									date: date,
-									dateIndex: dateIndex,
-								})
-							}
-						>
-							<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }} numberOfLines={1}>
-								{item.studentName}
-							</Text>
-						</TouchableOpacity>
-					))}
-			</ScrollView>
+				)}
+			</View>
 
 			<Navbar />
 		</View>
