@@ -21,6 +21,7 @@ import ImportInfo from './pages/ImportInfo'
 import HomeInfo from './pages/HomeInfo'
 import ExportInfo from './pages/ExportInfo'
 import MarkInfo from './pages/MarkInfo'
+import DbInfo from './pages/DbInfo'
 
 const Stack = createStackNavigator()
 
@@ -69,6 +70,7 @@ const App = () => {
 				<Stack.Screen name='HomeInfo' component={HomeInfo} />
 				<Stack.Screen name='ExportInfo' component={ExportInfo} />
 				<Stack.Screen name='MarkInfo' component={MarkInfo} />
+				<Stack.Screen name='DbInfo' component={DbInfo} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

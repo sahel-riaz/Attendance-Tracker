@@ -6,7 +6,7 @@ import { Path, Svg } from 'react-native-svg'
 import { COLORS, FONTS } from '../styles/theme'
 import { useNavigation } from '@react-navigation/native'
 
-export default function ExportInfo() {
+export default function DbInfo() {
 	const navigation = useNavigation()
 
 	return (
@@ -16,7 +16,7 @@ export default function ExportInfo() {
 			<View style={{ paddingTop: 60, flexDirection: 'row', paddingLeft: 20, paddingRight: 20 }}>
 				<TouchableOpacity
 					style={{ padding: 20, paddingLeft: 0 }}
-					onPress={() => navigation.push('Export')}
+					onPress={() => navigation.push('Db')}
 				>
 					<Svg
 						width='20'
@@ -52,7 +52,7 @@ export default function ExportInfo() {
 							lineHeight: 19,
 						}}
 					>
-						Export instructions
+						What does the database contain?
 					</Text>
 				</View>
 			</View>
@@ -65,7 +65,7 @@ export default function ExportInfo() {
 							lineHeight: 19,
 						}}
 					>
-						Course:
+						Total students:
 					</Text>
 					<Text
 						style={{
@@ -75,7 +75,7 @@ export default function ExportInfo() {
 							marginTop: 8,
 						}}
 					>
-						Select the course of the respective batch you want to export attendance for.
+						Total students in the batch
 					</Text>
 				</View>
 
@@ -87,7 +87,7 @@ export default function ExportInfo() {
 							lineHeight: 19,
 						}}
 					>
-						Batch:
+						Average attendance:
 					</Text>
 					<Text
 						style={{
@@ -97,21 +97,9 @@ export default function ExportInfo() {
 							marginTop: 8,
 						}}
 					>
-						Select the required batch from the dropdown.
-					</Text>
-					<Text
-						style={{
-							fontFamily: FONTS?.regular,
-							fontSize: 14,
-							lineHeight: 20,
-							marginTop: 6,
-						}}
-					>
-						If the batch you wanted is not available in the dropdown, check the selected course
-						again.
+						Displays the average attendance for the batch across all sessions.
 					</Text>
 				</View>
-
 				<View style={{ marginTop: 30 }}>
 					<Text
 						style={{
@@ -120,7 +108,7 @@ export default function ExportInfo() {
 							lineHeight: 19,
 						}}
 					>
-						'Export attendance' button
+						Student details:
 					</Text>
 					<Text
 						style={{
@@ -130,7 +118,29 @@ export default function ExportInfo() {
 							marginTop: 8,
 						}}
 					>
-						The app will redirect to you files. Create a new folder to store the CSV file generated.
+						All the students in the batch can be viewed with their stats.{'\n'}
+						Emails can be sent to students individually.
+					</Text>
+				</View>
+				<View style={{ marginTop: 30 }}>
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+						}}
+					>
+						Students with attendance {'< 80%'}
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 8,
+						}}
+					>
+						Shows the list of students with attendance {'< 80%'}.
 					</Text>
 					<Text
 						style={{
@@ -140,18 +150,54 @@ export default function ExportInfo() {
 							marginTop: 6,
 						}}
 					>
-						Content of the CSV file will be of the format mentioned below:
+						The list can be exported as a separate CSV file with the attendance percentage for each
+						student.
 					</Text>
 					<Text
 						style={{
 							fontFamily: FONTS?.regular,
 							fontSize: 14,
 							lineHeight: 20,
-							marginTop: 12,
+							marginTop: 6,
 						}}
 					>
-						|&nbsp;Sno.&nbsp;|&nbsp;Roll no.&nbsp;|&nbsp;Student Name&nbsp;|&nbsp;Email
-						ID&nbsp;|&nbsp;Attendance&nbsp;|&nbsp;Percentage&nbsp;|
+						An email can be sent to all students with a pre-generated template
+						{' (which can be edited if necessary).'}
+					</Text>
+				</View>
+				<View style={{ marginTop: 30 }}>
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+						}}
+					>
+						Delete students or batch:
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 8,
+						}}
+					>
+						Students can be deleted from the batch.{'\n'}
+						Once deleted, all the information related to the student will be deleted including the
+						attendance details.
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+						}}
+					>
+						The database provides an option to delete the batch in its entirety.{'\n'}
+						Once deleted, all the information related to the batch will be deleted including the
+						attendance details.
 					</Text>
 				</View>
 			</ScrollView>
