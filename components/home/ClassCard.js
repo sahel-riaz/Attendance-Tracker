@@ -68,6 +68,8 @@ export default function ClassCard({ courseId, courseName, className, students_qt
 				paddingBottom: 10,
 				borderBottomColor: COLORS?.borderGrey,
 				borderBottomWidth: 1,
+				paddingLeft: 20,
+				paddingRight: 20,
 			}}
 			onPress={() => handleCourseClick()}
 		>

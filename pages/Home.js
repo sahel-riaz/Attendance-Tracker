@@ -119,7 +119,7 @@ export default function Home() {
 	return (
 		<SafeAreaView style={{ backgroundColor: COLORS?.bg, flex: 1 }}>
 			<StatusBar style='dark' />
-			<View style={{ paddingTop: 80 }}>
+			<View style={{ paddingTop: 80, flex: 7 / 16 }}>
 				<View
 					style={{
 						paddingLeft: 30,
@@ -181,37 +181,45 @@ export default function Home() {
 					<HomeCard count={courses.length} isCourse={true} />
 					<HomeCard count={batches.length} />
 				</View>
-				<View
+			</View>
+			<View
+				style={{
+					backgroundColor: COLORS?.white,
+					flex: 9 / 16,
+					borderRadius: 20,
+					paddingBottom: 65,
+				}}
+			>
+				<Text
 					style={{
-						backgroundColor: COLORS?.white,
-						marginTop: 35,
-						borderRadius: 20,
-						paddingTop: 40,
-						paddingLeft: 30,
-						paddingRight: 30,
-						marginBottom: 650,
+						fontFamily: FONTS?.bold,
+						fontSize: 18,
+						lineHeight: 22,
+						marginBottom: 22,
+						marginTop: 30,
+						paddingLeft: 20,
 					}}
 				>
-					<Text style={{ fontFamily: FONTS?.bold, fontSize: 18, lineHeight: 22, marginBottom: 22 }}>
-						Courses 💼
+					Quick navigation:
+				</Text>
+				{courses.length < 1 ? (
+					<Text style={{ fontFamily: FONTS?.regular, paddingLeft: 20 }}>
+						Add courses and batches in Import tab!
 					</Text>
-					{courses.length < 1 ? (
-						<Text style={{ fontFamily: FONTS?.regular }}>Add batches in import tab!</Text>
-					) : (
-						<FlatList
-							data={batches}
-							renderItem={({ item, index }) => (
-								<ClassCard
-									key={index}
-									courseId={item[0]}
-									courseName={item[1]}
-									className={item[2]}
-									students_qty={item[3]}
-								/>
-							)}
-						/>
-					)}
-				</View>
+				) : (
+					<FlatList
+						data={batches}
+						renderItem={({ item, index }) => (
+							<ClassCard
+								key={index}
+								courseId={item[0]}
+								courseName={item[1]}
+								className={item[2]}
+								students_qty={item[3]}
+							/>
+						)}
+					/>
+				)}
 			</View>
 			<Navbar />
 		</SafeAreaView>
