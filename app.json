@@ -4,7 +4,7 @@
 		"slug": "attendance",
 		"version": "1.6.0",
 		"orientation": "portrait",
-		"icon": "./assets/expo/icon-1.png",
+		"icon": "./assets/expo/icon.png",
 		"userInterfaceStyle": "light",
 		"splash": {
 			"image": "./assets/expo/splash.png",
