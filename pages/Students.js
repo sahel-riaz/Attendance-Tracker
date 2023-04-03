@@ -352,7 +352,10 @@ export default function Students({ route, navigation }) {
 									})
 								}
 							>
-								<Text style={{ fontSize: 18, fontFamily: FONTS?.regular }} numberOfLines={1}>
+								<Text
+									style={{ fontSize: 18, fontFamily: FONTS?.regular, width: '80%' }}
+									numberOfLines={1}
+								>
 									{item.studentName}
 								</Text>
 							</TouchableOpacity>

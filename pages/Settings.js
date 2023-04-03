@@ -84,7 +84,7 @@ export default function Settings() {
 					</Text>
 				</View>
 			</View>
-			<View style={{ alignItems: 'center', marginTop: 32 }}>
+			<View style={{ alignItems: 'center', marginTop: 20 }}>
 				<View
 					style={{
 						height: 54,
