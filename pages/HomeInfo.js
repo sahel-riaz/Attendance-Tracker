@@ -262,7 +262,7 @@ export default function HomeInfo() {
 							fontFamily: FONTS?.bold,
 							fontSize: 12,
 							lineHeight: 20,
-							marginTop: 26,
+							marginTop: 30,
 							alignSelf: 'center',
 						}}
 					>

@@ -200,6 +200,37 @@ export default function DbInfo() {
 						attendance details.
 					</Text>
 				</View>
+				<View style={{ marginTop: 30 }}>
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+						}}
+					>
+						Add student
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 8,
+						}}
+					>
+						Students can be added to batch if necessary.
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+						}}
+					>
+						Please make sure the roll number is unique when entering the details.
+					</Text>
+				</View>
 			</ScrollView>
 		</View>
 	)

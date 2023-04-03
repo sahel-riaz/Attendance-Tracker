@@ -242,7 +242,7 @@ export default function Home() {
 				</Text>
 				{courses.length < 1 ? (
 					<Text style={{ fontFamily: FONTS?.regular, paddingLeft: 20 }}>
-						Add courses and batches in Import tab!
+						Please read the instructions before using the app!
 					</Text>
 				) : (
 					<FlatList
