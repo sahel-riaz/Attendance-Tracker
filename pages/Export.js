@@ -90,34 +90,48 @@ export default function Mark() {
 				)
 				const fileName = course + '|' + batch + ' || ' + date
 
-				var header = ['Roll No.', 'Student Name']
+				let header = ['Sno.', 'Roll No.', 'Student Name', 'Email ID']
 
 				for (let i = 0; i < results['batches'][batch].date.length; i++) {
 					header = [...header, results['batches'][batch].date[i]]
 				}
 
-				var student = []
+				header = [...header, 'Percentage']
+
+				let student = []
 
 				for (let i = 0; i < results['batches'][batch].students.length; i++) {
 					let temp = []
+					let pCount = 0
 					let tempAttendance = []
 					if (results['batches'][batch].students[i].studentName != '') {
 						for (let j = 0; j < results['batches'][batch].students[i].attendance.length; j++) {
-							if (results['batches'][batch].students[i].attendance[j] == 0) {
-								tempAttendance.push('A')
-							} else if (results['batches'][batch].students[i].attendance[j] == 1) {
+							if (results['batches'][batch].students[i].attendance[j] == 0) tempAttendance.push('A')
+							else if (results['batches'][batch].students[i].attendance[j] == 1) {
 								tempAttendance.push('P')
+								pCount += 1
 							} else if (results['batches'][batch].students[i].attendance[j] == 2) {
 								tempAttendance.push('L')
-							} else if (results['batches'][batch].students[i].attendance[j] == 3) {
+								pCount += 1
+							} else if (results['batches'][batch].students[i].attendance[j] == 3)
 								tempAttendance.push('N')
-							}
 						}
+						let pPercentage = (
+							(pCount / results['batches'][batch].students[i].attendance.length) *
+							100
+						).toFixed(2)
+
+						let emailId = results['batches'][batch].students[i].emailId
+						if (emailId != null) emailId = emailId.trim()
+
 						temp = [
 							...temp,
+							i + 1,
 							results['batches'][batch].students[i].rollNumber.trim(),
 							results['batches'][batch].students[i].studentName,
+							emailId,
 							...tempAttendance,
+							pPercentage,
 						]
 					}
 					student = [...student, temp]

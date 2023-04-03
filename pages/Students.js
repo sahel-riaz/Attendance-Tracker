@@ -308,7 +308,7 @@ export default function Students({ route, navigation }) {
 					<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>
 						Total students: {students?.length}
 					</Text>
-					<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>Avg: {avg}%</Text>
+					<Text style={{ fontFamily: FONTS?.bold, fontSize: 16 }}>{avg}%</Text>
 				</View>
 			</View>
 			<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, paddingLeft: 24, marginTop: 25 }}>

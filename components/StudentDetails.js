@@ -256,9 +256,9 @@ export default function StudentDetails({
 										? student.attendance.length
 										: student.attendance.length - 1
 									: student.attendance.length)}
-							&nbsp;sessions
+							&nbsp;session{'(s)'}
 						</Text>
-						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>Avg: {avg}%</Text>
+						<Text style={{ fontFamily: FONTS?.bold, fontSize: 14 }}>{avg}%</Text>
 					</View>
 				</View>
 				<View style={{ flexDirection: 'row', marginTop: 25, height: 20 }}>
