@@ -241,9 +241,14 @@ export default function Home() {
 					Quick navigation:
 				</Text>
 				{courses.length < 1 ? (
-					<Text style={{ fontFamily: FONTS?.regular, paddingLeft: 20 }}>
-						Please read the instructions before using the app!
-					</Text>
+					<>
+						<Text style={{ fontFamily: FONTS?.regular, paddingLeft: 20 }}>
+							Please read the instructions before using the app!
+						</Text>
+						<Text style={{ fontFamily: FONTS?.regular, paddingLeft: 20, marginTop: 14 }}>
+							Import new courses and batches from the Import page
+						</Text>
+					</>
 				) : (
 					<FlatList
 						data={batches}

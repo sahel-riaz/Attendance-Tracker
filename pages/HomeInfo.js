@@ -5,8 +5,17 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import { Path, Svg } from 'react-native-svg'
 import { COLORS, FONTS } from '../styles/theme'
 import { useNavigation } from '@react-navigation/native'
+import * as MailComposer from 'expo-mail-composer'
 
 export default function HomeInfo() {
+	function handleEmail() {
+		MailComposer.composeAsync({
+			recipients: ['aadhavanlenin@gmail.com'],
+			subject: '',
+			body: '',
+		})
+	}
+
 	const navigation = useNavigation()
 
 	return (
@@ -127,6 +136,7 @@ export default function HomeInfo() {
 							fontSize: 14,
 							lineHeight: 20,
 							marginTop: 6,
+							paddingLeft: 14,
 						}}
 					>
 						1. Home page contains some stats and a 'Quick navigation' section to mark attendance
@@ -138,6 +148,7 @@ export default function HomeInfo() {
 							fontSize: 14,
 							lineHeight: 20,
 							marginTop: 6,
+							paddingLeft: 14,
 						}}
 					>
 						2. Import roll list into the app by going to the 'Import student roll list' page.
@@ -148,6 +159,7 @@ export default function HomeInfo() {
 							fontSize: 14,
 							lineHeight: 20,
 							marginTop: 6,
+							paddingLeft: 14,
 						}}
 					>
 						3. To take attendance for a particular batch, go to the 'Mark attendance' page
@@ -159,6 +171,7 @@ export default function HomeInfo() {
 							fontSize: 14,
 							lineHeight: 20,
 							marginTop: 6,
+							paddingLeft: 14,
 						}}
 					>
 						4. To view batch details and statistics, go to 'View student database' page.
@@ -169,6 +182,7 @@ export default function HomeInfo() {
 							fontSize: 14,
 							lineHeight: 20,
 							marginTop: 6,
+							paddingLeft: 14,
 						}}
 					>
 						5. Export attendance details by going to 'Export attendance' page.
@@ -254,8 +268,10 @@ export default function HomeInfo() {
 							marginTop: 8,
 						}}
 					>
-						If you have found a bug or have any queries, please send a mail to:
-						aadhavanlenin@gmail.com
+						If you have found a bug or have any queries, please send a mail to:&nbsp;
+						<Text style={{ color: 'blue', textDecorationLine: 'underline' }} onPress={handleEmail}>
+							aadhavanlenin@gmail.com
+						</Text>
 					</Text>
 					<Text
 						style={{
