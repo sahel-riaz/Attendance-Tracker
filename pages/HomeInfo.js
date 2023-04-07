@@ -97,7 +97,7 @@ export default function HomeInfo() {
 							marginTop: 8,
 						}}
 					>
-						Although anyone can access the app, it is indented for faculties and teaching staff.
+						Although anyone can access the app, it is intended for faculties and teaching staff.
 					</Text>
 				</View>
 

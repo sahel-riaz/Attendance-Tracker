@@ -179,7 +179,7 @@ export default function StudentDetails({
 				</View>
 				<View style={{ marginTop: 20 }}>
 					<Text style={{ fontFamily: FONTS?.bold, color: COLORS?.selectGrey, fontSize: 16 }}>
-						Roll no:
+						Roll number:
 					</Text>
 					<Text
 						style={{

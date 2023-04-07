@@ -84,7 +84,7 @@ export default function Mark() {
 		 *
 			check if courseID already exists using getAllKeys()
 			if it does, push it
-			if it doesnt, set new
+			if it doesn't, set new
 		 *
 		 */
 

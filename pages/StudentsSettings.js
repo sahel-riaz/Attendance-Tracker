@@ -9,6 +9,7 @@ import ErrorPopUp from '../components/ErrorPopUp'
 
 //themes
 import { COLORS, FONTS } from '../styles/theme'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default function DbSettings({ route, navigation }) {
 	const { course, batch, date, dateIndex } = route.params
@@ -101,11 +102,378 @@ export default function DbSettings({ route, navigation }) {
 							lineHeight: 19,
 						}}
 					>
-						Session Settings
+						Session information
 					</Text>
 				</View>
 			</View>
 
+			<ScrollView style={{ marginTop: 30, marginBottom: 20 }}>
+				<View>
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+						}}
+					>
+						Color key:
+					</Text>
+					<View
+						style={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'space-between',
+							marginTop: 8,
+						}}
+					>
+						<View
+							style={{
+								alignItems: 'center',
+								justifyContent: 'center',
+								paddingTop: 13,
+								paddingBottom: 13,
+								flex: 1 / 4,
+								backgroundColor: COLORS?.borderGrey,
+								borderRadius: 10,
+								borderWidth: 3,
+								borderStyle: 'solid',
+								borderColor: '#E8E8E8',
+							}}
+						>
+							<Text style={{ fontFamily: FONTS?.regular, fontSize: 10 }}>Not marked</Text>
+						</View>
+						<View
+							style={{
+								alignItems: 'center',
+								justifyContent: 'center',
+								paddingTop: 13,
+								paddingBottom: 13,
+								flex: 1 / 4,
+								marginLeft: 10,
+								backgroundColor: COLORS?.green,
+								borderRadius: 10,
+								borderWidth: 3,
+								borderStyle: 'solid',
+								borderColor: '#ABE2CB',
+							}}
+						>
+							<Text style={{ fontFamily: FONTS?.regular, fontSize: 14 }}>Present</Text>
+						</View>
+						<View
+							style={{
+								alignItems: 'center',
+								justifyContent: 'center',
+								paddingTop: 13,
+								paddingBottom: 13,
+								flex: 1 / 4,
+								marginLeft: 10,
+								backgroundColor: COLORS?.lightRed,
+								borderRadius: 10,
+								borderWidth: 3,
+								borderStyle: 'solid',
+								borderColor: '#FFA196',
+							}}
+						>
+							<Text style={{ fontFamily: FONTS?.regular, fontSize: 14 }}>Absent</Text>
+						</View>
+						<View
+							style={{
+								alignItems: 'center',
+								justifyContent: 'center',
+								paddingTop: 13,
+								paddingBottom: 13,
+								flex: 1 / 4,
+								marginLeft: 10,
+								backgroundColor: COLORS?.yellow,
+								borderRadius: 10,
+								borderWidth: 3,
+								borderStyle: 'solid',
+								borderColor: '#FFEE93',
+							}}
+						>
+							<Text style={{ fontFamily: FONTS?.regular, fontSize: 14 }}>Late</Text>
+						</View>
+					</View>
+				</View>
+
+				<View style={{ marginTop: 30 }}>
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+						}}
+					>
+						Total students & percentage:
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 8,
+						}}
+					>
+						Shows the number of students in the batch and the attendance percentage for this
+						session.
+					</Text>
+				</View>
+
+				<View style={{ marginTop: 30 }}>
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+						}}
+					>
+						Students:
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 8,
+						}}
+					>
+						All the students in the batch are displayed below.
+					</Text>
+				</View>
+
+				<View style={{ marginTop: 30 }}>
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+						}}
+					>
+						How to start taking attendance?
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 8,
+						}}
+					>
+						When a new session is created, all students are 'Not marked' by default.
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+						}}
+					>
+						Click on the first student to start marking attendance for the entire batch.
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+						}}
+					>
+						App will take you to a page with student details and 5 different buttons, each with
+						their own actions:
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 12,
+							paddingLeft: 14,
+						}}
+					>
+						<Text style={{ fontStyle: 'italic', color: COLORS?.green, fontFamily: FONTS?.bold }}>
+							/*
+						</Text>
+						<Text style={{ fontStyle: 'italic' }}>Present</Text> - Mark current student as present
+						and redirect to next student.
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+							paddingLeft: 14,
+						}}
+					>
+						<Text style={{ fontStyle: 'italic', color: COLORS?.yellow, fontFamily: FONTS?.bold }}>
+							/*
+						</Text>
+						<Text style={{ fontStyle: 'italic' }}>Late</Text> - Mark current student as late and
+						redirect to next student.
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+							paddingLeft: 14,
+						}}
+					>
+						<Text style={{ fontStyle: 'italic', color: COLORS?.red, fontFamily: FONTS?.bold }}>
+							/*
+						</Text>
+						<Text style={{ fontStyle: 'italic' }}>Absent</Text> - Mark current student as absent and
+						redirect to next student.
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+							paddingLeft: 14,
+						}}
+					>
+						<Text
+							style={{ fontStyle: 'italic', color: COLORS?.borderGrey, fontFamily: FONTS?.bold }}
+						>
+							/*
+						</Text>
+						<Text style={{ fontStyle: 'italic' }}>Previous</Text> - Go to the previous student
+						without changing the attendance of the current student.
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+							paddingLeft: 14,
+						}}
+					>
+						<Text
+							style={{ fontStyle: 'italic', color: COLORS?.borderGrey, fontFamily: FONTS?.bold }}
+						>
+							/*
+						</Text>
+						<Text style={{ fontStyle: 'italic' }}>Skip</Text> - Go to the next student without
+						changing the attendance of the current student.
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+						}}
+					>
+						The page also contains details of the student including:
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 12,
+							paddingLeft: 14,
+						}}
+					>
+						1. Student Name
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+							paddingLeft: 14,
+						}}
+					>
+						2. Roll number
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+							paddingLeft: 14,
+						}}
+					>
+						3. Stats: attendance statistics for that student
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+							paddingLeft: 14,
+						}}
+					>
+						4. Total sessions & attendance percentage: If the attendance is {'<80%'}, a{' '}
+						<Text style={{ color: COLORS?.red }}>red</Text> box will appear around the screen.
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 6,
+							paddingLeft: 14,
+						}}
+					>
+						5. (optional) If the student is absent for 3 or more days, a warning will be displayed
+						in <Text style={{ color: COLORS?.red }}>red.</Text>
+					</Text>
+				</View>
+				<View style={{ marginTop: 30 }}>
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+						}}
+					>
+						Change attendance
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 8,
+						}}
+					>
+						Navigate to the student you want to the change the attendance for. Click on the
+						appropriate button to mark. Return back by clicking on the back arrow button.
+					</Text>
+				</View>
+				<View style={{ marginTop: 30 }}>
+					<Text
+						style={{
+							fontFamily: FONTS?.bold,
+							fontSize: 16,
+							lineHeight: 19,
+						}}
+					>
+						Delete session
+					</Text>
+					<Text
+						style={{
+							fontFamily: FONTS?.regular,
+							fontSize: 14,
+							lineHeight: 20,
+							marginTop: 8,
+						}}
+					>
+						To delete all the attendance information of this particular session, click on the button
+						below.
+					</Text>
+				</View>
+			</ScrollView>
 			<TouchableOpacity
 				style={{
 					height: 43,
@@ -115,7 +483,7 @@ export default function DbSettings({ route, navigation }) {
 					borderRadius: 10,
 					flexDirection: 'row',
 					justifyContent: 'center',
-					marginTop: 40,
+					marginBottom: 20,
 				}}
 				onPress={() => {
 					setTrigger(true)
