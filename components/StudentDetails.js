@@ -9,6 +9,7 @@ import { COLORS, FONTS } from '../styles/theme'
 import { useNavigation } from '@react-navigation/core'
 import { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default function StudentDetails({
 	student,
@@ -165,17 +166,19 @@ export default function StudentDetails({
 					>
 						Student name:
 					</Text>
-					<Text
-						style={{
-							marginTop: 5,
-							fontFamily: FONTS?.bold,
-							fontSize: 26,
-							height: 34,
-						}}
-						numberOfLines={1}
-					>
-						{student && student.studentName}
-					</Text>
+					<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+						<Text
+							style={{
+								marginTop: 5,
+								fontFamily: FONTS?.bold,
+								fontSize: 26,
+								height: 34,
+							}}
+							numberOfLines={1}
+						>
+							{student && student.studentName}
+						</Text>
+					</ScrollView>
 				</View>
 				<View style={{ marginTop: 20 }}>
 					<Text style={{ fontFamily: FONTS?.bold, color: COLORS?.selectGrey, fontSize: 16 }}>
