@@ -1,8 +1,8 @@
 {
 	"expo": {
-		"name": "attendance",
+		"name": "Attendance",
 		"slug": "attendance",
-		"version": "1.0.0",
+		"version": "1.7.0",
 		"orientation": "portrait",
 		"icon": "./assets/expo/icon.png",
 		"userInterfaceStyle": "light",

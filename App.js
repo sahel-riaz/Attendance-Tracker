@@ -8,17 +8,28 @@ import Mark from './pages/Mark'
 import Export from './pages/Export'
 import AddStudent from './pages/AddStudent'
 import Import from './pages/Import'
-import newImport from './pages/newImport'
 import Db from './pages/Db'
 import Students from './pages/Students'
 import Student from './pages/Student'
 import DbStudents from './pages/DbStudents'
 import DbStudent from './pages/DbStudent'
+<<<<<<< HEAD
 import Info from './pages/Info'
 import PopUp from './pages/PopUp'
 // import NewAuth from './pages/NewAuth'
 import NewButtons from './pages/NewButtons'
 
+=======
+import Settings from './pages/Settings'
+import DbSettings from './pages/DbSettings'
+import LessAttendance from './pages/LessAttendance'
+import StudentsSettings from './pages/StudentsSettings'
+import ImportInfo from './pages/ImportInfo'
+import HomeInfo from './pages/HomeInfo'
+import ExportInfo from './pages/ExportInfo'
+import MarkInfo from './pages/MarkInfo'
+import DbInfo from './pages/DbInfo'
+>>>>>>> 9ed94aa7f63d42982e277766e0f5317ef290704b
 
 const Stack = createStackNavigator()
 
@@ -50,9 +61,8 @@ const App = () => {
 			>
 				<Stack.Screen name='Auth' component={Auth} />
 				<Stack.Screen name='Home' component={Home} />
+				<Stack.Screen name='Settings' component={Settings} />
 				<Stack.Screen name='Import' component={Import} />
-				<Stack.Screen name='Info' component={Info} />
-				<Stack.Screen name='PopUp' component={PopUp} />
 				<Stack.Screen name='Mark' component={Mark} />
 				<Stack.Screen name='Export' component={Export} />
 				<Stack.Screen name='Db' component={Db} />
@@ -61,8 +71,19 @@ const App = () => {
 				<Stack.Screen name='Student' component={Student} />
 				<Stack.Screen name='DbStudents' component={DbStudents} />
 				<Stack.Screen name='DbStudent' component={DbStudent} />
+<<<<<<< HEAD
 				<Stack.Screen name='NewButtons' component={NewButtons} />
 				{/* <Stack.Screen name='NewAuth' component={NewAuth} /> */}
+=======
+				<Stack.Screen name='DbSettings' component={DbSettings} />
+				<Stack.Screen name='LessAttendance' component={LessAttendance} />
+				<Stack.Screen name='StudentsSettings' component={StudentsSettings} />
+				<Stack.Screen name='ImportInfo' component={ImportInfo} />
+				<Stack.Screen name='HomeInfo' component={HomeInfo} />
+				<Stack.Screen name='ExportInfo' component={ExportInfo} />
+				<Stack.Screen name='MarkInfo' component={MarkInfo} />
+				<Stack.Screen name='DbInfo' component={DbInfo} />
+>>>>>>> 9ed94aa7f63d42982e277766e0f5317ef290704b
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

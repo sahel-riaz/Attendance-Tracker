@@ -17,15 +17,14 @@ export default function Navbar() {
 				borderTopStartRadius: 20,
 				borderTopEndRadius: 20,
 				borderWidth: 1,
-				paddingTop: 20,
-				paddingBottom: 20,
-				paddingLeft: 30,
-				paddingRight: 30,
+				paddingLeft: 10,
+				paddingRight: 10,
 				flexDirection: 'row',
 				position: 'absolute',
 				bottom: 0,
 				justifyContent: 'space-between',
 				width: '100%',
+				zIndex: 99999,
 			}}
 		>
 			<View style={{ flexDirection: 'row' }}>
@@ -34,7 +33,7 @@ export default function Navbar() {
 						navigation.push('Home')
 					}}
 					activeOpacity={0.7}
-					style={{ marginRight: 42 }}
+					style={{ marginRight: 2, padding: 20 }}
 				>
 					{route.name == 'Home' ? (
 						<Svg
@@ -59,11 +58,12 @@ export default function Navbar() {
 						>
 							<Path
 								d='M20.83 8.01002L14.28 2.77002C13 1.75002 11 1.74002 9.72996 2.76002L3.17996 8.01002C2.23996 8.76002 1.66996 10.26 1.86996 11.44L3.12996 18.98C3.41996 20.67 4.98996 22 6.69996 22H17.3C18.99 22 20.59 20.64 20.88 18.97L22.14 11.43C22.32 10.26 21.75 8.76002 20.83 8.01002ZM12.75 18C12.75 18.41 12.41 18.75 12 18.75C11.59 18.75 11.25 18.41 11.25 18V15C11.25 14.59 11.59 14.25 12 14.25C12.41 14.25 12.75 14.59 12.75 15V18Z'
-								fill='#C8C8C8'  
+								fill='#C8C8C8'
 							/>
 						</Svg>
 					)}
 				</TouchableOpacity>
+<<<<<<< HEAD
 				<TouchableOpacity //mine
 					onPress={() => {
 						navigation.push('NewButtons')
@@ -100,11 +100,14 @@ export default function Navbar() {
 					)}
 				</TouchableOpacity>
 				
+=======
+>>>>>>> 9ed94aa7f63d42982e277766e0f5317ef290704b
 				<TouchableOpacity
 					onPress={() => {
 						navigation.push('Import')
 					}}
 					activeOpacity={0.7}
+					style={{ padding: 20 }}
 				>
 					{route.name == 'Import' ? (
 						<Svg
@@ -141,9 +144,7 @@ export default function Navbar() {
 				}}
 				activeOpacity={0.7}
 				style={{
-					position: 'absolute',
 					top: -33,
-					right: '50%',
 					backgroundColor: COLORS.blue,
 					borderRadius: 100,
 					height: 64,
@@ -176,7 +177,7 @@ export default function Navbar() {
 						navigation.push('Export')
 					}}
 					activeOpacity={0.7}
-					style={{ marginRight: 42 }}
+					style={{ marginRight: 2, padding: 20 }}
 				>
 					{route.name == 'Export' ? (
 						<Svg
@@ -219,6 +220,7 @@ export default function Navbar() {
 						navigation.push('Db')
 					}}
 					activeOpacity={0.7}
+					style={{ padding: 20 }}
 				>
 					{route.name == 'Db' ? (
 						<Svg

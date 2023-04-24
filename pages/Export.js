@@ -18,9 +18,9 @@ export default function Mark() {
 	const navigation = useNavigation()
 
 	const [courses, setCourses] = useState([])
-	const [classes, setClasses] = useState([])
+	const [batches, setBatches] = useState([])
 	const [course, setCourse] = useState(null)
-	const [classs, setClasss] = useState(null)
+	const [batch, setBatch] = useState(null)
 
 	/*=============================================
 	=                fetchCourses                 =
@@ -29,6 +29,9 @@ export default function Mark() {
 		async function fetch() {
 			AsyncStorage.getAllKeys()
 				.then((res) => {
+					for (let i = 0; i < res.length; i++) {
+						if (res[i] === 'settings') res.splice(i, 1)
+					}
 					setCourses(res.map((item, index) => ({ label: item, value: item })))
 				})
 				.catch((e) => {
@@ -47,8 +50,8 @@ export default function Mark() {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					res = Object.keys(res['classes'])
-					setClasses(res.map((item, index) => ({ label: item, value: item })))
+					res = Object.keys(res['batches'])
+					setBatches(res.map((item, index) => ({ label: item, value: item })))
 				})
 				.catch((e) => {
 					console.log(e)
@@ -58,7 +61,7 @@ export default function Mark() {
 	}, [course])
 
 	async function handlePress() {
-		if (course && classs) {
+		if (course && batch) {
 			AsyncStorage.getItem(course).then((res) => {
 				const results = JSON.parse(res)
 
@@ -85,24 +88,50 @@ export default function Mark() {
 				const date = String(
 					dotw + ', ' + day + '/' + month + '/' + year + '-' + hours + ':' + minutes + ':' + seconds
 				)
-				const fileName = course + '|' + classs + ' || ' + date
+				const fileName = course + '|' + batch + ' || ' + date
 
-				var dates = ['Student Name', 'Student Roll Number']
+				let header = ['Sno.', 'Roll No.', 'Student Name', 'Email ID']
 
-				for (let i = 0; i < results['classes'][classs].date.length; i++) {
-					dates = [...dates, results['classes'][classs].date[i]]
+				for (let i = 0; i < results['batches'][batch].date.length; i++) {
+					header = [...header, results['batches'][batch].date[i]]
 				}
 
-				var student = []
+				header = [...header, 'Percentage']
 
-				for (let i = 0; i < results['classes'][classs].students.length; i++) {
+				let student = []
+
+				for (let i = 0; i < results['batches'][batch].students.length; i++) {
 					let temp = []
-					if (results['classes'][classs].students[i].studentName != '') {
+					let pCount = 0
+					let tempAttendance = []
+					if (results['batches'][batch].students[i].studentName != '') {
+						for (let j = 0; j < results['batches'][batch].students[i].attendance.length; j++) {
+							if (results['batches'][batch].students[i].attendance[j] == 0) tempAttendance.push('A')
+							else if (results['batches'][batch].students[i].attendance[j] == 1) {
+								tempAttendance.push('P')
+								pCount += 1
+							} else if (results['batches'][batch].students[i].attendance[j] == 2) {
+								tempAttendance.push('L')
+								pCount += 1
+							} else if (results['batches'][batch].students[i].attendance[j] == 3)
+								tempAttendance.push('N')
+						}
+						let pPercentage = (
+							(pCount / results['batches'][batch].students[i].attendance.length) *
+							100
+						).toFixed(2)
+
+						let emailId = results['batches'][batch].students[i].emailId
+						if (emailId != null) emailId = emailId.trim()
+
 						temp = [
 							...temp,
-							results['classes'][classs].students[i].studentName,
-							results['classes'][classs].students[i].rollNumber,
-							...results['classes'][classs].students[i].attendance,
+							i + 1,
+							results['batches'][batch].students[i].rollNumber.trim(),
+							results['batches'][batch].students[i].studentName,
+							emailId,
+							...tempAttendance,
+							pPercentage,
 						]
 					}
 					student = [...student, temp]
@@ -112,7 +141,7 @@ export default function Mark() {
 					.then((res) => {
 						const folderLocation = res['directoryUri']
 						const results = jsonToCSV({
-							fields: dates,
+							fields: header,
 							data: student,
 						})
 						StorageAccessFramework.createFileAsync(folderLocation, fileName, 'text/csv').then(
@@ -149,27 +178,67 @@ export default function Mark() {
 	// console.log(albumRes)
 	// }
 
+	/*=============================================
+	=               preventGoingBack              =
+	=============================================*/
+
+	navigation.addListener(
+		'beforeRemove',
+		(e) => {
+			e.preventDefault()
+			navigation.push('Home')
+		},
+		[navigation]
+	)
+
 	return (
 		<View style={{ flex: 1 }}>
-			<StatusBar />
-			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
-				<Svg
-					width='20'
-					height='20'
-					viewBox='0 0 16 17'
-					fill='none'
-					xmlns='http://www.w3.org/2000/svg'
-					onPress={() => navigation.goBack()}
+			<StatusBar style='dark' />
+			<View
+				style={{
+					paddingTop: 60,
+					flexDirection: 'row',
+					paddingRight: 20,
+					justifyContent: 'flex-end',
+					alignItems: 'center',
+				}}
+			>
+				<TouchableOpacity
+					style={{
+						padding: 8,
+						borderRadius: 50,
+						backgroundColor: COLORS?.white,
+						elevation: 3,
+						marginTop: 10,
+					}}
+					activeOpacity={0.7}
+					onPress={() => {
+						navigation.push('ExportInfo')
+					}}
 				>
-					<Path
-						d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
-						stroke='#525058'
-						stroke-width='1.5'
-						stroke-miterlimit='10'
-						stroke-linecap='round'
-						stroke-linejoin='round'
-					/>
-				</Svg>
+					<Svg
+						width='20'
+						height='21'
+						viewBox='0 0 20 21'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M10 9.45834C10.3452 9.45834 10.625 9.73818 10.625 10.0833V14.25C10.625 14.5952 10.3452 14.875 10 14.875C9.65483 14.875 9.375 14.5952 9.375 14.25V10.0833C9.375 9.73818 9.65483 9.45834 10 9.45834Z'
+							fill='black'
+						/>
+						<Path
+							d='M10 8.5C10.4602 8.5 10.8332 7.62691 10.8332 7.16668C10.8332 6.70644 10.4601 6.33334 9.99984 6.33334C9.53959 6.33334 9.1665 6.70644 9.1665 7.16668C9.1665 7.62691 9.53975 8.5 10 8.5Z'
+							fill='black'
+						/>
+						<Path
+							fill-rule='evenodd'
+							clip-rule='evenodd'
+							d='M2.7085 10.5C2.7085 6.47294 5.97309 3.20834 10.0002 3.20834C14.0272 3.20834 17.2918 6.47294 17.2918 10.5C17.2918 14.5271 14.0272 17.7917 10.0002 17.7917C5.97309 17.7917 2.7085 14.5271 2.7085 10.5ZM10.0002 4.45834C6.66345 4.45834 3.9585 7.16329 3.9585 10.5C3.9585 13.8368 6.66345 16.5417 10.0002 16.5417C13.3369 16.5417 16.0418 13.8368 16.0418 10.5C16.0418 7.16329 13.3369 4.45834 10.0002 4.45834Z'
+							fill='black'
+						/>
+					</Svg>
+				</TouchableOpacity>
 
 				<View
 					style={{
@@ -188,7 +257,7 @@ export default function Mark() {
 							lineHeight: 19,
 						}}
 					>
-						Export data
+						Export attendance
 					</Text>
 				</View>
 			</View>
@@ -283,14 +352,14 @@ export default function Mark() {
 							marginTop: 15,
 						}}
 					>
-						Class:
+						Batch:
 					</Text>
 					<Dropdown
 						style={styles.dropdown}
-						placeholder='Select class'
+						placeholder='Select batch'
 						placeholderStyle={styles.placeholderStyle}
 						selectedTextStyle={styles.selectedTextStyle}
-						data={classes}
+						data={batches}
 						autoScroll={false}
 						maxHeight={300}
 						containerStyle={{ marginTop: -50, borderRadius: 7 }}
@@ -301,9 +370,9 @@ export default function Mark() {
 						}}
 						labelField='label'
 						valueField='value'
-						value={classs}
+						value={batch}
 						onChange={(item) => {
-							setClasss(item.value)
+							setBatch(item.value)
 						}}
 						renderRightIcon={() => (
 							<Svg
@@ -328,7 +397,7 @@ export default function Mark() {
 				<TouchableOpacity
 					style={{
 						height: 43,
-						width: 160,
+						width: 190,
 						backgroundColor: COLORS?.blue,
 						alignItems: 'center',
 						borderRadius: 10,
@@ -340,22 +409,18 @@ export default function Mark() {
 					activeOpacity={0.7}
 				>
 					<Svg
-						width='24'
-						height='24'
-						viewBox='0 0 24 24'
+						width='20'
+						height='19'
+						viewBox='0 0 20 19'
 						fill='none'
 						xmlns='http://www.w3.org/2000/svg'
 					>
 						<Path
-							d='M7.25 7.59998C7.25 8.56647 8.0335 9.34998 9 9.34998H15C15.9665 9.34998 16.75 8.56647 16.75 7.59998V4.27627C16.75 4.12369 16.8737 4 17.0263 4C17.1722 4 17.3108 4.06373 17.4058 4.17448L20.3685 7.62867C20.7791 8.1074 20.9936 8.72364 20.9689 9.35387L20.6273 18.0976C20.5749 19.4393 19.4719 20.5 18.1292 20.5H17.75C17.4739 20.5 17.25 20.2761 17.25 20V15C17.25 14.0335 16.4665 13.25 15.5 13.25H8.5C7.5335 13.25 6.75 14.0335 6.75 15V20C6.75 20.2761 6.52614 20.5 6.25 20.5H6.11291C4.90908 20.5 3.89276 19.6055 3.73989 18.4114C3.24597 14.5534 3.2247 10.6495 3.67653 6.78632L3.73742 6.26575C3.8885 4.97395 4.983 4 6.28361 4H6.75C7.02614 4 7.25 4.22386 7.25 4.5V7.59998Z'
+							d='M16.729 8.06709H14.4411C12.5648 8.06709 11.0369 6.53918 11.0369 4.66293V2.37501C11.0369 1.93959 10.6807 1.58334 10.2453 1.58334H6.88859C4.45025 1.58334 2.479 3.16668 2.479 5.99293V13.0071C2.479 15.8333 4.45025 17.4167 6.88859 17.4167H13.1111C15.5494 17.4167 17.5207 15.8333 17.5207 13.0071V8.85876C17.5207 8.42334 17.1644 8.06709 16.729 8.06709ZM10.2215 12.4925L8.63817 14.0758C8.58275 14.1313 8.5115 14.1788 8.44025 14.2025C8.37072 14.2344 8.2951 14.251 8.21859 14.251C8.14207 14.251 8.06646 14.2344 7.99692 14.2025C7.93142 14.1751 7.87217 14.1347 7.82275 14.0838C7.81484 14.0758 7.80692 14.0758 7.80692 14.0679L6.22359 12.4846C6.11317 12.3729 6.05124 12.2221 6.05124 12.065C6.05124 11.9079 6.11317 11.7572 6.22359 11.6454C6.45317 11.4158 6.83317 11.4158 7.06275 11.6454L7.62484 12.2233V8.90626C7.62484 8.58168 7.894 8.31251 8.21859 8.31251C8.54317 8.31251 8.81234 8.58168 8.81234 8.90626V12.2233L9.38234 11.6533C9.61192 11.4238 9.99192 11.4238 10.2215 11.6533C10.4511 11.8829 10.4511 12.2629 10.2215 12.4925Z'
 							fill='white'
 						/>
 						<Path
-							d='M8.25 20C8.25 20.2761 8.47386 20.5 8.75 20.5H15.25C15.5261 20.5 15.75 20.2761 15.75 20V15C15.75 14.8619 15.6381 14.75 15.5 14.75H8.5C8.36193 14.75 8.25 14.8619 8.25 15V20Z'
-							fill='white'
-						/>
-						<Path
-							d='M15.25 4.5C15.25 4.22386 15.0261 4 14.75 4H9.25C8.97386 4 8.75 4.22386 8.75 4.5V7.59998C8.75 7.73805 8.86193 7.84998 9 7.84998H15C15.1381 7.84998 15.25 7.73805 15.25 7.59998V4.5Z'
+							d='M14.2987 6.9746C15.0507 6.98252 16.0957 6.98251 16.9903 6.98251C17.4416 6.98251 17.6791 6.4521 17.3624 6.13543C16.2224 4.98751 14.1799 2.92126 13.0082 1.7496C12.6837 1.42501 12.1216 1.64668 12.1216 2.09793V4.86085C12.1216 6.01668 13.1032 6.9746 14.2987 6.9746Z'
 							fill='white'
 						/>
 					</Svg>
@@ -367,7 +432,7 @@ export default function Mark() {
 							color: COLORS?.white,
 						}}
 					>
-						Export data
+						Export attendance
 					</Text>
 				</TouchableOpacity>
 			</View>

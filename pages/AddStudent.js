@@ -1,6 +1,13 @@
 import { useState } from 'react'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { StyleSheet } from 'react-native'
+import {
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+	StyleSheet,
+	KeyboardAvoidingView,
+	Platform,
+} from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StatusBar } from 'expo-status-bar'
@@ -12,17 +19,18 @@ import Navbar from '../components/Navbar'
 import { COLORS, FONTS } from '../styles/theme'
 
 export default function Mark({ route, navigation }) {
-	const { course, classs } = route.params
+	const { course, batch } = route.params
 
 	const [studentName, setStudentName] = useState()
 	const [studentID, setStudentID] = useState()
+	const [studentEmailID, setStudentEmailID] = useState()
 
 	async function handlePress() {
 		if (studentName && studentID) {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					const numberOfDays = res.classes[classs].date.length
+					const numberOfDays = res.batches[batch].date.length
 					const fillAttendance = []
 					for (let i = 0; i < numberOfDays; i++) {
 						fillAttendance.push(3)
@@ -31,42 +39,67 @@ export default function Mark({ route, navigation }) {
 						attendance: fillAttendance,
 						rollNumber: studentID,
 						studentName: studentName,
+						emailId: studentEmailID,
 					}
-					res.classes[classs].students = [...res.classes[classs].students, student]
-					console.log(res.classes[classs].students)
+					res.batches[batch].students = [...res.batches[batch].students, student]
 					res = JSON.stringify(res)
 					AsyncStorage.setItem(course, res)
 				})
 				.then(() => {
 					navigation.push('DbStudents', {
 						course: course,
-						classs: classs,
+						batch: batch,
 					})
 				})
 		}
 	}
 
+	/*=============================================
+	=               preventGoingBack              =
+	=============================================*/
+
+	navigation.addListener(
+		'beforeRemove',
+		(e) => {
+			e.preventDefault()
+			navigation.push('DbStudents', {
+				course: course,
+				batch: batch,
+			})
+		},
+		[navigation]
+	)
+
 	return (
-		<View style={{ flex: 1 }}>
-			<StatusBar />
-			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
-				<Svg
-					width='20'
-					height='20'
-					viewBox='0 0 16 17'
-					fill='none'
-					xmlns='http://www.w3.org/2000/svg'
-					onPress={() => navigation.goBack()}
+		<KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : null}>
+			<StatusBar style='dark' />
+			<View style={{ paddingTop: 60, flexDirection: 'row' }}>
+				<TouchableOpacity
+					style={{ padding: 20 }}
+					onPress={() =>
+						navigation.push('DbStudents', {
+							course: course,
+							batch: batch,
+						})
+					}
 				>
-					<Path
-						d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
-						stroke='#525058'
-						stroke-width='1.5'
-						stroke-miterlimit='10'
-						stroke-linecap='round'
-						stroke-linejoin='round'
-					/>
-				</Svg>
+					<Svg
+						width='20'
+						height='20'
+						viewBox='0 0 16 17'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
+							stroke='#525058'
+							stroke-width='1.5'
+							stroke-miterlimit='10'
+							stroke-linecap='round'
+							stroke-linejoin='round'
+						/>
+					</Svg>
+				</TouchableOpacity>
 
 				<View
 					style={{
@@ -89,7 +122,7 @@ export default function Mark({ route, navigation }) {
 					</Text>
 				</View>
 			</View>
-			<View style={{ alignItems: 'center', marginTop: 32 }}>
+			<View style={{ alignItems: 'center', marginTop: 20, justifyContent: 'flex-end' }}>
 				<View
 					style={{
 						height: 54,
@@ -130,10 +163,10 @@ export default function Mark({ route, navigation }) {
 							fontSize: 16,
 							lineHeight: 19,
 							marginBottom: 6,
-							marginTop: 70,
+							marginTop: 60,
 						}}
 					>
-						Student Name:
+						* Student Name:
 					</Text>
 					<TextInput
 						style={styles.dropdown}
@@ -151,7 +184,7 @@ export default function Mark({ route, navigation }) {
 							marginTop: 15,
 						}}
 					>
-						Student Roll no:
+						* Student Roll no:
 					</Text>
 					<TextInput
 						style={styles.dropdown}
@@ -169,21 +202,45 @@ export default function Mark({ route, navigation }) {
 							marginTop: 15,
 						}}
 					>
-						Course:
+						Student Email ID:
 					</Text>
-					<TextInput style={styles.dropdown} value={course} editable={false} />
-					<Text
-						style={{
-							fontFamily: FONTS?.bold,
-							fontSize: 16,
-							lineHeight: 19,
-							marginBottom: 6,
-							marginTop: 15,
-						}}
-					>
-						Class:
-					</Text>
-					<TextInput style={styles.dropdown} value={classs} editable={false} />
+					<TextInput
+						style={styles.dropdown}
+						value={studentEmailID}
+						onChangeText={setStudentEmailID}
+						placeholder='Enter student email ID'
+						placeholderTextColor={COLORS?.placeholder}
+					/>
+					<View style={{ flexDirection: 'row' }}>
+						<View>
+							<Text
+								style={{
+									fontFamily: FONTS?.bold,
+									fontSize: 16,
+									lineHeight: 19,
+									marginBottom: 6,
+									marginTop: 15,
+								}}
+							>
+								Course:
+							</Text>
+							<TextInput style={styles.smallDropdown} value={course} editable={false} />
+						</View>
+						<View style={{ marginLeft: 20 }}>
+							<Text
+								style={{
+									fontFamily: FONTS?.bold,
+									fontSize: 16,
+									lineHeight: 19,
+									marginBottom: 6,
+									marginTop: 15,
+								}}
+							>
+								Batch:
+							</Text>
+							<TextInput style={styles.smallDropdown} value={batch} editable={false} />
+						</View>
+					</View>
 				</View>
 
 				<TouchableOpacity
@@ -228,7 +285,7 @@ export default function Mark({ route, navigation }) {
 				</TouchableOpacity>
 			</View>
 			<Navbar />
-		</View>
+		</KeyboardAvoidingView>
 	)
 }
 
@@ -260,5 +317,15 @@ const styles = StyleSheet.create({
 	inputSearchStyle: {
 		height: 40,
 		fontSize: 16,
+	},
+	smallDropdown: {
+		height: 50,
+		borderColor: COLORS?.borderGrey,
+		borderWidth: 1,
+		width: 125,
+		paddingLeft: 10,
+		paddingRight: 10,
+		borderRadius: 7,
+		fontFamily: FONTS?.regular,
 	},
 })

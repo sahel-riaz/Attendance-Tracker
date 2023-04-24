@@ -16,13 +16,13 @@ export default function Mark() {
 	const navigation = useNavigation()
 
 	const [courses, setCourses] = useState([])
-	const [classes, setClasses] = useState([])
+	const [batches, setBatches] = useState([])
 	const [dates, setDates] = useState([])
 
 	const [res, setRes] = useState({})
 
 	const [course, setCourse] = useState(null)
-	const [classs, setClasss] = useState(null)
+	const [batch, setBatch] = useState(null)
 	const [date, setDate] = useState(null)
 
 	/*=============================================
@@ -32,6 +32,9 @@ export default function Mark() {
 		async function fetch() {
 			AsyncStorage.getAllKeys()
 				.then((res) => {
+					for (let i = 0; i < res.length; i++) {
+						if (res[i] === 'settings') res.splice(i, 1)
+					}
 					setCourses(res.map((item, index) => ({ label: item, value: item })))
 				})
 				.catch((e) => {
@@ -51,8 +54,8 @@ export default function Mark() {
 				.then((res) => {
 					res = JSON.parse(res)
 					setRes(res)
-					res = Object.keys(res['classes'])
-					setClasses(res.map((item, index) => ({ label: item, value: item })))
+					res = Object.keys(res['batches'])
+					setBatches(res.map((item, index) => ({ label: item, value: item })))
 				})
 				.catch((e) => {
 					console.log(e)
@@ -65,7 +68,7 @@ export default function Mark() {
 	=                 fetchDates                  =
 	=============================================*/
 	useEffect(() => {
-		if (classs == null) return
+		if (batch == null) return
 
 		const jsDate = new Date()
 		const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
@@ -83,27 +86,27 @@ export default function Mark() {
 			dotw + ', ' + day + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ':' + seconds
 		)
 
-		let tempDates = Object.values(res.classes[classs].date)
+		let tempDates = Object.values(res.batches[batch].date)
 		tempDates.push(date)
 		setDate(date)
 		setDates(tempDates.map((item, index) => ({ label: item, value: item })))
-	}, [classs])
+	}, [batch])
 
 	/*=============================================
 	=         Apply button functionality          =
 	=============================================*/
 	async function handleNavigate() {
-		if (course && classs) {
+		if (course && batch) {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
 					/*=====  check if the selected date already exists  ======*/
-					if (!Object.values(res.classes[classs].date).includes(date)) {
+					if (!Object.values(res.batches[batch].date).includes(date)) {
 						/*=====  insert selected date and time; push 3 into every students attendance  ======*/
-						res.classes[classs]['date'] = [...res.classes[classs]['date'], date]
-						for (let i = 0; i < res.classes[classs].students.length; i++) {
-							res.classes[classs].students[i].attendance = [
-								...res.classes[classs].students[i].attendance,
+						res.batches[batch]['date'] = [...res.batches[batch]['date'], date]
+						for (let i = 0; i < res.batches[batch].students.length; i++) {
+							res.batches[batch].students[i].attendance = [
+								...res.batches[batch].students[i].attendance,
 								3,
 							]
 						}
@@ -114,7 +117,7 @@ export default function Mark() {
 				.then(() => {
 					navigation.push('Students', {
 						course: course,
-						classs: classs,
+						batch: batch,
 						date: date,
 					})
 				})
@@ -126,27 +129,67 @@ export default function Mark() {
 		}
 	}
 
+	/*=============================================
+	=               preventGoingBack              =
+	=============================================*/
+
+	navigation.addListener(
+		'beforeRemove',
+		(e) => {
+			e.preventDefault()
+			navigation.push('Home')
+		},
+		[navigation]
+	)
+
 	return (
 		<View style={{ flex: 1 }}>
-			<StatusBar />
-			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
-				<Svg
-					width='20'
-					height='20'
-					viewBox='0 0 16 17'
-					fill='none'
-					xmlns='http://www.w3.org/2000/svg'
-					onPress={() => navigation.goBack()}
+			<StatusBar style='dark' />
+			<View
+				style={{
+					paddingTop: 60,
+					flexDirection: 'row',
+					paddingRight: 20,
+					justifyContent: 'flex-end',
+					alignItems: 'center',
+				}}
+			>
+				<TouchableOpacity
+					style={{
+						padding: 8,
+						borderRadius: 50,
+						backgroundColor: COLORS?.white,
+						elevation: 3,
+						marginTop: 10,
+					}}
+					activeOpacity={0.7}
+					onPress={() => {
+						navigation.push('MarkInfo')
+					}}
 				>
-					<Path
-						d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
-						stroke='#525058'
-						stroke-width='1.5'
-						stroke-miterlimit='10'
-						stroke-linecap='round'
-						stroke-linejoin='round'
-					/>
-				</Svg>
+					<Svg
+						width='20'
+						height='21'
+						viewBox='0 0 20 21'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M10 9.45834C10.3452 9.45834 10.625 9.73818 10.625 10.0833V14.25C10.625 14.5952 10.3452 14.875 10 14.875C9.65483 14.875 9.375 14.5952 9.375 14.25V10.0833C9.375 9.73818 9.65483 9.45834 10 9.45834Z'
+							fill='black'
+						/>
+						<Path
+							d='M10 8.5C10.4602 8.5 10.8332 7.62691 10.8332 7.16668C10.8332 6.70644 10.4601 6.33334 9.99984 6.33334C9.53959 6.33334 9.1665 6.70644 9.1665 7.16668C9.1665 7.62691 9.53975 8.5 10 8.5Z'
+							fill='black'
+						/>
+						<Path
+							fill-rule='evenodd'
+							clip-rule='evenodd'
+							d='M2.7085 10.5C2.7085 6.47294 5.97309 3.20834 10.0002 3.20834C14.0272 3.20834 17.2918 6.47294 17.2918 10.5C17.2918 14.5271 14.0272 17.7917 10.0002 17.7917C5.97309 17.7917 2.7085 14.5271 2.7085 10.5ZM10.0002 4.45834C6.66345 4.45834 3.9585 7.16329 3.9585 10.5C3.9585 13.8368 6.66345 16.5417 10.0002 16.5417C13.3369 16.5417 16.0418 13.8368 16.0418 10.5C16.0418 7.16329 13.3369 4.45834 10.0002 4.45834Z'
+							fill='black'
+						/>
+					</Svg>
+				</TouchableOpacity>
 
 				<View
 					style={{
@@ -260,14 +303,14 @@ export default function Mark() {
 							marginTop: 15,
 						}}
 					>
-						Class:
+						Batch:
 					</Text>
 					<Dropdown
 						style={styles.dropdown}
-						placeholder='Select class'
+						placeholder='Select batch'
 						placeholderStyle={styles.placeholderStyle}
 						selectedTextStyle={styles.selectedTextStyle}
-						data={classes}
+						data={batches}
 						autoScroll={false}
 						maxHeight={300}
 						containerStyle={{ marginTop: -50, borderRadius: 7 }}
@@ -278,9 +321,9 @@ export default function Mark() {
 						}}
 						labelField='label'
 						valueField='value'
-						value={classs}
+						value={batch}
 						onChange={(item) => {
-							setClasss(item.value)
+							setBatch(item.value)
 						}}
 						renderRightIcon={() => (
 							<Svg

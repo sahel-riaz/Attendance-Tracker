@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
-import { StyleSheet } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -17,14 +16,17 @@ export default function Mark() {
 	const navigation = useNavigation()
 
 	const [courses, setCourses] = useState([])
-	const [classes, setClasses] = useState([])
+	const [batches, setBatches] = useState([])
 	const [course, setCourse] = useState(null)
-	const [classs, setClasss] = useState(null)
+	const [batch, setBatch] = useState(null)
 
 	useEffect(() => {
 		async function fetch() {
 			AsyncStorage.getAllKeys()
 				.then((res) => {
+					for (let i = 0; i < res.length; i++) {
+						if (res[i] === 'settings') res.splice(i, 1)
+					}
 					setCourses(res.map((item, index) => ({ label: item, value: item })))
 				})
 				.catch((e) => {
@@ -40,8 +42,8 @@ export default function Mark() {
 			AsyncStorage.getItem(course)
 				.then((res) => {
 					res = JSON.parse(res)
-					res = Object.keys(res['classes'])
-					setClasses(res.map((item, index) => ({ label: item, value: item })))
+					res = Object.keys(res['batches'])
+					setBatches(res.map((item, index) => ({ label: item, value: item })))
 				})
 				.catch((e) => {
 					console.log(e)
@@ -51,37 +53,77 @@ export default function Mark() {
 	}, [course])
 
 	async function handleNavigate() {
-		if (course && classs) {
-			navigation.navigate('DbStudents', {
+		if (course && batch) {
+			navigation.push('DbStudents', {
 				course: course,
-				classs: classs,
+				batch: batch,
 			})
 		} else {
 			//error
 		}
 	}
 
+	/*=============================================
+	=               preventGoingBack              =
+	=============================================*/
+
+	navigation.addListener(
+		'beforeRemove',
+		(e) => {
+			e.preventDefault()
+			navigation.push('Home')
+		},
+		[navigation]
+	)
+
 	return (
 		<View style={{ flex: 1 }}>
-			<StatusBar />
-			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
-				<Svg
-					width='20'
-					height='20'
-					viewBox='0 0 16 17'
-					fill='none'
-					xmlns='http://www.w3.org/2000/svg'
-					onPress={() => navigation.goBack()}
+			<StatusBar style='dark' />
+			<View
+				style={{
+					paddingTop: 60,
+					flexDirection: 'row',
+					paddingRight: 20,
+					justifyContent: 'flex-end',
+					alignItems: 'center',
+				}}
+			>
+				<TouchableOpacity
+					style={{
+						padding: 8,
+						borderRadius: 50,
+						backgroundColor: COLORS?.white,
+						elevation: 3,
+						marginTop: 10,
+					}}
+					activeOpacity={0.7}
+					onPress={() => {
+						navigation.push('DbInfo')
+					}}
 				>
-					<Path
-						d='M9.99998 13.78L5.65331 9.4333C5.13998 8.91997 5.13998 8.07997 5.65331 7.56664L9.99998 3.21997'
-						stroke='#525058'
-						stroke-width='1.5'
-						stroke-miterlimit='10'
-						stroke-linecap='round'
-						stroke-linejoin='round'
-					/>
-				</Svg>
+					<Svg
+						width='20'
+						height='21'
+						viewBox='0 0 20 21'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<Path
+							d='M10 9.45834C10.3452 9.45834 10.625 9.73818 10.625 10.0833V14.25C10.625 14.5952 10.3452 14.875 10 14.875C9.65483 14.875 9.375 14.5952 9.375 14.25V10.0833C9.375 9.73818 9.65483 9.45834 10 9.45834Z'
+							fill='black'
+						/>
+						<Path
+							d='M10 8.5C10.4602 8.5 10.8332 7.62691 10.8332 7.16668C10.8332 6.70644 10.4601 6.33334 9.99984 6.33334C9.53959 6.33334 9.1665 6.70644 9.1665 7.16668C9.1665 7.62691 9.53975 8.5 10 8.5Z'
+							fill='black'
+						/>
+						<Path
+							fill-rule='evenodd'
+							clip-rule='evenodd'
+							d='M2.7085 10.5C2.7085 6.47294 5.97309 3.20834 10.0002 3.20834C14.0272 3.20834 17.2918 6.47294 17.2918 10.5C17.2918 14.5271 14.0272 17.7917 10.0002 17.7917C5.97309 17.7917 2.7085 14.5271 2.7085 10.5ZM10.0002 4.45834C6.66345 4.45834 3.9585 7.16329 3.9585 10.5C3.9585 13.8368 6.66345 16.5417 10.0002 16.5417C13.3369 16.5417 16.0418 13.8368 16.0418 10.5C16.0418 7.16329 13.3369 4.45834 10.0002 4.45834Z'
+							fill='black'
+						/>
+					</Svg>
+				</TouchableOpacity>
 
 				<View
 					style={{
@@ -100,7 +142,7 @@ export default function Mark() {
 							lineHeight: 19,
 						}}
 					>
-						View data
+						View student database
 					</Text>
 				</View>
 			</View>
@@ -124,11 +166,7 @@ export default function Mark() {
 						xmlns='http://www.w3.org/2000/svg'
 					>
 						<Path
-							d='M20.9375 4.45V2.5C20.9375 1.9875 20.5125 1.5625 20 1.5625C19.4875 1.5625 19.0625 1.9875 19.0625 2.5V4.375H10.9375V2.5C10.9375 1.9875 10.5125 1.5625 10 1.5625C9.48754 1.5625 9.06254 1.9875 9.06254 2.5V4.45C5.68754 4.7625 4.05004 6.775 3.80004 9.7625C3.77504 10.125 4.07504 10.425 4.42504 10.425H25.575C25.9375 10.425 26.2375 10.1125 26.2 9.7625C25.95 6.775 24.3125 4.7625 20.9375 4.45ZM23.75 18.75C20.9875 18.75 18.75 20.9875 18.75 23.75C18.75 24.6875 19.0125 25.575 19.475 26.325C19.9157 27.0656 20.5416 27.6787 21.2912 28.1039C22.0408 28.5291 22.8882 28.7518 23.75 28.75C25.575 28.75 27.1625 27.775 28.025 26.325C28.4875 25.575 28.75 24.6875 28.75 23.75C28.75 20.9875 26.5125 18.75 23.75 18.75ZM26.3375 23.2125L23.675 25.675C23.5 25.8375 23.2625 25.925 23.0375 25.925C22.8 25.925 22.5625 25.8375 22.375 25.65L21.1375 24.4125C20.9632 24.2361 20.8654 23.998 20.8654 23.75C20.8654 23.502 20.9632 23.2639 21.1375 23.0875C21.5 22.725 22.1 22.725 22.4625 23.0875L23.0625 23.6875L25.0625 21.8375C25.4375 21.4875 26.0375 21.5125 26.3875 21.8875C26.7375 22.2625 26.7125 22.85 26.3375 23.2125Z'
-							fill='#294F82'
-						/>
-						<Path
-							d='M25 12.3H5C4.3125 12.3 3.75 12.8625 3.75 13.55V21.25C3.75 25 5.625 27.5 10 27.5H16.1625C17.025 27.5 17.625 26.6625 17.35 25.85C17.1 25.125 16.8875 24.325 16.8875 23.75C16.8875 19.9625 19.975 16.875 23.7625 16.875C24.125 16.875 24.4875 16.9 24.8375 16.9625C25.5875 17.075 26.2625 16.4875 26.2625 15.7375V13.5625C26.2592 13.2287 26.1252 12.9095 25.8891 12.6734C25.6531 12.4374 25.3338 12.3033 25 12.3ZM11.5125 22.7625C11.275 22.9875 10.95 23.125 10.625 23.125C10.3 23.125 9.975 22.9875 9.7375 22.7625C9.5125 22.525 9.375 22.2 9.375 21.875C9.375 21.55 9.5125 21.225 9.7375 20.9875C9.8625 20.875 9.9875 20.7875 10.15 20.725C10.6125 20.525 11.1625 20.6375 11.5125 20.9875C11.7375 21.225 11.875 21.55 11.875 21.875C11.875 22.2 11.7375 22.525 11.5125 22.7625ZM11.5125 18.3875L11.325 18.5375C11.25 18.5875 11.175 18.625 11.1 18.65C11.025 18.6875 10.95 18.7125 10.875 18.725C10.7875 18.7375 10.7 18.75 10.625 18.75C10.3 18.75 9.975 18.6125 9.7375 18.3875C9.5125 18.15 9.375 17.825 9.375 17.5C9.375 17.175 9.5125 16.85 9.7375 16.6125C10.025 16.325 10.4625 16.1875 10.875 16.275C10.95 16.2875 11.025 16.3125 11.1 16.35C11.175 16.375 11.25 16.4125 11.325 16.4625L11.5125 16.6125C11.7375 16.85 11.875 17.175 11.875 17.5C11.875 17.825 11.7375 18.15 11.5125 18.3875ZM15.8875 18.3875C15.65 18.6125 15.325 18.75 15 18.75C14.675 18.75 14.35 18.6125 14.1125 18.3875C13.8875 18.15 13.75 17.825 13.75 17.5C13.75 17.175 13.8875 16.85 14.1125 16.6125C14.5875 16.15 15.425 16.15 15.8875 16.6125C16.1125 16.85 16.25 17.175 16.25 17.5C16.25 17.825 16.1125 18.15 15.8875 18.3875Z'
+							d='M24.15 2.5H5.85C4.0125 2.5 2.5 4.0125 2.5 5.85V9.1375C2.5 10.9875 4.0125 12.5 5.85 12.5H24.1375C25.9875 12.5 27.5 10.9875 27.5 9.15V5.85C27.5 4.0125 25.9875 2.5 24.15 2.5ZM8.4375 8.75C8.4375 9.2625 8.0125 9.6875 7.5 9.6875C6.9875 9.6875 6.5625 9.2625 6.5625 8.75V6.25C6.5625 5.7375 6.9875 5.3125 7.5 5.3125C8.0125 5.3125 8.4375 5.7375 8.4375 6.25V8.75ZM13.4375 8.75C13.4375 9.2625 13.0125 9.6875 12.5 9.6875C11.9875 9.6875 11.5625 9.2625 11.5625 8.75V6.25C11.5625 5.7375 11.9875 5.3125 12.5 5.3125C13.0125 5.3125 13.4375 5.7375 13.4375 6.25V8.75ZM22.5 8.4375H17.5C16.9875 8.4375 16.5625 8.0125 16.5625 7.5C16.5625 6.9875 16.9875 6.5625 17.5 6.5625H22.5C23.0125 6.5625 23.4375 6.9875 23.4375 7.5C23.4375 8.0125 23.0125 8.4375 22.5 8.4375ZM24.15 17.5H5.85C4.0125 17.5 2.5 19.0125 2.5 20.85V24.1375C2.5 25.9875 4.0125 27.5 5.85 27.5H24.1375C25.9875 27.5 27.4875 25.9875 27.4875 24.15V20.8625C27.4891 20.4226 27.4041 19.9866 27.2373 19.5796C27.0705 19.1725 26.8251 18.8023 26.5152 18.49C26.2052 18.1778 25.8369 17.9296 25.431 17.7598C25.0252 17.5899 24.5899 17.5016 24.15 17.5ZM8.4375 23.75C8.4375 24.2625 8.0125 24.6875 7.5 24.6875C6.9875 24.6875 6.5625 24.2625 6.5625 23.75V21.25C6.5625 20.7375 6.9875 20.3125 7.5 20.3125C8.0125 20.3125 8.4375 20.7375 8.4375 21.25V23.75ZM13.4375 23.75C13.4375 24.2625 13.0125 24.6875 12.5 24.6875C11.9875 24.6875 11.5625 24.2625 11.5625 23.75V21.25C11.5625 20.7375 11.9875 20.3125 12.5 20.3125C13.0125 20.3125 13.4375 20.7375 13.4375 21.25V23.75ZM22.5 23.4375H17.5C16.9875 23.4375 16.5625 23.0125 16.5625 22.5C16.5625 21.9875 16.9875 21.5625 17.5 21.5625H22.5C23.0125 21.5625 23.4375 21.9875 23.4375 22.5C23.4375 23.0125 23.0125 23.4375 22.5 23.4375Z'
 							fill='#294F82'
 						/>
 					</Svg>
@@ -195,14 +233,14 @@ export default function Mark() {
 							marginTop: 15,
 						}}
 					>
-						Class:
+						Batch:
 					</Text>
 					<Dropdown
 						style={styles.dropdown}
-						placeholder='Select class'
+						placeholder='Select batch'
 						placeholderStyle={styles.placeholderStyle}
 						selectedTextStyle={styles.selectedTextStyle}
-						data={classes}
+						data={batches}
 						autoScroll={false}
 						maxHeight={300}
 						containerStyle={{ marginTop: -50, borderRadius: 7 }}
@@ -213,9 +251,9 @@ export default function Mark() {
 						}}
 						labelField='label'
 						valueField='value'
-						value={classs}
+						value={batch}
 						onChange={(item) => {
-							setClasss(item.value)
+							setBatch(item.value)
 						}}
 						renderRightIcon={() => (
 							<Svg
