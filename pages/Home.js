@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native'
-=======
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { useEffect, useState } from 'react'
@@ -10,46 +7,18 @@ import { useNavigation } from '@react-navigation/native'
 import { FlatList } from 'react-native-gesture-handler'
 
 //components
->>>>>>> 9ed94aa7f63d42982e277766e0f5317ef290704b
 import ClassCard from '../components/home/ClassCard'
 import HomeCard from '../components/home/HomeCard'
 import Navbar from '../components/Navbar'
 
 import * as LocalAuthentication from 'expo-local-authentication'
 
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useEffect, useState } from 'react'
+// import AsyncStorage from '@react-native-async-storage/async-storage'
+// import { useEffect, useState } from 'react'
 
 import { COLORS, FONTS } from '../styles/theme'
 
 export default function Home() {
-<<<<<<< HEAD
-
-	const [courses, setCourses] = useState([])
-	const [classes, setClasses] = useState([])
-
-	const [res, setRes] = useState({})
-
-	const [course, setCourse] = useState(null)
-	const [classs, setClasss] = useState(null)
-
-	const [coursename, setCourseName] = useState(null)
-	const [studentcount, setStudentCount] = useState(0)
-
-	/*=============================================
-	=                fetchCourses                 =
-	=============================================*/
-	useEffect(() => {
-		async function fetch() {
-			AsyncStorage.getAllKeys()
-				.then((res) => {
-					setCourses(res)
-					console.log(courses)
-				})
-				.catch((e) => {
-					console.log(e)
-				})
-=======
 	var [date, setDate] = useState(new Date())
 	const navigation = useNavigation()
 
@@ -74,73 +43,11 @@ export default function Home() {
 			AsyncStorage.getItem('settings').then((res) => {
 				setName(res)
 			})
->>>>>>> 9ed94aa7f63d42982e277766e0f5317ef290704b
 		}
 		fetch()
 	}, [])
 
 	/*=============================================
-<<<<<<< HEAD
-	=                fetchClasses                 =
-	=============================================*/
-	useEffect(() => {
-		if (courses.length == 0) return
-		async function fetch() {
-			AsyncStorage.getItem(courses[0])
-				.then((res) => {
-					res = JSON.parse(res)
-					setRes(res)
-					// console.log(res)
-					res1 = Object.keys(res['classes'])
-					setClasses(res1)
-					console.log(classes)
-					res2 = Object.keys(res['students'])
-					setStudentCount(res2.length)
-					console.log(studentcount)
-
-				})
-				.catch((e) => {
-					console.log(e)
-				})
-		}
-		fetch()
-	}, [course])
-
-
-
-
-	// for (let i=0; i<courses.length; i++) {
-	// 	useEffect(() => {
-	// 		if (courses.length == 0) return
-	// 		async function fetch() 
-	// 		{
-	// 			AsyncStorage.getItem(courses[i])
-	// 				.then((res) => {
-	// 					res = JSON.parse(res)
-	// 					setRes(res)
-	// 					res = Object.keys(res['classes'])
-	// 					setClasses(res)
-	
-	// 				})
-	// 				.catch((e) => {
-	// 					console.log(e)
-	// 				})
-	// 		}
-	// 		fetch()
-	// 	}, [course])
-	// }
-
-
-	return (
-		<SafeAreaView style={{ backgroundColor: COLORS?.bg, flex: 1 }}>
-			<View style={{ paddingTop: 80 }}>
-				<View style={{ paddingLeft: 30, paddingRight: 30 }}>
-					<Text style={{ fontSize: 32, lineHeight: 32, fontFamily: FONTS?.bold }}>09:12 am</Text>
-					<Text style={{ paddingTop: 6 }}>
-						Good morning,
-						<Text style={{ fontFamily: FONTS?.bold, fontSize: 16, lineHeight: 19 }}>
-							&nbsp;Sahel&nbsp;
-=======
 	=            fetchCoursesAndClasses           =
 	=============================================*/
 	useEffect(() => {
@@ -229,7 +136,6 @@ export default function Home() {
 					<View>
 						<Text style={{ fontSize: 32, lineHeight: 32, fontFamily: FONTS?.bold }}>
 							{date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
->>>>>>> 9ed94aa7f63d42982e277766e0f5317ef290704b
 						</Text>
 						<Text style={{ paddingTop: 6 }}>
 							Good day
@@ -336,38 +242,6 @@ export default function Home() {
 						paddingLeft: 20,
 					}}
 				>
-<<<<<<< HEAD
-					<Text style={{ fontFamily: FONTS?.bold, fontSize: 18, lineHeight: 22, marginBottom: 22 }}>
-						Courses 💼
-					</Text>
-					<ClassCard 
-						courseId='CS2002D:'
-						courseName='Software Engineering Lab'
-						className='CS01'
-						students_qty='160'	
-					/>
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<ClassCard />
-					<View style={{ height: 400 }}></View>
-				</ScrollView>
-=======
 					Quick navigation:
 				</Text>
 				{courses.length < 1 ? (
@@ -393,7 +267,6 @@ export default function Home() {
 						)}
 					/>
 				)}
->>>>>>> 9ed94aa7f63d42982e277766e0f5317ef290704b
 			</View>
 			<Navbar />
 		</SafeAreaView>

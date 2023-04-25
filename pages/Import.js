@@ -151,11 +151,6 @@ export default function Mark() {
 	)
 
 	return (
-<<<<<<< HEAD
-		<View style={{ flex: 1 }}>
-			<StatusBar style='dark' />
-			<View style={{ paddingTop: 80, flexDirection: 'row', padding: 20 }}>
-=======
 		<KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : null}>
 			<StatusBar style='dark' />
 
@@ -205,7 +200,6 @@ export default function Mark() {
 					</Svg>
 				</TouchableOpacity>
 
->>>>>>> 9ed94aa7f63d42982e277766e0f5317ef290704b
 				<View
 					style={{
 						position: 'absolute',
